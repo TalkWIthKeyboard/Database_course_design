@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGEntities">
+    <EntitySetMapping Name="COMMENTTABLEs">
+      <EntityTypeMapping TypeName="Model.COMMENTTABLE">
+        <MappingFragment StoreEntitySet="COMMENTTABLE">
+          <ScalarProperty Name="COMMENT_ID" ColumnName="COMMENT_ID" />
+          <ScalarProperty Name="COMMENT_DATE" ColumnName="COMMENT_DATE" />
+          <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FILETABLEs">
+      <EntityTypeMapping TypeName="Model.FILETABLE">
+        <MappingFragment StoreEntitySet="FILETABLE">
+          <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+          <ScalarProperty Name="FILE_NAME" ColumnName="FILE_NAME" />
+          <ScalarProperty Name="FILE_TYPE" ColumnName="FILE_TYPE" />
+          <ScalarProperty Name="FILE_STATE" ColumnName="FILE_STATE" />
+          <ScalarProperty Name="FILE_SIZE" ColumnName="FILE_SIZE" />
+          <ScalarProperty Name="FILE_DEEP" ColumnName="FILE_DEEP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MESSAGEs">
+      <EntityTypeMapping TypeName="Model.MESSAGE">
+        <MappingFragment StoreEntitySet="MESSAGE">
+          <ScalarProperty Name="MESSAGE_ID" ColumnName="MESSAGE_ID" />
+          <ScalarProperty Name="MESSAGE_DATE" ColumnName="MESSAGE_DATE" />
+          <ScalarProperty Name="MESSAGE_CONTENT" ColumnName="MESSAGE_CONTENT" />
+          <ScalarProperty Name="RECEIVER_ID" ColumnName="RECEIVER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPOSITORies">
+      <EntityTypeMapping TypeName="Model.REPOSITORY">
+        <MappingFragment StoreEntitySet="REPOSITORY">
+          <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="AUTHORITY" ColumnName="AUTHORITY" />
+          <ScalarProperty Name="LABEL1" ColumnName="LABEL1" />
+          <ScalarProperty Name="LABEL2" ColumnName="LABEL2" />
+          <ScalarProperty Name="LABEL3" ColumnName="LABEL3" />
+          <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
+          <ScalarProperty Name="STAR_NUM" ColumnName="STAR_NUM" />
+          <ScalarProperty Name="FORK_NUM" ColumnName="FORK_NUM" />
+          <ScalarProperty Name="IS_CREATE" ColumnName="IS_CREATE" />
+          <ScalarProperty Name="FORK_FROM" ColumnName="FORK_FROM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_COMMENT_REPOSITORY">
+      <EntityTypeMapping TypeName="Model.USER_COMMENT_REPOSITORY">
+        <MappingFragment StoreEntitySet="USER_COMMENT_REPOSITORY">
+          <ScalarProperty Name="COMMENT_ID" ColumnName="COMMENT_ID" />
+          <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+          <ScalarProperty Name="ANNOUNCER" ColumnName="ANNOUNCER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_COMMENT_USER">
+      <EntityTypeMapping TypeName="Model.USER_COMMENT_USER">
+        <MappingFragment StoreEntitySet="USER_COMMENT_USER">
+          <ScalarProperty Name="COMMENT_ID" ColumnName="COMMENT_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="ANNOUNCER" ColumnName="ANNOUNCER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_REPOSITORY_LOOKHISTORY">
+      <EntityTypeMapping TypeName="Model.USER_REPOSITORY_LOOKHISTORY">
+        <MappingFragment StoreEntitySet="USER_REPOSITORY_LOOKHISTORY">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+          <ScalarProperty Name="LOOK_DATE" ColumnName="LOOK_DATE" />
+          <ScalarProperty Name="IS__STAR" ColumnName="IS__STAR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_REPOSITORY_OPERATION">
+      <EntityTypeMapping TypeName="Model.USER_REPOSITORY_OPERATION">
+        <MappingFragment StoreEntitySet="USER_REPOSITORY_OPERATION">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+          <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
+          <ScalarProperty Name="OPRATION" ColumnName="OPRATION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_REPOSITORY_RELATIONSHIP">
+      <EntityTypeMapping TypeName="Model.USER_REPOSITORY_RELATIONSHIP">
+        <MappingFragment StoreEntitySet="USER_REPOSITORY_RELATIONSHIP">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+          <ScalarProperty Name="RELATIONSHIP" ColumnName="RELATIONSHIP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERTABLEs">
+      <EntityTypeMapping TypeName="Model.USERTABLE">
+        <MappingFragment StoreEntitySet="USERTABLE">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+          <ScalarProperty Name="IDENTITY" ColumnName="IDENTITY" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="GRADE" ColumnName="GRADE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FILE_FILE" TypeName="Model.FILE_FILE" StoreEntitySet="FILE_FILE">
+      <EndProperty Name="FILETABLE">
+        <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID1" />
+      </EndProperty>
+      <EndProperty Name="FILETABLE1">
+        <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID2" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="REPOSITORY_FILE" TypeName="Model.REPOSITORY_FILE" StoreEntitySet="REPOSITORY_FILE">
+      <EndProperty Name="FILETABLE">
+        <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
+      </EndProperty>
+      <EndProperty Name="REPOSITORY">
+        <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="USER_USER" TypeName="Model.USER_USER" StoreEntitySet="USER_USER">
+      <EndProperty Name="USERTABLE">
+        <ScalarProperty Name="USER_ID" ColumnName="USER_ID1" />
+      </EndProperty>
+      <EndProperty Name="USERTABLE1">
+        <ScalarProperty Name="USER_ID" ColumnName="USER_ID2" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5a285c907868429294bd8f0dfe9bfae1" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.COMMENTTABLE" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FILETABLE" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MESSAGE" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.REPOSITORY" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_COMMENT_REPOSITORY" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_COMMENT_USER" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_REPOSITORY_LOOKHISTORY" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_REPOSITORY_OPERATION" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_REPOSITORY_RELATIONSHIP" Width="1.5" PointX="6" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USERTABLE" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="Model.USER_COMMENT_REPOSITORY_C_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_COMMENT_USER_COMMENT_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.MESSAGE_USERTABLE_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.REPOSITORY_REPOSITORY_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_COMMENT_REPOSITORY_R_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_REPOSITORY_LOOKHISTO_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_REPOSITORY_OPERATION_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_REPOSITORY_RELATIONS_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_COMMENT_REPOSITORY_U_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_COMMENT_USER_USERTAB_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_COMMENT_USER_USERTAB_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_REPOSITORY_LOOKHISTO_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_REPOSITORY_OPERATION_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_REPOSITORY_RELATIONS_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FILE_FILE" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.REPOSITORY_FILE" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_USER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
