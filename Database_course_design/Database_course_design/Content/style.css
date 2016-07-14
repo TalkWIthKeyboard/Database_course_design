@@ -1,0 +1,94 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+body { 
+  font-family: 'Open Sans', sans-serif;
+  color: #666;
+}
+
+
+/*NavigationBar*/
+
+#triangle1 {
+	position: absolute;
+	top: 0px;
+	left: 400px;
+    width:0; 
+    height:0; 
+    border-top:15px solid transparent;
+    border-bottom: 15.5px solid transparent;
+    border-left: 25px solid blue;
+}
+#t1 {
+	position: absolute;
+	width: 400px;
+	height:30px;
+	background: blue;
+}
+#triangle2 {
+	position: absolute;
+	top: 0px;
+	left: 400px;
+    width:0; 
+    height:0; 
+    border-top:15px solid transparent;
+    border-bottom: 15.5px solid transparent;
+    border-left: 25px solid green;
+}
+#t2 {
+	position: absolute;
+	left: 400px;
+	width: 400px;
+	height:30px;
+	background: green;
+}
+#triangle3 {
+	position: absolute;
+	top: 0px;
+	left: 400px;
+    width:0; 
+    height:0; 
+    border-top:15px solid transparent;
+    border-bottom: 15.5px solid transparent;
+    border-left: 25px solid red;
+}
+#t3 {
+	position: absolute;
+	left: 800px;
+	width: 400px;
+	height:30px;
+	background: red;
+}
+
+/* Three Column */
+
+#pagewrap {
+	padding: 5px;
+	width: 960px;
+	margin: 20px auto;
+}
+#content {
+	width: 290px;
+	float: left;
+	padding: 5px 15px;
+}
+
+#middle {
+	width: 294px; /* Account for margins + border values */
+	float: left;
+	padding: 5px 15px;
+	margin: 0px 5px 5px 5px;
+}
+
+#sidebar {
+	width: 270px;
+	padding: 5px 15px;
+	float: left;
+}
+footer {
+	clear: both;
+	padding: 0 15px;
+}
+
+
+
+

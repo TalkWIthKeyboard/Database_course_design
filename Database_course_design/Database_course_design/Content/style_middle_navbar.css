@@ -1,0 +1,95 @@
+﻿.wrapper {
+  margin: 70px auto;
+  width: 260x;
+  height: 49px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px #B9B9B9;
+  box-shadow: 0 0 5px #B9B9B9;
+}
+
+.menu ul {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+}
+.menu ul > li {
+  float: right;
+}
+.menu ul > li a {
+  position: relative;
+  display: inline-block;
+  min-width: 100px;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #fff;
+  color: #6D6565;
+  font-size: 16px;
+  -moz-transition: background-color 0.3s, color 0.2s;
+  -o-transition: background-color 0.3s, color 0.2s;
+  -webkit-transition: background-color 0.3s, color 0.2s;
+  transition: background-color 0.3s, color 0.2s;
+}
+.menu ul > li a:hover {
+  background-color: #F44336;
+  color: #fff;
+}
+.menu .parent-item {
+  position: relative;
+}
+.menu .parent-item:after {
+  content: '>';
+  position: absolute;
+  top: 17px;
+  left: 10px;
+  transform: rotate(90deg) translateY(-50%);
+  font-size: 19px;
+  color: #D8D8D8;
+}
+.menu .parent-item:hover:after {
+  color: #ff897c;
+}
+.menu .parent-item:hover .sub-menu {
+  transform: scale(1, 1) translateX(-50%);
+  opacity: 1;
+}
+.menu .parent-item .sub-menu {
+  position: absolute;
+  left: 50%;
+  z-index: 9999;
+  transform: scale(1, 0) translateX(-50%);
+  transform-origin: 0 0;
+  opacity: 0;
+  width: 190px;
+  -webkit-box-shadow: 0 0 5px #B9B9B9;
+  box-shadow: 0 0 5px #B9B9B9;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.menu .parent-item .sub-menu a {
+  display: block;
+  width: 150px;
+  background-color: #000;
+  color: #fff;
+}
+.menu .parent-item .sub-menu a:hover {
+  display: block;
+  width: 150px;
+  background-color: #F44336;
+  color: #fff;
+}
+.menu .parent-item .sub-menu:before {
+  content: "";
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #000;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
