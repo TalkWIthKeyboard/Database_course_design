@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "MainPage";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/Content/style_middle.css">
+    <link rel="stylesheet" href="~/Content/style_middle_navbar.css">
+</head>
+
+<body>
+
+    <!--NavigationBar-->
+    <div id="t3">
+        <p style="position: absolute;left: 100px; top: -12px; color: green;">好友动态</p>
+        <div id="triangle3"></div>
+    </div>
+    <div id="t2">
+        <p style="position: absolute;left: 100px; top: -12px; color: red;">仓库推荐</p>
+        <div id="triangle2"></div>
+    </div>
+    <div id="t1">
+        <p style="position: absolute;left: 100px; top: -12px; color: red;">库享</p>
+        <div id="triangle1"></div>
+    </div>
+
+    <!--ThreeColumn-->
+
+    <div id="pagewrap">
+
+        <section id="content">
+            <img src="img/olson.jpg" width="100px" alt="TouXiang" style="position: absolute;top: 100px">
+            <p style="position: relative;top: 170px;">NickName</p>
+            </img>
+            <div style="position: relative; top: 200px;width: 100px; height: 300px;">
+                <button>个人信息</button>
+                <button>历史浏览</button>
+                <button>个人收藏</button>
+                <button>我的好友</button>
+                <button>我的仓库</button>
+            </div>
+        </section>
+
+        <section id="middle">
+            <!--NavBar-->
+            <nav class="menu" style="position: relative; top: 100px; left: -100px;">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                </ul>
+            </nav>
+            <!--CardView-->
+            <div class="viewport" style="position: relative; top: 150px; left: -170px;">
+                <div class="flip-card">
+                    <div class="card-front">DatabasePrinciple</div>
+                    <div class="card-back">Back!</div>
+                </div>
+                <div class="flip-card">
+                    <div class="card-front">OperatingSystem</div>
+                    <div class="card-back">Back!</div>
+                </div>
+                <div class="flip-card">
+                    <div class="card-front">Algorithm</div>
+                    <div class="card-back">Back!</div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="sidebar">
+            <div style="position: absolute;top: 150px">
+                <p>xx收藏了xxx</p>
+                <p>xx复刻了xxx</p>
+            </div>
+        </section>
+
+
+
+        <!--<footer>
+            <h4>Footer</h4>
+        </footer>-->
+
+    </div>
+</body>
+
+</html>
+
+
