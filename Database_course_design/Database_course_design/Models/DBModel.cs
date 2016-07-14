@@ -211,14 +211,29 @@ namespace Database_course_design.Models
         }
 
         /// <summary>
-        /// 展示用户创建的所有仓库
+        /// 展示用户相关的所有仓库
         /// 输入：用户的id
-        /// 输出：所有相关的仓库名（是否要链接）
+        /// 输出：所有相关的USER_REPOSITORY_RELATIONSHIP类（失败返回空）
         /// 待测试
         /// </summary>
-        public string[] showUserRepertory(string UserId)
+        public USER_REPOSITORY_RELATIONSHIP[] showUserRepertory(string UserId)
         {
+            USER_REPOSITORY_RELATIONSHIP[] userRep = { };
+            using ( KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            {
+                try
+                {
+                    userRep = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == UserId).ToArray();
+                    return userRep;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("查找用户相关仓库操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
 
+            }
         }
 
         /// <summary>
@@ -525,9 +540,13 @@ namespace Database_course_design.Models
         /// 输出：排序好的文件数组
         /// 待测试
         /// </summary>
-        public FILETABLE[] ShowFileOrder(string repositoryid)
+        public REPOSITORY[] ShowFileOrder(string RepositoryId)
         {
 
+            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            {
+
+            }
         }
     }
 }
