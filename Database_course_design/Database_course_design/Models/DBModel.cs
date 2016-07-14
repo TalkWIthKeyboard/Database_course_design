@@ -144,14 +144,34 @@ namespace Database_course_design.Models
         }
 
         /// <summary>
-        /// 添加好友
+        /// 关注好友
         /// 输入：用户的id，朋友的id
         /// 输出：操作是否成功
         /// 待测试
         /// </summary>
         public bool makeFriend(string UserId, string FriendId)
         {
+            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            {
+                try
+                {
+                    USER_USER friend = new USER_USER
+                    {
+                        USER_ID1 = UserId,
+                        USER_ID2 = FriendId
+                    };
 
+                    db.USER_USER.Add(friend);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("关注操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }
         }
 
         /// <summary>
@@ -162,7 +182,21 @@ namespace Database_course_design.Models
         /// </summary>
         public bool deleteFriend(string UserId, string FriendId)
         {
-
+            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            {
+                try
+                {
+                    db.USER_USER.Remove(db.USER_USER.Where(p => p.USER_ID1 == UserId & p.USER_ID2 == FriendId).FirstOrDefault());
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("删除好友操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }
         }
 
         /// <summary>
