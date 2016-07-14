@@ -24,8 +24,8 @@ namespace Database_course_design.Models
             this.USER_REPOSITORY_LOOKHISTORY = new HashSet<USER_REPOSITORY_LOOKHISTORY>();
             this.USER_REPOSITORY_OPERATION = new HashSet<USER_REPOSITORY_OPERATION>();
             this.USER_REPOSITORY_RELATIONSHIP = new HashSet<USER_REPOSITORY_RELATIONSHIP>();
-            this.USERTABLE1 = new HashSet<USERTABLE>();
-            this.USERTABLEs = new HashSet<USERTABLE>();
+            this.USER_USER = new HashSet<USER_USER>();
+            this.USER_USER1 = new HashSet<USER_USER>();
         }
     
         public string USER_ID { get; set; }
@@ -51,8 +51,8 @@ namespace Database_course_design.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER_REPOSITORY_RELATIONSHIP> USER_REPOSITORY_RELATIONSHIP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USERTABLE> USERTABLE1 { get; set; }
+        public virtual ICollection<USER_USER> USER_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USERTABLE> USERTABLEs { get; set; }
+        public virtual ICollection<USER_USER> USER_USER1 { get; set; }
     }
 }

@@ -20,6 +20,7 @@
           </Key>
           <Property Name="FILE_ID1" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="FILE_ID2" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="FILE_FILE_ID" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="FILETABLE">
           <Key>
@@ -120,6 +121,7 @@
           </Key>
           <Property Name="USER_ID1" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="USER_ID2" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="USER_USER_ID" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="USERTABLE">
           <Key>
@@ -501,6 +503,17 @@
           <NavigationProperty Name="USER_COMMENT_REPOSITORY" Relationship="Self.USER_COMMENT_REPOSITORY_C_FK1" FromRole="COMMENTTABLE" ToRole="USER_COMMENT_REPOSITORY" />
           <NavigationProperty Name="USER_COMMENT_USER" Relationship="Self.USER_COMMENT_USER_COMMENT_FK1" FromRole="COMMENTTABLE" ToRole="USER_COMMENT_USER" />
         </EntityType>
+        <EntityType Name="FILE_FILE">
+          <Key>
+            <PropertyRef Name="FILE_ID1" />
+            <PropertyRef Name="FILE_ID2" />
+          </Key>
+          <Property Name="FILE_ID1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILE_ID2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILE_FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FILETABLE" Relationship="Self.FILE_FILE_FILETABLE_FK1" FromRole="FILE_FILE" ToRole="FILETABLE" />
+          <NavigationProperty Name="FILETABLE1" Relationship="Self.FILE_FILE_FILETABLE_FK2" FromRole="FILE_FILE" ToRole="FILETABLE" />
+        </EntityType>
         <EntityType Name="FILETABLE">
           <Key>
             <PropertyRef Name="FILE_ID" />
@@ -513,8 +526,8 @@
           <Property Name="FILE_STATE" Type="Int32" />
           <Property Name="FILE_SIZE" Type="Int32" />
           <Property Name="FILE_DEEP" Type="Int32" />
-          <NavigationProperty Name="FILETABLE1" Relationship="Self.FILE_FILE" FromRole="FILETABLE" ToRole="FILETABLE1" />
-          <NavigationProperty Name="FILETABLEs" Relationship="Self.FILE_FILE" FromRole="FILETABLE1" ToRole="FILETABLE" />
+          <NavigationProperty Name="FILE_FILE" Relationship="Self.FILE_FILE_FILETABLE_FK1" FromRole="FILETABLE" ToRole="FILE_FILE" />
+          <NavigationProperty Name="FILE_FILE1" Relationship="Self.FILE_FILE_FILETABLE_FK2" FromRole="FILETABLE" ToRole="FILE_FILE" />
           <NavigationProperty Name="REPOSITORies" Relationship="Self.REPOSITORY_FILE" FromRole="FILETABLE" ToRole="REPOSITORY" />
         </EntityType>
         <EntityType Name="MESSAGE">
@@ -608,6 +621,17 @@
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_RELATIONS_FK2" FromRole="USER_REPOSITORY_RELATIONSHIP" ToRole="REPOSITORY" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_RELATIONS_FK1" FromRole="USER_REPOSITORY_RELATIONSHIP" ToRole="USERTABLE" />
         </EntityType>
+        <EntityType Name="USER_USER">
+          <Key>
+            <PropertyRef Name="USER_ID1" />
+            <PropertyRef Name="USER_ID2" />
+          </Key>
+          <Property Name="USER_ID1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ID2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USERTABLE" Relationship="Self.USER_USER_USERTABLE_FK1" FromRole="USER_USER" ToRole="USERTABLE" />
+          <NavigationProperty Name="USERTABLE1" Relationship="Self.USER_USER_USERTABLE_FK2" FromRole="USER_USER" ToRole="USERTABLE" />
+        </EntityType>
         <EntityType Name="USERTABLE">
           <Key>
             <PropertyRef Name="USER_ID" />
@@ -626,8 +650,8 @@
           <NavigationProperty Name="USER_REPOSITORY_LOOKHISTORY" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK1" FromRole="USERTABLE" ToRole="USER_REPOSITORY_LOOKHISTORY" />
           <NavigationProperty Name="USER_REPOSITORY_OPERATION" Relationship="Self.USER_REPOSITORY_OPERATION_FK1" FromRole="USERTABLE" ToRole="USER_REPOSITORY_OPERATION" />
           <NavigationProperty Name="USER_REPOSITORY_RELATIONSHIP" Relationship="Self.USER_REPOSITORY_RELATIONS_FK1" FromRole="USERTABLE" ToRole="USER_REPOSITORY_RELATIONSHIP" />
-          <NavigationProperty Name="USERTABLE1" Relationship="Self.USER_USER" FromRole="USERTABLE" ToRole="USERTABLE1" />
-          <NavigationProperty Name="USERTABLEs" Relationship="Self.USER_USER" FromRole="USERTABLE1" ToRole="USERTABLE" />
+          <NavigationProperty Name="USER_USER" Relationship="Self.USER_USER_USERTABLE_FK1" FromRole="USERTABLE" ToRole="USER_USER" />
+          <NavigationProperty Name="USER_USER1" Relationship="Self.USER_USER_USERTABLE_FK2" FromRole="USERTABLE" ToRole="USER_USER" />
         </EntityType>
         <Association Name="USER_COMMENT_REPOSITORY_C_FK1">
           <End Role="COMMENTTABLE" Type="Self.COMMENTTABLE" Multiplicity="1">
@@ -654,6 +678,32 @@
             </Principal>
             <Dependent Role="USER_COMMENT_USER">
               <PropertyRef Name="COMMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FILE_FILE_FILETABLE_FK1">
+          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FILE_FILE" Type="Self.FILE_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILETABLE">
+              <PropertyRef Name="FILE_ID" />
+            </Principal>
+            <Dependent Role="FILE_FILE">
+              <PropertyRef Name="FILE_ID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FILE_FILE_FILETABLE_FK2">
+          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1" />
+          <End Role="FILE_FILE" Type="Self.FILE_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILETABLE">
+              <PropertyRef Name="FILE_ID" />
+            </Principal>
+            <Dependent Role="FILE_FILE">
+              <PropertyRef Name="FILE_ID2" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -809,20 +859,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FILE_FILE">
-          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="*" />
-          <End Role="FILETABLE1" Type="Self.FILETABLE" Multiplicity="*" />
+        <Association Name="USER_USER_USERTABLE_FK1">
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USER_USER" Type="Self.USER_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERTABLE">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="USER_USER">
+              <PropertyRef Name="USER_ID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="USER_USER_USERTABLE_FK2">
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USER_USER" Type="Self.USER_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERTABLE">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="USER_USER">
+              <PropertyRef Name="USER_ID2" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="REPOSITORY_FILE">
           <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="*" />
           <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="*" />
         </Association>
-        <Association Name="USER_USER">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="*" />
-          <End Role="USERTABLE1" Type="Self.USERTABLE" Multiplicity="*" />
-        </Association>
-        <EntityContainer Name="KUXIANGEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="KUXIANGDATAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="COMMENTTABLEs" EntityType="Self.COMMENTTABLE" />
+          <EntitySet Name="FILE_FILE" EntityType="Self.FILE_FILE" />
           <EntitySet Name="FILETABLEs" EntityType="Self.FILETABLE" />
           <EntitySet Name="MESSAGEs" EntityType="Self.MESSAGE" />
           <EntitySet Name="REPOSITORies" EntityType="Self.REPOSITORY" />
@@ -831,6 +898,7 @@
           <EntitySet Name="USER_REPOSITORY_LOOKHISTORY" EntityType="Self.USER_REPOSITORY_LOOKHISTORY" />
           <EntitySet Name="USER_REPOSITORY_OPERATION" EntityType="Self.USER_REPOSITORY_OPERATION" />
           <EntitySet Name="USER_REPOSITORY_RELATIONSHIP" EntityType="Self.USER_REPOSITORY_RELATIONSHIP" />
+          <EntitySet Name="USER_USER" EntityType="Self.USER_USER" />
           <EntitySet Name="USERTABLEs" EntityType="Self.USERTABLE" />
           <AssociationSet Name="USER_COMMENT_REPOSITORY_C_FK1" Association="Self.USER_COMMENT_REPOSITORY_C_FK1">
             <End Role="COMMENTTABLE" EntitySet="COMMENTTABLEs" />
@@ -839,6 +907,14 @@
           <AssociationSet Name="USER_COMMENT_USER_COMMENT_FK1" Association="Self.USER_COMMENT_USER_COMMENT_FK1">
             <End Role="COMMENTTABLE" EntitySet="COMMENTTABLEs" />
             <End Role="USER_COMMENT_USER" EntitySet="USER_COMMENT_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FILE_FILE_FILETABLE_FK1" Association="Self.FILE_FILE_FILETABLE_FK1">
+            <End Role="FILETABLE" EntitySet="FILETABLEs" />
+            <End Role="FILE_FILE" EntitySet="FILE_FILE" />
+          </AssociationSet>
+          <AssociationSet Name="FILE_FILE_FILETABLE_FK2" Association="Self.FILE_FILE_FILETABLE_FK2">
+            <End Role="FILETABLE" EntitySet="FILETABLEs" />
+            <End Role="FILE_FILE" EntitySet="FILE_FILE" />
           </AssociationSet>
           <AssociationSet Name="MESSAGE_USERTABLE_FK1" Association="Self.MESSAGE_USERTABLE_FK1">
             <End Role="USERTABLE" EntitySet="USERTABLEs" />
@@ -888,17 +964,17 @@
             <End Role="USERTABLE" EntitySet="USERTABLEs" />
             <End Role="USER_REPOSITORY_RELATIONSHIP" EntitySet="USER_REPOSITORY_RELATIONSHIP" />
           </AssociationSet>
-          <AssociationSet Name="FILE_FILE" Association="Self.FILE_FILE">
-            <End Role="FILETABLE" EntitySet="FILETABLEs" />
-            <End Role="FILETABLE1" EntitySet="FILETABLEs" />
+          <AssociationSet Name="USER_USER_USERTABLE_FK1" Association="Self.USER_USER_USERTABLE_FK1">
+            <End Role="USERTABLE" EntitySet="USERTABLEs" />
+            <End Role="USER_USER" EntitySet="USER_USER" />
+          </AssociationSet>
+          <AssociationSet Name="USER_USER_USERTABLE_FK2" Association="Self.USER_USER_USERTABLE_FK2">
+            <End Role="USERTABLE" EntitySet="USERTABLEs" />
+            <End Role="USER_USER" EntitySet="USER_USER" />
           </AssociationSet>
           <AssociationSet Name="REPOSITORY_FILE" Association="Self.REPOSITORY_FILE">
             <End Role="FILETABLE" EntitySet="FILETABLEs" />
             <End Role="REPOSITORY" EntitySet="REPOSITORies" />
-          </AssociationSet>
-          <AssociationSet Name="USER_USER" Association="Self.USER_USER">
-            <End Role="USERTABLE" EntitySet="USERTABLEs" />
-            <End Role="USERTABLE1" EntitySet="USERTABLEs" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -906,13 +982,22 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGDATAEntities">
           <EntitySetMapping Name="COMMENTTABLEs">
             <EntityTypeMapping TypeName="Model.COMMENTTABLE">
               <MappingFragment StoreEntitySet="COMMENTTABLE">
                 <ScalarProperty Name="COMMENT_ID" ColumnName="COMMENT_ID" />
                 <ScalarProperty Name="COMMENT_DATE" ColumnName="COMMENT_DATE" />
                 <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FILE_FILE">
+            <EntityTypeMapping TypeName="Model.FILE_FILE">
+              <MappingFragment StoreEntitySet="FILE_FILE">
+                <ScalarProperty Name="FILE_ID1" ColumnName="FILE_ID1" />
+                <ScalarProperty Name="FILE_ID2" ColumnName="FILE_ID2" />
+                <ScalarProperty Name="FILE_FILE_ID" ColumnName="FILE_FILE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1004,6 +1089,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="USER_USER">
+            <EntityTypeMapping TypeName="Model.USER_USER">
+              <MappingFragment StoreEntitySet="USER_USER">
+                <ScalarProperty Name="USER_ID1" ColumnName="USER_ID1" />
+                <ScalarProperty Name="USER_ID2" ColumnName="USER_ID2" />
+                <ScalarProperty Name="USER_USER_ID" ColumnName="USER_USER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="USERTABLEs">
             <EntityTypeMapping TypeName="Model.USERTABLE">
               <MappingFragment StoreEntitySet="USERTABLE">
@@ -1017,28 +1111,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="FILE_FILE" TypeName="Model.FILE_FILE" StoreEntitySet="FILE_FILE">
-            <EndProperty Name="FILETABLE">
-              <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID1" />
-            </EndProperty>
-            <EndProperty Name="FILETABLE1">
-              <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID2" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="REPOSITORY_FILE" TypeName="Model.REPOSITORY_FILE" StoreEntitySet="REPOSITORY_FILE">
             <EndProperty Name="FILETABLE">
               <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
             </EndProperty>
             <EndProperty Name="REPOSITORY">
               <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="USER_USER" TypeName="Model.USER_USER" StoreEntitySet="USER_USER">
-            <EndProperty Name="USERTABLE">
-              <ScalarProperty Name="USER_ID" ColumnName="USER_ID1" />
-            </EndProperty>
-            <EndProperty Name="USERTABLE1">
-              <ScalarProperty Name="USER_ID" ColumnName="USER_ID2" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

@@ -10,6 +10,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FILE_FILE">
+      <EntityTypeMapping TypeName="Model.FILE_FILE">
+        <MappingFragment StoreEntitySet="FILE_FILE">
+          <ScalarProperty Name="FILE_ID1" ColumnName="FILE_ID1" />
+          <ScalarProperty Name="FILE_ID2" ColumnName="FILE_ID2" />
+          <ScalarProperty Name="FILE_FILE_ID" ColumnName="FILE_FILE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FILETABLEs">
       <EntityTypeMapping TypeName="Model.FILETABLE">
         <MappingFragment StoreEntitySet="FILETABLE">
@@ -98,6 +107,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="USER_USER">
+      <EntityTypeMapping TypeName="Model.USER_USER">
+        <MappingFragment StoreEntitySet="USER_USER">
+          <ScalarProperty Name="USER_ID1" ColumnName="USER_ID1" />
+          <ScalarProperty Name="USER_ID2" ColumnName="USER_ID2" />
+          <ScalarProperty Name="USER_USER_ID" ColumnName="USER_USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="USERTABLEs">
       <EntityTypeMapping TypeName="Model.USERTABLE">
         <MappingFragment StoreEntitySet="USERTABLE">
@@ -111,28 +129,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="FILE_FILE" TypeName="Model.FILE_FILE" StoreEntitySet="FILE_FILE">
-      <EndProperty Name="FILETABLE">
-        <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID1" />
-      </EndProperty>
-      <EndProperty Name="FILETABLE1">
-        <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID2" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="REPOSITORY_FILE" TypeName="Model.REPOSITORY_FILE" StoreEntitySet="REPOSITORY_FILE">
       <EndProperty Name="FILETABLE">
         <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
       </EndProperty>
       <EndProperty Name="REPOSITORY">
         <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="USER_USER" TypeName="Model.USER_USER" StoreEntitySet="USER_USER">
-      <EndProperty Name="USERTABLE">
-        <ScalarProperty Name="USER_ID" ColumnName="USER_ID1" />
-      </EndProperty>
-      <EndProperty Name="USERTABLE1">
-        <ScalarProperty Name="USER_ID" ColumnName="USER_ID2" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

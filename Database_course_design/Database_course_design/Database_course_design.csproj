@@ -125,24 +125,24 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\KUXIANGDBModel.Context.tt">
+    <Content Include="Models\KUXIANGModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KUXIANGDBModel.edmx</DependentUpon>
-      <LastGenOutput>KUXIANGDBModel.Context.cs</LastGenOutput>
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
+      <LastGenOutput>KUXIANGModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\KUXIANGDBModel.tt">
+    <Content Include="Models\KUXIANGModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KUXIANGDBModel.edmx</DependentUpon>
-      <LastGenOutput>KUXIANGDBModel.cs</LastGenOutput>
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
+      <LastGenOutput>KUXIANGModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\KUXIANGDBModel.edmx">
+    <EntityDeploy Include="Models\KUXIANGModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KUXIANGDBModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\KUXIANGDBModel.edmx.diagram">
-      <DependentUpon>KUXIANGDBModel.edmx</DependentUpon>
+    <Content Include="Models\KUXIANGModel.edmx.diagram">
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -160,51 +160,57 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\COMMENTTABLE.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBModel.cs" />
     <Compile Include="Models\FILETABLE.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\KUXIANGDBModel.Context.cs">
+    <Compile Include="Models\FILE_FILE.cs">
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KUXIANGModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KUXIANGDBModel.Context.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\KUXIANGDBModel.cs">
+    <Compile Include="Models\KUXIANGModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\KUXIANGDBModel.Designer.cs">
+    <Compile Include="Models\KUXIANGModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KUXIANGDBModel.edmx</DependentUpon>
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\MESSAGE.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrclDBContext.cs" />
     <Compile Include="Models\REPOSITORY.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USERTABLE.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_COMMENT_REPOSITORY.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_COMMENT_USER.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_REPOSITORY_LOOKHISTORY.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_REPOSITORY_OPERATION.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_REPOSITORY_RELATIONSHIP.cs">
-      <DependentUpon>KUXIANGDBModel.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USER_USER.cs">
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

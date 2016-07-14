@@ -13,6 +13,6 @@ namespace Database_course_design.Models
         {
 
         }
-        public DbSet<KUXIANGEntities> entities { get; set; }
+        public DbSet<KUXIANGDATAEntities> entities { get; set; }
     }
 }

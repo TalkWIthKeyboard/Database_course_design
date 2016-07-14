@@ -13,10 +13,10 @@ namespace Database_course_design.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KUXIANGEntities : DbContext
+    public partial class KUXIANGDATAEntities : DbContext
     {
-        public KUXIANGEntities()
-            : base("name=KUXIANGEntities")
+        public KUXIANGDATAEntities()
+            : base("name=KUXIANGDATAEntities")
         {
         }
     
@@ -26,6 +26,7 @@ namespace Database_course_design.Models
         }
     
         public virtual DbSet<COMMENTTABLE> COMMENTTABLEs { get; set; }
+        public virtual DbSet<FILE_FILE> FILE_FILE { get; set; }
         public virtual DbSet<FILETABLE> FILETABLEs { get; set; }
         public virtual DbSet<MESSAGE> MESSAGEs { get; set; }
         public virtual DbSet<REPOSITORY> REPOSITORies { get; set; }
@@ -34,6 +35,7 @@ namespace Database_course_design.Models
         public virtual DbSet<USER_REPOSITORY_LOOKHISTORY> USER_REPOSITORY_LOOKHISTORY { get; set; }
         public virtual DbSet<USER_REPOSITORY_OPERATION> USER_REPOSITORY_OPERATION { get; set; }
         public virtual DbSet<USER_REPOSITORY_RELATIONSHIP> USER_REPOSITORY_RELATIONSHIP { get; set; }
+        public virtual DbSet<USER_USER> USER_USER { get; set; }
         public virtual DbSet<USERTABLE> USERTABLEs { get; set; }
     }
 }

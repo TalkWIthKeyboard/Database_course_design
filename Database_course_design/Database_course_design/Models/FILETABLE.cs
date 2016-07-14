@@ -17,8 +17,8 @@ namespace Database_course_design.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FILETABLE()
         {
-            this.FILETABLE1 = new HashSet<FILETABLE>();
-            this.FILETABLEs = new HashSet<FILETABLE>();
+            this.FILE_FILE = new HashSet<FILE_FILE>();
+            this.FILE_FILE1 = new HashSet<FILE_FILE>();
             this.REPOSITORies = new HashSet<REPOSITORY>();
         }
     
@@ -32,9 +32,9 @@ namespace Database_course_design.Models
         public Nullable<int> FILE_DEEP { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FILETABLE> FILETABLE1 { get; set; }
+        public virtual ICollection<FILE_FILE> FILE_FILE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FILETABLE> FILETABLEs { get; set; }
+        public virtual ICollection<FILE_FILE> FILE_FILE1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REPOSITORY> REPOSITORies { get; set; }
     }

@@ -32,11 +32,8 @@ namespace Database_course_design.Models
         /// </summary>
         public bool addUserInfo(string UserAccount, string UserKey, string UserName, string UserDepartment, string UserEmail, short UserIdentity, short UserGrade)
         {
-            string newId = createNewId("USERTABLE");
-
             USERTABLE newUser = new USERTABLE
             {
-                USER_ID = newId,
                 USER_NAME = UserName,
                 PASSWORD = UserKey,
                 DEPARTMENT = UserDepartment,
@@ -45,7 +42,7 @@ namespace Database_course_design.Models
                 GRADE = UserGrade
             };
 
-            using (KUXIANGEntities db = new KUXIANGEntities())
+            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
             {
                 try
                 {
@@ -57,41 +54,92 @@ namespace Database_course_design.Models
                 {
                     System.Diagnostics.Debug.WriteLine("用户添加异常");
                     System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
                 }
             }
-            return false;
         }
 
         /// <summary>
         /// 修改用户信息（只能修改用户名，邮箱）
-        /// 输入：用户名，用户邮箱
+        /// 输入：用户id，用户名，用户邮箱
         /// 输出：是否修改成功
         /// 待测试
         /// </summary>
-        public bool changeUserInfo(string UserName, string UserEmail)
+        public bool changeUserInfo(string UserId,string UserName, string UserEmail)
         {
-
+            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            {
+                try
+                {
+                    USERTABLE oldUserInfo = db.USERTABLEs.Where(p => p.USER_ID == UserId).FirstOrDefault();
+                    oldUserInfo.USER_NAME = UserName;
+                    oldUserInfo.EMAIL = UserEmail;
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("用户修改异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }          
         }
 
         /// <summary>
         /// 注销账户信息
-        /// 输入：无
+        /// 输入：用户id
         /// 输出：是否注销成功
         /// 待测试
         /// </summary>
-        public bool cancelUserAccount()
+        public bool deleteUserAccount(string UserId)
         {
+            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            {
+                try
+                {
+                    db.USERTABLEs.Remove(db.USERTABLEs.Where(p => p.USER_ID == UserId).FirstOrDefault());
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("用户删除异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }
 
         }
 
         /// <summary>
         /// 改变用户的积分
-        /// 输入：修改的分数值（+为正，-为负）
-        /// 输出：修改后的分数
+        /// 输入：用户id,修改的分数值（+为正，-为负）
+        /// 输出：修改后的分数(失败后返回-1)
         /// 待测试
         /// </summary>
-        public int changeUserGrade(int changeGrade)
+        public short changeUserGrade(string UserId,short changeGrade)
         {
+            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            {
+                try
+                {
+                    USERTABLE oldUser = db.USERTABLEs.Where(p => p.USER_ID == UserId).FirstOrDefault();
+                    oldUser.GRADE += changeGrade;
+                    if (oldUser.GRADE < 0)
+                    {
+                        oldUser.GRADE = 0;
+                    }
+                    db.SaveChanges();
+                    return (short)oldUser.GRADE;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("用户分数修改异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return -1;  
+                }
+            }
 
         }
 
@@ -197,6 +245,7 @@ namespace Database_course_design.Models
         /// 检索功能--仓库
         /// 输入：要检索的仓库的名称和标签
         /// 输出：检索出的仓库ID列表
+        /// 待测试
         /// </summary>
         public List<string> searchRepository(string RepositoryName, string RepositoryLabel)
         {
@@ -207,6 +256,7 @@ namespace Database_course_design.Models
         /// 检索功能--文件
         /// 输入：要检索的文件的名称
         /// 输出：检索出的文件ID列表
+        /// 待测试
         /// </summary>
         public List<string> searchFile(string FileName)
         {
@@ -217,6 +267,7 @@ namespace Database_course_design.Models
         /// 检索功能--用户
         /// 输入：要检索的用户的名称
         /// 输出：检索出的用户ID列表
+        /// 待测试
         /// </summary>
         public List<string> searchUser(string UserName)
         {
@@ -227,6 +278,7 @@ namespace Database_course_design.Models
         /// 推荐--按老师推荐
         /// 输入：老师的ID列表
         /// 输出：检索出的仓库列表
+        /// 待测试
         /// </summary>
         public List<string> recommendRepositoryByTeachers(List<string> TeacherID)
         {
@@ -237,6 +289,7 @@ namespace Database_course_design.Models
         /// 推荐--按仓库热度推荐
         /// 输入：无
         /// 输出：检索出的仓库列表
+        /// 待测试
         /// </summary>
         public List<string> recommendRepositoryByHeat()
         {
@@ -247,6 +300,7 @@ namespace Database_course_design.Models
         /// 推荐--按用户浏览历史推荐
         /// 输入：用户ID
         /// 输出：检索出的仓库列表
+        /// 待测试
         /// </summary>
         public List<string> recommendRepositoryByLookingHistory(string UserID)
         {
@@ -257,6 +311,7 @@ namespace Database_course_design.Models
         /// 查询用户的统计信息
         /// 输入：用户ID
         /// 输出：检索出的仓库列表
+        /// 待测试
         /// </summary>
         public int getContributionNum(string UserID)
         {
@@ -268,6 +323,7 @@ namespace Database_course_design.Models
         /// 邀请管理者
         /// 输入:用户ID
         /// 输出：返回布尔类型，确定是否添加成功
+        /// 待测试
         /// </summary>
         public bool AddPartner(string User_id)
         {
@@ -277,6 +333,7 @@ namespace Database_course_design.Models
         /// 删除管理者
         /// 输入：用户ID
         /// 输出：返回布尔类型，确定是否删除成功
+        /// 待测试
         /// </summary>
         public bool DletePartner(string User_id)
         {
@@ -286,6 +343,7 @@ namespace Database_course_design.Models
         /// 添加或修改仓库描述
         /// 输入：仓库描述des
         /// 输出：返回布尔类型，确定是否添加描述成功
+        /// 待测试
         /// /// </summary>
         public bool AddDescribion(string des)
         {
@@ -295,6 +353,7 @@ namespace Database_course_design.Models
         /// 修改仓库基本信息（仓库名称，仓库标签）
         /// 输入：名称，标签
         /// 输出：返回布尔类型，确定是否修改成功
+        /// 待测试
         /// </summary>
         public bool ModifyInformation(string name, string label1, string label2, string label3)
         {
