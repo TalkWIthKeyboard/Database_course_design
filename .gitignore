@@ -4,6 +4,7 @@
 # User-specific files
 obj
 bin
+packages
 *.suo
 *.user
 *.userosscache
