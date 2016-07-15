@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Database_course_design.Models
 {
-    public class DBModel
+  /*  public class DBModel
     {
         /// <summary>
         /// 创建主码ID
@@ -548,5 +548,5 @@ namespace Database_course_design.Models
 
             }
         }
-    }
+    }*/
 }
