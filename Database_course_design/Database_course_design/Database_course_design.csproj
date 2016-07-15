@@ -136,13 +136,6 @@
       <LastGenOutput>KUXIANGModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\app.js" />
-    <EntityDeploy Include="Models\KUXIANGModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\KUXIANGModel.edmx.diagram">
-      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Web.config">
@@ -192,6 +185,9 @@
     <Compile Include="Models\REPOSITORY.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\REPOSITORY_FILE.cs">
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USERTABLE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
@@ -224,6 +220,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <EntityDeploy Include="Models\KUXIANGModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\KUXIANGModel.edmx.diagram">
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
