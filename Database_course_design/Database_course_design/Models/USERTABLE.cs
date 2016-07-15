@@ -35,6 +35,9 @@ namespace Database_course_design.Models
         public Nullable<int> IDENTITY { get; set; }
         public string EMAIL { get; set; }
         public Nullable<int> GRADE { get; set; }
+        public string IMAGE { get; set; }
+        public string SIGNATURE { get; set; }
+        public Nullable<System.DateTime> CREATE_DATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MESSAGE> MESSAGEs { get; set; }

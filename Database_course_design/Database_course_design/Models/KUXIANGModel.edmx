@@ -43,6 +43,7 @@
           <Property Name="MESSAGE_DATE" Type="date" />
           <Property Name="MESSAGE_CONTENT" Type="varchar2" MaxLength="300" Nullable="false" />
           <Property Name="RECEIVER_ID" Type="varchar2" MaxLength="20" />
+          <Property Name="IS_READ" Type="number" Precision="7" Scale="0" />
         </EntityType>
         <EntityType Name="REPOSITORY">
           <Key>
@@ -136,6 +137,9 @@
           <Property Name="IDENTITY" Type="number" Precision="7" Scale="0" />
           <Property Name="EMAIL" Type="varchar2" MaxLength="30" />
           <Property Name="GRADE" Type="number" Precision="7" Scale="0" />
+          <Property Name="IMAGE" Type="varchar2" MaxLength="100" />
+          <Property Name="SIGNATURE" Type="varchar2" MaxLength="50" />
+          <Property Name="CREATE_DATE" Type="date" />
         </EntityType>
         <Association Name="FILE_FILE_FILETABLE_FK1">
           <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1">
@@ -540,6 +544,7 @@
           <Property Name="MESSAGE_DATE" Type="DateTime" />
           <Property Name="MESSAGE_CONTENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RECEIVER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IS_READ" Type="Int32" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.MESSAGE_USERTABLE_FK1" FromRole="MESSAGE" ToRole="USERTABLE" />
         </EntityType>
         <EntityType Name="REPOSITORY">
@@ -657,6 +662,9 @@
           <Property Name="IDENTITY" Type="Int32" />
           <Property Name="EMAIL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="GRADE" Type="Int32" />
+          <Property Name="IMAGE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SIGNATURE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATE_DATE" Type="DateTime" />
           <NavigationProperty Name="MESSAGEs" Relationship="Self.MESSAGE_USERTABLE_FK1" FromRole="USERTABLE" ToRole="MESSAGE" />
           <NavigationProperty Name="USER_COMMENT_REPOSITORY" Relationship="Self.USER_COMMENT_REPOSITORY_U_FK1" FromRole="USERTABLE" ToRole="USER_COMMENT_REPOSITORY" />
           <NavigationProperty Name="USER_COMMENT_USER" Relationship="Self.USER_COMMENT_USER_USERTAB_FK1" FromRole="USERTABLE" ToRole="USER_COMMENT_USER" />
@@ -1065,6 +1073,7 @@
                 <ScalarProperty Name="MESSAGE_DATE" ColumnName="MESSAGE_DATE" />
                 <ScalarProperty Name="MESSAGE_CONTENT" ColumnName="MESSAGE_CONTENT" />
                 <ScalarProperty Name="RECEIVER_ID" ColumnName="RECEIVER_ID" />
+                <ScalarProperty Name="IS_READ" ColumnName="IS_READ" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1161,6 +1170,9 @@
                 <ScalarProperty Name="IDENTITY" ColumnName="IDENTITY" />
                 <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
                 <ScalarProperty Name="GRADE" ColumnName="GRADE" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+                <ScalarProperty Name="SIGNATURE" ColumnName="SIGNATURE" />
+                <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

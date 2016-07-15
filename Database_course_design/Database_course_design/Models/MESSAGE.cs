@@ -18,6 +18,7 @@ namespace Database_course_design.Models
         public Nullable<System.DateTime> MESSAGE_DATE { get; set; }
         public string MESSAGE_CONTENT { get; set; }
         public string RECEIVER_ID { get; set; }
+        public Nullable<int> IS_READ { get; set; }
     
         public virtual USERTABLE USERTABLE { get; set; }
     }
