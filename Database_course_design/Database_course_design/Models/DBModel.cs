@@ -42,7 +42,7 @@ namespace Database_course_design.Models
                 GRADE = UserGrade
             };
 
-            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
@@ -67,7 +67,7 @@ namespace Database_course_design.Models
         /// </summary>
         public bool sureUserLoad(string UserId,string UserKey)
         {
-            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
@@ -91,7 +91,7 @@ namespace Database_course_design.Models
         /// </summary>
         public bool changeUserInfo(string UserId,string UserName, string UserEmail)
         {
-            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
@@ -118,7 +118,7 @@ namespace Database_course_design.Models
         /// </summary>
         public bool deleteUserAccount(string UserId)
         {
-            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
@@ -144,7 +144,7 @@ namespace Database_course_design.Models
         /// </summary>
         public short changeUserGrade(string UserId,short changeGrade)
         {
-            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
@@ -175,7 +175,7 @@ namespace Database_course_design.Models
         /// </summary>
         public bool makeFriend(string UserId, string FriendId)
         {
-            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
@@ -206,7 +206,7 @@ namespace Database_course_design.Models
         /// </summary>
         public bool deleteFriend(string UserId, string FriendId)
         {
-            using (KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
@@ -232,7 +232,7 @@ namespace Database_course_design.Models
         public USER_REPOSITORY_RELATIONSHIP[] showUserRepertory(string UserId)
         {
             USER_REPOSITORY_RELATIONSHIP[] userRep = { };
-            using ( KUXIANGDATAEntities db = new KUXIANGDATAEntities())
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
