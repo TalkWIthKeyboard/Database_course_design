@@ -7,9 +7,9 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class HomeController : Controller
+    public class LoginController : Controller
     {
-        public ActionResult MainPage()
+        public ActionResult Login()
         {
             return View();
         }
