@@ -16,8 +16,8 @@ namespace Database_course_design.Models
     {
         public string USER_ID { get; set; }
         public string REPOSITORY_ID { get; set; }
-        public Nullable<System.DateTime> OPERATION_DATE { get; set; }
-        public string OPRATION { get; set; }
+        public System.DateTime OPERATION_DATE { get; set; }
+        public string OPERATION { get; set; }
     
         public virtual REPOSITORY REPOSITORY { get; set; }
         public virtual USERTABLE USERTABLE { get; set; }

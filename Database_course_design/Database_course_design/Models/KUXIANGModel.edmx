@@ -59,6 +59,7 @@
           <Property Name="FORK_NUM" Type="number" Precision="7" Scale="0" />
           <Property Name="IS_CREATE" Type="number" Precision="7" Scale="0" />
           <Property Name="FORK_FROM" Type="varchar2" MaxLength="20" />
+          <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
         </EntityType>
         <EntityType Name="REPOSITORY_FILE">
           <Key>
@@ -99,11 +100,12 @@
           <Key>
             <PropertyRef Name="USER_ID" />
             <PropertyRef Name="REPOSITORY_ID" />
+            <PropertyRef Name="OPERATION_DATE" />
           </Key>
           <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="OPERATION_DATE" Type="date" />
-          <Property Name="OPRATION" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="OPERATION_DATE" Type="date" Nullable="false" />
+          <Property Name="OPERATION" Type="varchar2" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
           <Key>
@@ -555,6 +557,7 @@
           <Property Name="FORK_NUM" Type="Int32" />
           <Property Name="IS_CREATE" Type="Int32" />
           <Property Name="FORK_FROM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="REPOSITORY_FILE" Relationship="Self.REPOSITORY_FILE_REPOSITOR_FK1" FromRole="REPOSITORY" ToRole="REPOSITORY_FILE" />
           <NavigationProperty Name="REPOSITORY1" Relationship="Self.REPOSITORY_REPOSITORY_FK1" FromRole="REPOSITORY" ToRole="REPOSITORY1" />
           <NavigationProperty Name="REPOSITORY2" Relationship="Self.REPOSITORY_REPOSITORY_FK1" FromRole="REPOSITORY1" ToRole="REPOSITORY" />
@@ -612,11 +615,12 @@
           <Key>
             <PropertyRef Name="USER_ID" />
             <PropertyRef Name="REPOSITORY_ID" />
+            <PropertyRef Name="OPERATION_DATE" />
           </Key>
           <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OPERATION_DATE" Type="DateTime" />
-          <Property Name="OPRATION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OPERATION_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="OPERATION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_OPERATION_FK2" FromRole="USER_REPOSITORY_OPERATION" ToRole="REPOSITORY" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_OPERATION_FK1" FromRole="USER_REPOSITORY_OPERATION" ToRole="USERTABLE" />
         </EntityType>
@@ -921,7 +925,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KUXIANGDATAEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="KUXIANGDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="COMMENTTABLEs" EntityType="Self.COMMENTTABLE" />
           <EntitySet Name="FILE_FILE" EntityType="Self.FILE_FILE" />
           <EntitySet Name="FILETABLEs" EntityType="Self.FILETABLE" />
@@ -1021,7 +1025,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGDATAEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGDBEntities">
           <EntitySetMapping Name="COMMENTTABLEs">
             <EntityTypeMapping TypeName="Model.COMMENTTABLE">
               <MappingFragment StoreEntitySet="COMMENTTABLE">
@@ -1078,6 +1082,7 @@
                 <ScalarProperty Name="FORK_NUM" ColumnName="FORK_NUM" />
                 <ScalarProperty Name="IS_CREATE" ColumnName="IS_CREATE" />
                 <ScalarProperty Name="FORK_FROM" ColumnName="FORK_FROM" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1124,7 +1129,7 @@
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
                 <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
-                <ScalarProperty Name="OPRATION" ColumnName="OPRATION" />
+                <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

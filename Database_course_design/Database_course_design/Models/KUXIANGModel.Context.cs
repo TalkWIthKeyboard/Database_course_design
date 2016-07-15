@@ -13,10 +13,10 @@ namespace Database_course_design.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KUXIANGDATAEntities : DbContext
+    public partial class KUXIANGDBEntities : DbContext
     {
-        public KUXIANGDATAEntities()
-            : base("name=KUXIANGDATAEntities")
+        public KUXIANGDBEntities()
+            : base("name=KUXIANGDBEntities")
         {
         }
     
