@@ -167,6 +167,9 @@
     <Compile Include="Models\FILE_FILE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ItemModel\anctionInfo.cs" />
+    <Compile Include="Models\ItemModel\RepertorySearchResult.cs" />
+    <Compile Include="Models\ItemModel\UserSearchResult.cs" />
     <Compile Include="Models\KUXIANGModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
