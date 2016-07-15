@@ -1,0 +1,293 @@
+﻿/* Reset */
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+a {
+	color: #bbb;
+	text-decoration: none;
+}
+fieldset {border: none;}
+button, input {
+	border: none;
+	outline: none;
+}
+
+/* General */
+body {
+	width: 100%;
+	font-family: Roboto,sans-serif;
+	background: #3b4465;
+}
+section {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	width: 550px;
+	margin: 0 auto;
+}
+button {
+	position: relative;
+	width: 160px;
+	text-transform: uppercase;
+	font-size: 14px;
+	background-color: transparent;
+}
+form {
+	width: 260px;
+	height: 280px;
+	padding: 20px;
+	background: #d7e7f1;
+	border-radius: 5px;
+}
+form label, form input {
+	display: block;
+	opacity: 0;
+}
+label {
+	padding-top: 15px;
+	font-size: 14px;
+	color: #a1b4b4;
+	letter-spacing: 0.5px;
+}
+input:not([type="submit"]) {
+	width: 220px;
+	margin: 0 auto;
+	margin-top: 5px;
+	padding: 0 15px;
+	line-height: 40px;
+	font-size: 14px;
+	color: #3b4465;
+	background: #eef9fe;
+	border: 1px solid #cddbef;
+	border-radius: 2px;
+}
+input[type="submit"] {
+	float: right;
+	width: 120px;
+	margin-top: 30px;
+	line-height: 40px;
+	font-size: 18px;
+	border-radius: 20px;
+}
+input[type="submit"]:hover {cursor: pointer;}
+
+/* Classes */
+.buttons {
+	height: 100px;
+	padding-top: 70px;
+	text-align: center;
+}
+.login-underline, .signup-underline {
+	content: '';
+	position: absolute;
+	top: 35px;
+	left: 30px;
+	height: 2px;
+	width: 100px;
+	opacity: 0;
+	background: #c8dfed;
+}
+.login-underline.login-button-active {
+	animation: loginUnderlineActive .2s linear .1s forwards;
+	transform-origin: right;
+}
+.login-underline.signup-button-active {
+	animation: loginUnderlineInactive .3s linear forwards;
+	transform-origin: right;
+}
+.signup-underline.signup-button-active {
+	animation: signupUnderlineActive .2s linear .1s forwards;
+	transform-origin: left;
+}
+.signup-underline.login-button-active {
+	animation: signupUnderlineInactive .3s linear forwards;
+	transform-origin: left;
+}
+.login-button-active {
+	animation: buttonsMoveToRight .3s linear forwards;
+	color: #fff;
+}
+.signup-button-active {
+	animation: buttonsMoveToLeft .3s linear forwards;
+	color: #fff;
+}
+.forms {padding-top: 50px;}
+.login-form.login-button-active label, .login-form.login-button-active input {animation: fielsetSlideToRight .5s linear 0.25s forwards;}
+.signup-form.signup-button-active label, .signup-form.signup-button-active input {animation: fieldsetSlideToLeft .5s linear 0.25s forwards;}
+.login-form input[type="submit"] {
+	color: #fbfdff;
+	background: #a7e245;
+}
+.signup-form input[type="submit"] {
+	color: #a7e245;
+	background: #fbfdff;
+	box-shadow: inset 0 0 0 2px #a7e245;
+}
+.login-form {animation: loginToBottom .4s linear forwards;}
+.signup-form {animation: signUpToBottom .4s linear forwards;}
+.login-form.login-button-active {animation: loginToTop .4s linear forwards;}
+.signup-form.signup-button-active {animation: signUpToTop .4s linear forwards;}
+
+/* Animations */
+@keyframes loginUnderlineActive {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+@keyframes loginUnderlineInactive {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(0);
+		opacity: 1;
+	}
+}
+@keyframes signupUnderlineActive {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+@keyframes signupUnderlineInactive {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(0);
+		opacity: 1;
+	}
+}
+@keyframes buttonsMoveToRight {
+	0% {
+		transform: translate(0);
+	}
+	100% {
+		transform: translate(50px);
+	}
+}
+@keyframes buttonsMoveToLeft {
+	0% {
+		transform: translate(0);
+	}
+	100% {
+		transform: translate(-50px);
+	}
+}
+@keyframes fielsetSlideToRight {
+	0% {
+		transform: translate(-15px);
+		opacity: 0;
+	}
+	100% {
+		transform: translate(0);
+		opacity: 1;
+	}
+}
+@keyframes fieldsetSlideToLeft {
+	0% {
+		transform: translate(15px);
+		opacity: 0;
+	}
+	100% {
+		transform: translate(0);
+		opacity: 1;
+	}
+}
+@keyframes loginToBottom {
+	0% {
+		transform: translate(100px);
+		z-index: 10;
+		background-color: #fff;
+	}
+	49% {
+		transform: translate(0);
+		z-index: 10;
+	}
+	50% {
+		transform: translate(0);
+		z-index: 1;
+	}
+	100% {
+		transform: translate(100px, 20px);
+		z-index: 1;
+		background-color: #d7e7f1;
+	}
+}
+@keyframes signUpToBottom {
+	0% {
+		transform: translate(-100px);
+		z-index: 10;
+		height: 360px;
+		background-color: #fff;
+	}
+	49% {
+		transform: translate(0);
+		z-index: 10;
+	}
+	50% {
+		transform: translate(0);
+		z-index: 1;
+	}
+	100% {
+		transform: translate(-100px, 20px);
+		z-index: 1;
+		height: 280px;
+		background-color: #d7e7f1;
+	}
+}
+@keyframes loginToTop {
+	0% {
+		transform: translate(100px, 20px);
+		z-index: 1;
+		background-color: #d7e7f1;
+	}
+	49% {
+		transform: translate(0);
+		z-index: 1;
+	}
+	50% {
+		transform: translate(0,);
+		z-index: 10;
+	}
+	100% {
+		transform: translate(100px);
+		z-index: 10;
+		background-color: #fff;
+	}
+}
+@keyframes signUpToTop {
+	0% {
+		transform: translate(-100px, 20px);
+		z-index: 1;
+		background-color: #d7e7f1;
+	}
+	25% {height: 280px;}
+	49% {
+		transform: translate(0);
+		z-index: 1;
+	}
+	50% {
+		transform: translate(0);
+		z-index: 10;
+	}
+	100% {
+		transform: translate(-100px);
+		z-index: 10;
+		height: 400px;
+		background-color: #fff;
+	}
+}
