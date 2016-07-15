@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication1.Models;
 
-namespace WebApplication1.Controllers
+namespace Database_course_design.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult MainPage()
+        // GET: Home
+        public ActionResult Index()
         {
             return View();
         }
