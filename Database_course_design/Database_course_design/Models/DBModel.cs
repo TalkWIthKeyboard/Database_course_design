@@ -615,5 +615,51 @@ namespace Database_course_design.Models
         }
         */
 
+        /// <summary>
+        /// 显示仓库文件
+        /// 输入：仓库ID
+        /// 输出：文件名,文件类型，文件大小
+        /// 待测试
+        /// </summary>
+        public struct FileInfo
+        {
+            public string name;
+            public string type;
+            public string size; 
+        }
+        public List<FileInfo> showFile(string resipositoryId)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    List<FileInfo> res = null;
+                    var file = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == resipositoryId);
+                    foreach (var str in file)
+                    {
+                        FileInfo temp = new FileInfo();
+                        temp.name = (from s in db.FILETABLEs
+                                     where s.FILE_ID == str.FILE_ID
+                                     select s.FILE_NAME).FirstOrDefault();
+                        temp.type = (from q in db.FILETABLEs
+                                     where q.FILE_ID == str.FILE_ID
+                                     select q.FILE_TYPE).FirstOrDefault();
+                        temp.size = (from p in db.FILETABLEs
+                                     where p.FILE_ID == str.FILE_ID
+                                     select p.FILE_SIZE).ToString();
+                        res.Add(temp);
+                    }
+                    return res;
+                }
+
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("文件显示异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
     }
 }
