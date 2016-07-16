@@ -1,0 +1,130 @@
+﻿body {
+    padding: 0;
+    overflow-x: hidden;
+}
+
+section {
+    background-color: transparent;
+}
+
+div {
+    background-color: transparent;
+}
+
+#logo {
+    height: 52%;
+    width: 52vh;
+    border-radius: 50%;
+    position: absolute;
+    top: -2vw;
+    right: 53vh;
+    background-color: transparent;
+}
+
+#logo div,
+#circle div {
+    box-sizing: border-box;
+    border-radius: 50%;
+    position: absolute;
+    height: calc(100% - 110px);
+    width: calc(100% - 110px);
+    top: 55px;
+    left: 55px;
+}
+
+#logo .bigDiv,
+#circle .bigDiv {
+    background-color: #03ACDC;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.middleDiv {
+    background: #037FA2;
+}
+
+.smallDiv {
+    background: #004E64;
+}
+
+.smallDiv img {
+    height: 64px;
+    width: 128px;
+    position: absolute;
+    top: calc(50% - 32px);
+    left: calc(50% - 64px);
+}
+
+#logo .middleDiv {
+    z-index: 2;
+}
+
+#circle {
+    height: 92%;
+    width: 92vh;
+    border-radius: 50%;
+    position: absolute;
+    right: -1vh;
+    top: 3vh;
+}
+
+#loginForm {
+    height: calc(92% - 220px);
+    width: calc(92vh - 220px);
+    border-radius: 50%;
+    background-color: #004E64;
+    position: absolute;
+    z-index: 4;
+    top: calc(3vh + 110px);
+    right: calc(-1vh + 110px);
+}
+
+#loginForm > div {
+    width: 46%;
+    height: 208px;
+    margin: 0 auto;
+    margin-top: calc(50% - 104px);
+    background-color: transparent;
+}
+
+#loginForm > div > div {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 6px 10px;
+    border-radius: 2px;
+    margin: 10px 0;
+}
+
+#loginForm svg {
+    vertical-align: middle;
+    fill: white;
+}
+
+#loginForm input {
+    width: calc(100% - 50px);
+    padding: 0 10px;
+    border: none;
+    height: 24px;
+    font-size: 16px;
+    background-color: transparent;
+    color: white;
+    outline: none;
+}
+
+#loginForm > div div:nth-child(2)  {
+    width: calc(100% - 85px);
+    display: inline-block;
+}
+
+#loginForm input::-webkit-input-placeholder {
+    color: white;
+}
+
+#loginForm input[type="submit"] {
+    width: 60px;
+    background-color: #18C7F8;
+    height: 37px;
+    border-radius: 2px;
+}
+
