@@ -121,7 +121,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fileicon.css" />
+    <Content Include="img\head.jpg" />
+    <Content Include="img\logo.png" />
+    <Content Include="Content\loginStyle.css" />
     <Content Include="Content\normalize.css" />
+    <Content Include="Content\register.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -227,6 +231,7 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Home\Personal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
