@@ -8,15 +8,6 @@ namespace Database_course_design.Models
 {
     public class DBModel
     {
-
-        /// <summary>
-        /// 创建主码ID
-        /// 输入：表名
-        /// 输出：该表的主码ID
-        /// 待测试
-        /// </summary>
-
-
         ///宋伟
         /// <summary>
         /// 添加新用户到数据库
@@ -110,6 +101,29 @@ namespace Database_course_design.Models
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 确认登录
+        /// 输入：用户id，用户的密码
+        /// 输出：是否登录成功
+        /// </summary>
+        public bool sureUserLoad(string UserId, string UserKey)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == UserId & p.PASSWORD == UserKey).FirstOrDefault();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("用户登录异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }
         }
 
         /// <summary>
