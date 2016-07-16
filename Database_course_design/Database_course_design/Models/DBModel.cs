@@ -674,7 +674,7 @@ namespace Database_course_design.Models
                                          select s.USER_NAME).FirstOrDefault();
                         temp.UserUrl = (from q in db.USERTABLEs
                                         where q.USER_ID == str.USER_ID2
-                                        select q.USER_URL).FirstOrDefault();
+                                        select q.USER_URL).FirstOrDefault();             
                         temp.UserPhotoUrl = (from a in db.USERTABLEs
                                              where a.USER_ID == str.USER_ID2
                                              select a.IMAGE).FirstOrDefault();

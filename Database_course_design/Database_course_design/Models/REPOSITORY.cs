@@ -37,6 +37,7 @@ namespace Database_course_design.Models
         public Nullable<int> IS_CREATE { get; set; }
         public string FORK_FROM { get; set; }
         public string DESCRIPTION { get; set; }
+        public string URL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REPOSITORY_FILE> REPOSITORY_FILE { get; set; }

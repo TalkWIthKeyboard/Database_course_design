@@ -167,6 +167,8 @@
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ItemModel\anctionInfo.cs" />
+    <Compile Include="Models\ItemModel\HeatItem.cs" />
+    <Compile Include="Models\ItemModel\OperationItem.cs" />
     <Compile Include="Models\ItemModel\RepertorySearchResult.cs" />
     <Compile Include="Models\ItemModel\UserSearchResult.cs" />
     <Compile Include="Models\KUXIANGModel.Context.cs">
@@ -226,6 +228,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Home\Personal.cshtml" />
     <EntityDeploy Include="Models\KUXIANGModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
@@ -233,7 +236,6 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Home\Personal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

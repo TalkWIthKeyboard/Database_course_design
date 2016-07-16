@@ -17,12 +17,12 @@ namespace Database_course_design.Models.ItemModel
     /// </summary>
     public class anctionInfo
     {
-        public string UserName;
-        public string UserUrl;
-        public string UserPhotoUrl;
-        public string UserOperation;
-        public string RepertoryName;
-        public string RepertoryUrl;
-        public string UpdateInfo;
+        public string UserName { get; set; }
+        public string UserUrl { get; set; }
+        public string UserPhotoUrl { get; set; }
+        public string UserOperation { get; set; }
+        public string RepertoryName { get; set; }
+        public string RepertoryUrl { get; set; }
+        public string UpdateInfo { get; set; }
     }
 }

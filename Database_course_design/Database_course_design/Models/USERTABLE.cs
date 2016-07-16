@@ -38,6 +38,8 @@ namespace Database_course_design.Models
         public string IMAGE { get; set; }
         public string SIGNATURE { get; set; }
         public Nullable<System.DateTime> CREATE_DATE { get; set; }
+        public string IMAGE_PATH { get; set; }
+        public string USER_URL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MESSAGE> MESSAGEs { get; set; }
