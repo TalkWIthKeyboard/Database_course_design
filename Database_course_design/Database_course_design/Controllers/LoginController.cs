@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
         {
             string username = Request["email"];
             string passwd = Request["password"];
-            if(dbmodel.sureUserLoad(username,passwd))
+            //if(dbmodel.sureUserLoad(username,passwd))
                 Response.Redirect("/Home/Index");
             return;
         }

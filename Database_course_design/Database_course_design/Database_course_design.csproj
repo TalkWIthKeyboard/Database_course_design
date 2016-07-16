@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fileicon.css" />
+    <Content Include="Content\Personal.css" />
     <Content Include="img\head.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="Content\loginStyle.css" />
@@ -142,6 +143,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\ScatterDiagram.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
