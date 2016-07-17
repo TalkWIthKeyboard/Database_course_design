@@ -10,15 +10,22 @@ namespace Database_course_design.Models
     public class DBModel
     {
 
+
         /// <summary>
         /// 创建主码ID
         /// 输入：表名
         /// 输出：该表的主码ID
         /// 待测试
         /// </summary>
+        public string createNewId(string tableName)
+        {
+            string newId = tableName + '_';
+            string timeStr = DateTime.Now.Ticks.ToString();
+            string time = timeStr.Substring(timeStr.Length - 10, 10);
+            newId += time;
+            return newId;
+        }
 
-
-        ///宋伟
         /// <summary>
         /// 添加新用户到数据库
         /// 输入：用户账号，用户密码，用户名，所在院系，邮箱地址，用户身份，用户积分
@@ -713,5 +720,390 @@ namespace Database_course_design.Models
                 }
             }
         }
+
+        /// <summary>
+        /// 创建仓库
+        /// 输入：用户名，库的名称，创建库的公私级别
+        /// 输出：创建成功与否
+        /// 待测试
+        /// </summary>
+        public bool CreateRepository(string userid, string name, int authority,string description)
+        {
+            
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    String rname;
+                    if (name != null)
+                        rname = name;
+                    else
+                    {
+                        String timeStr = DateTime.Now.Ticks.ToString();
+                        String time = timeStr.Substring(timeStr.Length - 10, 10);
+                        rname = userid.Substring(userid.Length - 10, 10) + "_" + time;
+                    }
+                    string repositoryid = createNewId("REPOSITORY");
+                    short attri = 0;
+                    short iscreate = 1;
+                    String forkfrom = "";
+                    short relationship = 0;
+                    REPOSITORY newRep = new REPOSITORY
+                    {
+                        REPOSITORY_ID = repositoryid,
+                        NAME = rname,
+                        AUTHORITY = authority,
+                        ATTRIBUTE = attri,
+                        IS_CREATE = iscreate,
+                        FORK_FROM = forkfrom,
+                        DESCRIPTION = description
+                    };
+
+                    USER_REPOSITORY_RELATIONSHIP userrepr = new USER_REPOSITORY_RELATIONSHIP
+                    {
+                        USER_ID = userid,
+                        REPOSITORY_ID = newRep.REPOSITORY_ID,
+                        RELATIONSHIP = relationship
+                    };
+
+                    db.REPOSITORies.Add(newRep);
+                    db.USER_REPOSITORY_RELATIONSHIP.Add(userrepr);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("仓库创建失败");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }
+        }
+
+
+
+
+ /// <summary>
+        /// 删除仓库
+        /// 输入：用户ID，仓库ID
+        /// 输出：删除成功与否
+        /// 待测试
+        /// </summary>
+        public bool RemoveRepository(string userid, string repositoryid)
+        {
+            int numb = 0;
+            using (var db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                           numb =
+               (from p
+                in db.USER_REPOSITORY_RELATIONSHIP
+                where repositoryid == p.REPOSITORY_ID
+                where userid == p.USER_ID
+                where p.RELATIONSHIP == 0
+                select p
+               ).Count();
+                    if (numb != 0)
+                    {
+                        db.REPOSITORies.Remove(db.REPOSITORies.Where(p =>
+
+p.REPOSITORY_ID == repositoryid).FirstOrDefault());
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("仓库删除失败！");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }
+                
+                return false;
+            }
+        }
+
+
+
+  /// <summary>
+        /// 修改文件状态
+        /// 输入：文件id
+        /// 输出：修改状态是否成功
+        /// 待测试
+        /// </summary>
+        public bool ModifyFileState(string fileid)
+        {
+            using (var db = new KUXIANGDBEntities())
+            {  
+                try
+                {
+                    var mfile =
+                   from p
+                   in db.FILETABLEs
+                   where p.FILE_ID == fileid
+                   select p;
+                    foreach (var mf in mfile)
+                    {
+                        mf.FILE_STATE = 1;
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("修改文件状态失败！");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+          
+            }
+        }
+        ///<summary>
+        ///留言板显示
+        ///输入： 接收者的编号
+        ///输出：评论队列
+        ///待测试
+        ///</summary> 
+        public List <COMMENTTABLE > showUserComment(string userid)
+        {
+            using (var db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    var comment = from user in db.USER_COMMENT_USER
+                                  join commnt in db.COMMENTTABLEs
+                                  on user.COMMENT_ID equals commnt.COMMENT_ID
+                                  where user.USER_ID == userid
+                                  select commnt;
+                    return comment.ToList ();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("修改文件状态失败！");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+
+            }
+        }
+
+        ///<summary>
+        ///浏览历史显示
+        ///输入： 接收者的编号
+        ///输出： 浏览历史（是否要链接？）
+        ///待测试
+        ///</summary> 
+        public List<USER_REPOSITORY_LOOKHISTORY> showLookHistory(string userId)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    var lookhistory = from row in db.USER_REPOSITORY_LOOKHISTORY
+                                      where row.USER_ID == userId
+                                      select row;
+                    return lookhistory.ToList();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("显示浏览历史操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+        /// <summary>
+        /// 检索功能--文件
+        /// 输入：要检索的文件的名称
+        /// 输出：检索出的文件ID列表
+        /// </summary>
+        public string[] searchFile(string FileName, string repositoryId)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    var newfile = from p in db.FILETABLEs
+                                  join c in db.REPOSITORY_FILE
+                                  on p.FILE_ID equals c.FILE_ID
+                                  where c.REPOSITORY_ID == repositoryId
+                                  where p.FILE_NAME == FileName
+                                  select p.FILE_ID;
+                    return newfile.ToArray();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("查找文件操作异常 ");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+        /// <summary>
+        /// 检索功能--用户
+        /// 输入：要检索的用户的名称
+        /// 输出：检索出的用户ID列表
+        /// </summary>
+        public List<USERTABLE > searchUser(string UserName)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    var newuser = from user in db.USERTABLEs
+                                where user.USER_NAME == UserName
+                                select user;
+                    return newuser.ToList();         
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("查找用户操作异常 ");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 推荐--按仓库热度推荐
+        /// 输入：无
+        /// 输出：检索出的仓库列表
+        /// 待测试
+        /// </summary>
+        public List<REPOSITORY > recommendRepositoryByHeat()
+        {
+          
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    List<REPOSITORY> heatrepository = new List<REPOSITORY>();
+                    int forkfigure = 20;
+                    int starfigure = 50;
+                    var temps =
+                        (from s in db.REPOSITORies
+                         where s.FORK_NUM >= forkfigure || s.STAR_NUM >= starfigure
+                         orderby s.FORK_NUM descending,s.STAR_NUM descending             
+                         select s);
+                    foreach (var temp in temps)
+                    { 
+                        heatrepository.Add(temp);
+                    }
+                    return heatrepository;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("按热度推荐仓库读取异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 推荐--按老师推荐
+        /// 输入：老师的ID列表
+        /// 输出：检索出的仓库列表
+        /// 待测试
+        /// </summary>
+        public List<string> recommendRepositoryByTeachers(List<string> TeacherID)
+        {
+            var teachrepolist = new List<string>();
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    foreach (var teacherid in TeacherID)
+                    {
+                        var teacherrepo =
+                            from p
+                            in db.USER_REPOSITORY_RELATIONSHIP
+                            where p.USER_ID == teacherid
+                            select p.REPOSITORY_ID;
+                        foreach (var repositoryid in teacherrepo)
+                        {
+                            teachrepolist.Add(repositoryid);
+                        }
+                    }
+                    return teachrepolist;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("按热度推荐仓库读取异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+        /// <summary>
+        /// 推荐--按用户浏览历史推荐
+        /// 输入：用户ID
+        /// 输出：检索出的仓库列表
+        /// 待测试
+        /// </summary>
+        public List<string> recommendRepositoryByLookingHistory(string UserID)
+        {
+            List<string> heatrepository = new List<string>();
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    var temps = db.USER_REPOSITORY_LOOKHISTORY.Where(p => p.USER_ID == UserID);
+                    string nowdate = "";
+                    nowdate = DateTime.Now.ToShortDateString();
+                    string dbdate, dategap;
+                    int i, j, k;
+                    foreach (var temp in temps)
+                    {
+                        dbdate = temp.ToString();
+                        i = dbdate.IndexOf("-");
+                        j = dbdate.IndexOf("月");
+                        k = dbdate.LastIndexOf("-");
+                        dbdate = "20" + dbdate.Substring(0, i) + "/" + dbdate.Substring(i + 1, j - i - 1) + "/" + dbdate.Substring(k + 1);
+                        dategap = (DateTime.Parse(nowdate) - DateTime.Parse(dbdate)).ToString();
+                        dategap = dategap.Substring(0, dategap.Length - 9);
+                        if (int.Parse(dategap) < 30)
+                            heatrepository.Add(temp.REPOSITORY_ID);
+                    }
+                    return heatrepository;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("按浏览历史推荐仓库读取异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 下载头像
+        /// 输入：用户id
+        /// 输出：头像图片url
+        /// 待测试
+        /// </summary>
+        public string DownloadImage(string userid)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    string url = "";
+                    url = (from s in db.USERTABLEs
+                           where s.USER_ID == userid
+                           select s.USER_ID).FirstOrDefault();
+                    return url;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("图片地址读取异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
+
     }
 }

@@ -18,7 +18,7 @@ namespace Database_course_design.Models.ItemModel
         public string UserName { get; set; }
         public string UserState { get; set; }
         public string UserPhotoUrl { get; set; }
-        public string UserCreateTime { get; set; }
+        public DateTime  UserCreateTime { get; set; }
         public string UserEmail { get; set; }
     }
 }
