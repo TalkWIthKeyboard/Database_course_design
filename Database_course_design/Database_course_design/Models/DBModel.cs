@@ -1177,7 +1177,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                 {
                     REPOSITORY origin = db.REPOSITORies.Where(p => p.REPOSITORY_ID == RepositoryId).FirstOrDefault();
                     var ofile = db.REPOSITORY_FILE.Where(a => a.REPOSITORY_ID == RepositoryId);
-                    string new_id = createNewId(origin.NAME);
+                    string new_id = createNewId("REPOSITORY");
 
                     //检查是否已经fork
                     var check = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == UserId && p.REPOSITORY_ID == RepositoryId && p.OPERATION == "Fork").FirstOrDefault();
@@ -1230,7 +1230,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                     {
                         temp.REPOSITORY_ID = new_id;
                         var file = db.FILETABLEs.Where(p => p.FILE_ID == temp.FILE_ID).FirstOrDefault();
-                        temp.FILE_ID = createNewId(file.FILE_NAME);
+                        temp.FILE_ID = createNewId("FILETABLE");
                         old_new.Add(file.FILE_ID, temp.FILE_ID);
                         copyFile(file.FILE_ID, temp.FILE_ID, UserId, RepositoryId);
                         REPOSITORY_FILE file_repository = new REPOSITORY_FILE
@@ -1251,7 +1251,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                         {
                             var file = db.FILETABLEs.Where(p => p.FILE_ID == temp2.FILE_ID2).FirstOrDefault();
                             var temp3 = file;
-                            temp3.FILE_ID = createNewId(file.FILE_NAME);
+                            temp3.FILE_ID = createNewId("FILETABLE");
                             old_new.Add(file.FILE_ID, temp3.FILE_ID);
                             copyFile(file.FILE_ID, temp3.FILE_ID, UserId, RepositoryId);
                             REPOSITORY_FILE file_repository = new REPOSITORY_FILE
@@ -1295,7 +1295,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
             {
                 try
                 {
-                    string newFileId = createNewId(name);
+                    string newFileId = createNewId("FILETABLE");
                     FILETABLE new_file = new FILETABLE
                     {
                         FILE_ID = newFileId,
