@@ -15,7 +15,7 @@ namespace Database_course_design.Models.ItemModel
     /// 仓库的链接
     /// 仓库的更新信息
     /// </summary>
-    public class anctionInfo
+    public class actionInfo
     {
         public string UserName { get; set; }
         public string UserUrl { get; set; }
