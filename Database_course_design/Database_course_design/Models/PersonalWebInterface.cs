@@ -5,37 +5,125 @@ using System.Web;
 
 namespace Database_course_design.Models
 {
-    /*public class PersonalWebInterface
+    public class PersonalWebInterface
     {
 
         /// <summary>
-        /// 获取用户的仓库，默认为获取所有的仓库
-        /// 输入：用户的id, 仓库id（null时为获取所有的仓库）， 要返回的仓库列表, 错误的信息
-        /// 输出：是否成功
-        /// 未测试
-        /// </summary>
-        public bool getUserRepository(string _UserId, string _RepoId, out List<ItemModel.RepertorySearchResult> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
-        {
-
-        }
-
-        /// <summary>
         /// 获取用户自己的动态
-        /// 输入：用户的id, 仓库id（null时为获取所有的仓库）， 要返回的仓库列表, 错误的信息
+        /// 输入：用户的id, 仓库id（null时为获取所有的动态）， 要返回的动态列表, 错误的信息
         /// 输出：是否成功
         /// 未测试
         /// </summary>
         public bool getSelfDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
         {
+            try
+            {
+                bool flag = false;
+                DBModel dbmodel = new DBModel();
+                KUXIANGDBEntities db = new KUXIANGDBEntities();
+                SearchResul = new List<ItemModel.actionInfo>();
+                if (_RepoId == null)
+                {
+                    var res = dbmodel.showFriendDynamics(_UserId);
+                    if (res != null)
+                    { flag = true; SearchResul = res; }
+                }
+                else
+                {
+                    var res = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == _UserId && p.REPOSITORY_ID == _RepoId);
+                    foreach (var row in res)
+                    {
+                        ItemModel.actionInfo newAction = new ItemModel.actionInfo();
+                        newAction.UpdateInfo = row.DESCRIPTION;
+                        newAction.UserId = _UserId;
+                        newAction.UserName = row.USERTABLE.USER_NAME;
+                        newAction.UserOperation = row.OPERATION;
+                        newAction.UserPhotoUrl = row.USERTABLE.IMAGE;
+                        newAction.RepositoryId = _RepoId;
+                        newAction.RepositoryName = row.REPOSITORY.NAME;
+                        SearchResul.Add(newAction);
+                    }
+                    flag = true;
+                }
+                if (flag == true)
+                {
+                    ErrorInfo = null;
+                    return true;
+                }
+                else
+                {
+                    ErrorInfo = new ItemModel.ErrorMessage();
+                    ErrorInfo.ErrorOperation = "获取用户自己的动态";
+                    ErrorInfo.ErrorReason = "获取动态函数失败";
+                    ErrorInfo.ErrorTime = System.DateTime.Now;
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                SearchResul = null;
+                ErrorInfo = new ItemModel.ErrorMessage();
+                ErrorInfo.ErrorOperation = "获取用户自己的动态";
+                ErrorInfo.ErrorReason = ex.Message;
+                return false;
+            }
+        }
+
+
+
+        /// <summary>
+        /// 修改用户好友关系
+        /// 输入：用户自己的Id, 对象用户的Id, 关注或取消关注（true是关注）, 错误信息
+        /// 输出：是否成功
+        /// </summary>
+        public bool changeFriend(string _SelfUserId, string _TarUserId, bool Focus, out ItemModel.ErrorMessage ErrorInfo)
+        {
+            try
+            {
+                bool flag = false;
+                DBModel dbmodel = new DBModel();
+                if (Focus == true)
+                {
+                    if (dbmodel.makeFriend(_SelfUserId, _TarUserId))
+                        flag = true;
+                }
+                else
+                {
+                    if (dbmodel.deleteFriend(_SelfUserId, _TarUserId))
+                        flag = true;
+                }
+                if (flag == true)
+                {
+                    ErrorInfo = null;
+                    return true;
+                }
+                else
+                {
+                    ErrorInfo = new ItemModel.ErrorMessage();
+                    ErrorInfo.ErrorOperation = "修改用户好友关系";
+                    ErrorInfo.ErrorReason = "添加或者删除好友错误";
+                    ErrorInfo.ErrorTime = System.DateTime.Now;
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                ErrorInfo = new ItemModel.ErrorMessage();
+                ErrorInfo.ErrorOperation = "修改用户好友关系";
+                ErrorInfo.ErrorReason = ex.Message;
+                ErrorInfo.ErrorTime = System.DateTime.Now;
+                return false;
+            }
 
         }
 
-        /// <summary>
+        /*/// <summary>
         /// 修改用户资料（对DBmodel的封装）
         /// 输入：， 错误信息
         /// 输出：是否成功
         /// </summary>
-        public bool changeUserInfo(  out ItemModel.ErrorMessage)
+        public bool changeUserInfo( out ItemModel.ErrorMessage)
         {
 
         }
@@ -45,10 +133,10 @@ namespace Database_course_design.Models
         /// 输入：用户自己的Id, 对象用户的Id, 关注或取消关注（true是关注）, 错误信息
         /// 输出：是否成功
         /// </summary>
-        public bool changeFriend(string _SelfUserId, string _TarUserId, bool Focus,out ItemModel.ErrorMessage ErrorInfo)
+        public bool changeFriend(string _SelfUserId, string _TarUserId, bool Focus, out ItemModel.ErrorMessage ErrorInfo)
         {
 
-        }
+        }*/
 
         /// <summary>
         /// 查询用户该月每天的操作和热度
@@ -64,8 +152,9 @@ namespace Database_course_design.Models
                 //实例化数据库
                 KUXIANGDBEntities db = new KUXIANGDBEntities();
                 DBModel func = new DBModel();
-                //拿到本月该用户所有的操作
-                var OpList = func.showOperationHistory(_UserId, new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
+                //拿到该用户本月所有的操作
+                var OpList = func.showOperationHistory(_UserId);
+                OpList.Where(p => p.DATE > new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
                 //创建返回列表
                 List<Database_course_design.Models.ItemModel.DayHeat> ret = new List<ItemModel.DayHeat>();
                 //插入本月的天数
@@ -80,12 +169,12 @@ namespace Database_course_design.Models
                     ret[op.DATE.Day].OpList.Add(//Add_Beg
                         new ItemModel.HeatOpItem
                         {//new_Beg
-                            //定义操作
-                            OPERATION = op.OPERATION,
-                            //定义仓库名
-                            TARGET_REPOSITORY_NAME = op.REPOSITORY_NAME,
-                            //查询拥有被操作的仓库的用户的名字
-                            TARGET_USER_NAME = (from r in db.USER_REPOSITORY_RELATIONSHIP
+                         //定义操作
+                        OPERATION = op.OPERATION,
+                        //定义仓库名
+                        TARGET_REPOSITORY_NAME = op.REPOSITORY_NAME,
+                        //查询拥有被操作的仓库的用户的名字
+                        TARGET_USER_NAME = (from r in db.USER_REPOSITORY_RELATIONSHIP
                                                 join s in db.USERTABLEs on r.USER_ID equals s.USER_ID
                                                 where op.REPOSITORY_ID == r.REPOSITORY_ID
 
@@ -97,14 +186,19 @@ namespace Database_course_design.Models
                     ret[op.DATE.Day].Count++;
                 }
                 //返回列表
-                return ret;
+                ErrorInfo = null;
+                DayHeatResult = ret;
+                return true;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("用户分数修改异常");
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                return null;
+                ErrorInfo = new ItemModel.ErrorMessage();
+                ErrorInfo.ErrorOperation = "getUserHeat";
+                ErrorInfo.ErrorReason = ex.Message;
+                ErrorInfo.ErrorTime = DateTime.Now;
+                DayHeatResult = null;
+                return false;
             }
         }
-    }*/
+    }
 }
