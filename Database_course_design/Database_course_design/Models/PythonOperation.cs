@@ -54,10 +54,10 @@ namespace Database_course_design.Models
             match = reg.Match(pageHtml);
             userInfo.department = match.Groups[1].Value;
 
-            return userInfo;
             //关闭浏览器
             driver.Close(); // closes browser
             driver.Quit(); //
+            return userInfo;
         }
 
         public void spiderClass(string userid, string userkey)
@@ -90,5 +90,4 @@ namespace Database_course_design.Models
             Console.WriteLine("Hello");
         }
     }
-}
 }
