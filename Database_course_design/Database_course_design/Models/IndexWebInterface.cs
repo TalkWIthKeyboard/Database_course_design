@@ -135,7 +135,7 @@ namespace Database_course_design.Models
         /// 输出：是否成功
         /// 未测试
         /// </summary>
-        public bool getFriendDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResult, out ItemModel.ErrorMessage ErrorInfo)
+        public bool getFriendDynamic(string _UserId, out List<ItemModel.actionInfo> SearchResult, out ItemModel.ErrorMessage ErrorInfo)
         {
             DBModel func = new DBModel();
             KUXIANGDBEntities db = new KUXIANGDBEntities();

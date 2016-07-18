@@ -24,15 +24,6 @@ namespace Database_course_design.Controllers
 
         public ActionResult Index()
         {
-            /*string forkName = "";
-            List<DBModel.FileInfo> list = dbmodel.showFile("1060", ref forkName);
-            ViewBag.ForkName = forkName;
-            ViewBag.FileName = list[0].name;
-            ViewBag.FileType = list[0].type;
-            ViewBag.FileSize = list[0].size;*/
-
-            dbmodel.AddPartner("1234", "1100");
-
             return View();
         }
 
