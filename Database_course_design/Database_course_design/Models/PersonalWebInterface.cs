@@ -120,7 +120,7 @@ namespace Database_course_design.Models
 
         /*/// <summary>
         /// 修改用户资料（对DBmodel的封装）
-        /// 输入：， 错误信息
+        /// 输入：待定参数， 错误信息
         /// 输出：是否成功
         /// </summary>
         public bool changeUserInfo( out ItemModel.ErrorMessage)
