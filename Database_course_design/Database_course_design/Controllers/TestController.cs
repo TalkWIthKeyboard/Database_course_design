@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Database_course_design.Models;
+using Database_course_design.Models.ItemModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +10,30 @@ namespace Database_course_design.Controllers
 {
     public class TestController :Controller
     {
-    
-        public string SimpleMethod()
+        private IndexWebInterface iweb = new IndexWebInterface();
+        string user_id;
+
+        /*得到卡片的内容*/
+       /* private ActionResult getCardContent()
         {
-            return "Fuck";
+            List<RepertorySearchResult> SearchResut = null;
+            ErrorMessage errorInfo = null;
+            iweb.getRepositoryByLabel(user_id, out SearchResut, out errorInfo);
+            ViewBag.SearchResut = SearchResut;
+
+
+            ViewBag.errorInfo = errorInfo;
+            retu
+        }*/
+
+        public ActionResult test()
+        {
+            List<RepertorySearchResult> SearchResut = null;
+            ErrorMessage errorInfo = null;
+            iweb.getRepositoryByLabel(user_id, out SearchResut, out errorInfo);
+            ViewBag.SearchResut = SearchResut;
+            ViewBag.errorInfo = errorInfo;
+            return View();
         }
 
     }

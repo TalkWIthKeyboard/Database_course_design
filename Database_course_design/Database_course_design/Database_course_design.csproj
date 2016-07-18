@@ -203,6 +203,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -297,6 +298,7 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Test\test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
