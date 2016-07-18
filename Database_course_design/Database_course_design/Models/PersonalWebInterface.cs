@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Database_course_design.Models
 {
-    public class PersonalWebInterface
+    /*public class PersonalWebInterface
     {
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace Database_course_design.Models
 
         /// <summary>
         /// 修改用户资料（对DBmodel的封装）
-        /// 输入：/*待定参数*/， 错误信息
+        /// 输入：， 错误信息
         /// 输出：是否成功
         /// </summary>
-        public bool changeUserInfo( /*待定参数*/ out ItemModel.ErrorMessage)
+        public bool changeUserInfo(  out ItemModel.ErrorMessage)
         {
 
         }
@@ -106,5 +106,5 @@ namespace Database_course_design.Models
                 return null;
             }
         }
-    }
+    }*/
 }

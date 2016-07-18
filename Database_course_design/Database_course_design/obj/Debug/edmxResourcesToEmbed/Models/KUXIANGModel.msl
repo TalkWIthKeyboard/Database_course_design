@@ -1,12 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGDATAEntities">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGDBEntities">
     <EntitySetMapping Name="COMMENTTABLEs">
       <EntityTypeMapping TypeName="Model.COMMENTTABLE">
         <MappingFragment StoreEntitySet="COMMENTTABLE">
           <ScalarProperty Name="COMMENT_ID" ColumnName="COMMENT_ID" />
           <ScalarProperty Name="COMMENT_DATE" ColumnName="COMMENT_DATE" />
           <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COURSEs">
+      <EntityTypeMapping TypeName="Model.COURSE">
+        <MappingFragment StoreEntitySet="COURSE">
+          <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+          <ScalarProperty Name="LABEL1" ColumnName="LABEL1" />
+          <ScalarProperty Name="LABEL2" ColumnName="LABEL2" />
+          <ScalarProperty Name="LABEL3" ColumnName="LABEL3" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -40,6 +50,7 @@
           <ScalarProperty Name="MESSAGE_DATE" ColumnName="MESSAGE_DATE" />
           <ScalarProperty Name="MESSAGE_CONTENT" ColumnName="MESSAGE_CONTENT" />
           <ScalarProperty Name="RECEIVER_ID" ColumnName="RECEIVER_ID" />
+          <ScalarProperty Name="IS_READ" ColumnName="IS_READ" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -49,14 +60,33 @@
           <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="AUTHORITY" ColumnName="AUTHORITY" />
-          <ScalarProperty Name="LABEL1" ColumnName="LABEL1" />
-          <ScalarProperty Name="LABEL2" ColumnName="LABEL2" />
-          <ScalarProperty Name="LABEL3" ColumnName="LABEL3" />
           <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
           <ScalarProperty Name="STAR_NUM" ColumnName="STAR_NUM" />
           <ScalarProperty Name="FORK_NUM" ColumnName="FORK_NUM" />
           <ScalarProperty Name="IS_CREATE" ColumnName="IS_CREATE" />
           <ScalarProperty Name="FORK_FROM" ColumnName="FORK_FROM" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPOSITORY_FILE">
+      <EntityTypeMapping TypeName="Model.REPOSITORY_FILE">
+        <MappingFragment StoreEntitySet="REPOSITORY_FILE">
+          <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+          <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
+          <ScalarProperty Name="REPOSITORY_FILE_ID" ColumnName="REPOSITORY_FILE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAKES">
+      <EntityTypeMapping TypeName="Model.TAKE">
+        <MappingFragment StoreEntitySet="TAKES">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+          <ScalarProperty Name="TAKES_ID" ColumnName="TAKES_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -84,7 +114,7 @@
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
           <ScalarProperty Name="LOOK_DATE" ColumnName="LOOK_DATE" />
-          <ScalarProperty Name="IS__STAR" ColumnName="IS__STAR" />
+          <ScalarProperty Name="IS_STAR" ColumnName="IS_STAR" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -94,7 +124,9 @@
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
           <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
-          <ScalarProperty Name="OPRATION" ColumnName="OPRATION" />
+          <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -126,16 +158,15 @@
           <ScalarProperty Name="IDENTITY" ColumnName="IDENTITY" />
           <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
           <ScalarProperty Name="GRADE" ColumnName="GRADE" />
+          <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+          <ScalarProperty Name="SIGNATURE" ColumnName="SIGNATURE" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
+          <ScalarProperty Name="SELFURL" ColumnName="SELFURL" />
+          <ScalarProperty Name="UNIVERSITY" ColumnName="UNIVERSITY" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="REPOSITORY_FILE" TypeName="Model.REPOSITORY_FILE" StoreEntitySet="REPOSITORY_FILE">
-      <EndProperty Name="FILETABLE">
-        <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
-      </EndProperty>
-      <EndProperty Name="REPOSITORY">
-        <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
-      </EndProperty>
-    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>
