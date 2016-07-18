@@ -7,6 +7,7 @@ using Database_course_design.Models.ItemModel;
 
 namespace Database_course_design.Models
 {
+
     public class DBModel
     {
         /// <summary>
@@ -57,6 +58,56 @@ namespace Database_course_design.Models
                     System.Diagnostics.Debug.WriteLine("用户添加异常");
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                     return false;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 显示仓库文件
+        /// 输入：仓库ID
+        /// 输出：文件名,文件类型，文件大小
+        /// 待测试
+        /// </summary>
+        public struct FileInfo
+        {
+            public string name;
+            public string type;
+            public string size;
+        }
+        public List<FileInfo> showFile(string resipositoryId, ref string resipositoryName)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    List<FileInfo> res = new List<FileInfo>();
+                    var file = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == resipositoryId);
+                    resipositoryName = (from a in db.REPOSITORies
+                                        where a.REPOSITORY_ID == resipositoryId
+                                        select a.NAME).FirstOrDefault();
+                    foreach (var str in file)
+                    {
+                        FileInfo temp = new FileInfo();
+                        temp.name = (from s in db.FILETABLEs
+                                     where s.FILE_ID == str.FILE_ID
+                                     select s.FILE_NAME).FirstOrDefault();
+                        temp.type = (from q in db.FILETABLEs
+                                     where q.FILE_ID == str.FILE_ID
+                                     select q.FILE_TYPE).FirstOrDefault();
+                        temp.size = Convert.ToString((from p in db.FILETABLEs
+                                                      where p.FILE_ID == str.FILE_ID
+                                                      select p.FILE_SIZE).FirstOrDefault());
+                        res.Add(temp);
+                    }
+                    return res;
+                }
+
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("文件显示异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
                 }
             }
         }

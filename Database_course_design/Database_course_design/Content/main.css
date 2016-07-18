@@ -1,0 +1,184 @@
+/*
+深蓝:#004E64
+中蓝:#037FA2
+浅蓝:#03ACDC
+*/
+a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+body {
+    font-family: 'PingFang SC Light', '华文细黑', '微软雅黑', sans-serif;
+    background: -webkit-linear-gradient(140deg, #00C8FF, #51FEB3);
+    padding-top: 50px;
+    margin: 0;
+    height: auto;
+    width: auto;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+li {
+    list-style: none;
+}
+
+section {
+    background-color: white;
+}
+
+ul {
+    padding: 0;
+}
+
+.file-icon {
+    display: inline-block;
+}
+
+/*NavigationBar*/
+#navigationBar {
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+#navigationBar > div {
+    height: 50px;
+    transform: translateZ(0);
+}
+
+#navigationBar > div p {
+    margin: 0;
+    margin-top: 26px;
+}
+
+#t1 {
+    float: right;
+    width: 18%;
+	background: #004E64;
+}
+
+#t1::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -50px;
+    border-width: 25px;
+    border-style: solid;
+    border-color: transparent transparent transparent #004E64;
+}
+
+#t1 a {
+    margin: 0 auto;
+}
+
+#t1 a img {
+    height: 34px;
+    margin: 0 auto;
+    margin-top: 8px;
+}
+
+#t2 {
+    float: right;
+    width: 52%;
+	background: #037FA2;
+}
+
+#t2::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -50px;
+    border-width: 25px;
+    border-style: solid;
+    border-color: transparent transparent transparent #037FA2;
+}
+
+#t3 {
+    float: right;
+    width: 30%;
+	background: #03ACDC;
+}
+
+/*个人信息*/
+#content {
+    position: fixed;
+    top: 50px;
+    left: 0;
+	width: 18%;
+    height: 100%;
+}
+
+#searchBar {
+    width: 70%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 5px;
+}
+
+#searchBar svg {
+    vertical-align: middle;
+}
+
+#searchBar input {
+    outline: none;
+    border: none;
+    width: calc(100% - 30px);
+    font-size: 16px;
+    padding: none;
+}
+
+#content .head {
+    width: 110px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 50%;
+}
+
+#content .head img {
+    width: 110px;
+    border-radius: 50%;
+}
+
+#content p {
+    text-align: center;
+}
+
+#content ul {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+#content ul li a {
+    color: #464646;
+    line-height: 28px;
+    width: 130px;
+    display: block;
+    margin: 0 auto;
+}
+
+#content ul li a svg {
+    vertical-align: baseline;
+    fill: #464646;
+}
