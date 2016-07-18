@@ -31,7 +31,10 @@ namespace Database_course_design.Models.ItemModel
         public string RepertoryLabel2 { get; set; }
         public string RepertoryLabel3 { get; set; }
 
-        public RepertorySearchResult( REPOSITORY _Repo)
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public RepertorySearchResult(REPOSITORY _Repo)
         {
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             RepertoryName = _Repo.NAME;
@@ -40,10 +43,12 @@ namespace Database_course_design.Models.ItemModel
             RepertoryUpdateTime = _Repo.UPDATE_DATE.ToString();
             RepertoryStar = _Repo.STAR_NUM.Value;
             RepertoryFork = _Repo.FORK_NUM.Value;
-            RepertoryCreater = db.USERTABLEs.Where(//Where:begin
-                q => q.USER_ID == (_Repo.USER_REPOSITORY_RELATIONSHIP .Where(p => p.REPOSITORY_ID == _Repo.REPOSITORY_ID) .Select(p => p.USER_ID).FirstOrDefault())
-                )//Where:end
+
+            RepertoryCreater = 
+                db.USERTABLEs.Where(
+                q => q.USER_ID == (_Repo.USER_REPOSITORY_RELATIONSHIP .Where(p => p.REPOSITORY_ID == _Repo.REPOSITORY_ID) .Select(p => p.USER_ID).FirstOrDefault()))
                 .Select(q => q.USER_NAME).First();
+
             RepertoryLabel1 = _Repo.COURSE.LABEL1;
             RepertoryLabel2 = _Repo.COURSE.LABEL2;
             RepertoryLabel3 = _Repo.COURSE.LABEL3;

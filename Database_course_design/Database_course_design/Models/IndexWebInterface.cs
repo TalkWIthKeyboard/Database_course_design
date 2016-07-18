@@ -84,54 +84,15 @@ namespace Database_course_design.Models
             {
 
             }
-            
-
-
         }
-        
-        /// <summary>
-        /// 获取用户的仓库，默认为获取所有的仓库
-        /// 输入：用户的id, 仓库id（null时为获取所有的仓库）， 要返回的仓库列表, 错误的信息
-        /// 输出：是否成功
-        /// 未测试
-        /// </summary>
-        public bool getUserRepository(string _UserId, string _RepoId, out List<ItemModel.RepertorySearchResult> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
-        {
-
-        }
-
-        /// <summary>
-        /// 获取用户动态，根据参数决定是获取用户本身的动态还是用户好友的动态
-        /// 输入：用户的id, 仓库id（null时为获取所有的仓库），获取类型（True时为获取好友的动态，False时为获取用户的动态）， 要返回的仓库列表, 错误的信息
-        /// 输出：是否成功
-        /// 说明：根据参数调用不同的私有方法
-        /// 未测试
-        /// </summary>
-        public bool getUserDynamic(string _UserId, string _RepoId, bool _GetFriend, out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
-        {
-
-        }
-
-        /// <summary>
-        /// 获取用户自己的动态
-        /// 输入：用户的id, 仓库id（null时为获取所有的仓库）， 要返回的仓库列表, 错误的信息
-        /// 输出：是否成功
-        /// 被 getUserDynamic 调用
-        /// 未测试
-        /// </summary>
-        private bool getSelfDynamic(string _UserId, string _RepoId,  out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
-        {
-
-        }
-
+       
         /// <summary>
         /// 获取用户的好友的动态
         /// 输入：用户的id, 仓库id（null时为获取所有的仓库）， 要返回的仓库列表, 错误的信息
         /// 输出：是否成功
-        /// 被 getUserDynamic 调用
         /// 未测试
         /// </summary>
-        private bool getFriendDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
+        public bool getFriendDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
         {
 
         }

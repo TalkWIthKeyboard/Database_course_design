@@ -7,6 +7,29 @@ namespace Database_course_design.Models
 {
     public class PersonalWebInterface
     {
+
+        /// <summary>
+        /// 获取用户的仓库，默认为获取所有的仓库
+        /// 输入：用户的id, 仓库id（null时为获取所有的仓库）， 要返回的仓库列表, 错误的信息
+        /// 输出：是否成功
+        /// 未测试
+        /// </summary>
+        public bool getUserRepository(string _UserId, string _RepoId, out List<ItemModel.RepertorySearchResult> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
+        {
+
+        }
+
+        /// <summary>
+        /// 获取用户自己的动态
+        /// 输入：用户的id, 仓库id（null时为获取所有的仓库）， 要返回的仓库列表, 错误的信息
+        /// 输出：是否成功
+        /// 未测试
+        /// </summary>
+        public bool getSelfDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
+        {
+
+        }
+
         /// <summary>
         /// 修改用户资料（对DBmodel的封装）
         /// 输入：/*待定参数*/， 错误信息
