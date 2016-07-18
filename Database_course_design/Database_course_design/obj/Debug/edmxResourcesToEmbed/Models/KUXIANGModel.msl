@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGDATAEntities">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KUXIANGDBEntities">
     <EntitySetMapping Name="COMMENTTABLEs">
       <EntityTypeMapping TypeName="Model.COMMENTTABLE">
         <MappingFragment StoreEntitySet="COMMENTTABLE">
@@ -57,6 +57,16 @@
           <ScalarProperty Name="FORK_NUM" ColumnName="FORK_NUM" />
           <ScalarProperty Name="IS_CREATE" ColumnName="IS_CREATE" />
           <ScalarProperty Name="FORK_FROM" ColumnName="FORK_FROM" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPOSITORY_FILE">
+      <EntityTypeMapping TypeName="Model.REPOSITORY_FILE">
+        <MappingFragment StoreEntitySet="REPOSITORY_FILE">
+          <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
+          <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
+          <ScalarProperty Name="REPOSITORY_FILE_ID" ColumnName="REPOSITORY_FILE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -94,7 +104,7 @@
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
           <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
-          <ScalarProperty Name="OPRATION" ColumnName="OPRATION" />
+          <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -129,13 +139,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="REPOSITORY_FILE" TypeName="Model.REPOSITORY_FILE" StoreEntitySet="REPOSITORY_FILE">
-      <EndProperty Name="FILETABLE">
-        <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
-      </EndProperty>
-      <EndProperty Name="REPOSITORY">
-        <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
-      </EndProperty>
-    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

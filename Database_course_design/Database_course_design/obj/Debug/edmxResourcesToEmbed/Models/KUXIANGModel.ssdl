@@ -54,14 +54,15 @@
     <Property Name="FORK_NUM" Type="number" Precision="7" Scale="0" />
     <Property Name="IS_CREATE" Type="number" Precision="7" Scale="0" />
     <Property Name="FORK_FROM" Type="varchar2" MaxLength="20" />
+    <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
   </EntityType>
   <EntityType Name="REPOSITORY_FILE">
     <Key>
-      <PropertyRef Name="REPOSITORY_ID" />
-      <PropertyRef Name="FILE_ID" />
+      <PropertyRef Name="REPOSITORY_FILE_ID" />
     </Key>
     <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
     <Property Name="FILE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+    <Property Name="REPOSITORY_FILE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
   </EntityType>
   <EntityType Name="USER_COMMENT_REPOSITORY">
     <Key>
@@ -94,11 +95,12 @@
     <Key>
       <PropertyRef Name="USER_ID" />
       <PropertyRef Name="REPOSITORY_ID" />
+      <PropertyRef Name="OPERATION_DATE" />
     </Key>
     <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
     <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-    <Property Name="OPERATION_DATE" Type="date" />
-    <Property Name="OPRATION" Type="varchar2" MaxLength="20" Nullable="false" />
+    <Property Name="OPERATION_DATE" Type="date" Nullable="false" />
+    <Property Name="OPERATION" Type="varchar2" MaxLength="20" Nullable="false" />
   </EntityType>
   <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
     <Key>

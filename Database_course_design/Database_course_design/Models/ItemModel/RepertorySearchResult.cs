@@ -30,5 +30,20 @@ namespace Database_course_design.Models.ItemModel
         public string RepertoryLabel1 { get; set; }
         public string RepertoryLabel2 { get; set; }
         public string RepertoryLabel3 { get; set; }
+
+        public RepertorySearchResult( REPOSITORY _Repo)
+        {
+            KUXIANGDBEntities
+            RepertoryName = _Repo.NAME;
+            RepertoryUrl = _Repo.URL;
+            RepertoryInfo = _Repo.DESCRIPTION;
+            RepertoryUpdateTime = _Repo.UPDATE_DATE.ToString();
+            RepertoryStar = _Repo.STAR_NUM.Value;
+            RepertoryFork = _Repo.FORK_NUM.Value;
+            RepertoryCreater =  (_Repo.USER_REPOSITORY_RELATIONSHIP
+                                                .Where(p=>p.REPOSITORY_ID == _Repo.REPOSITORY_ID)
+                                                .Select(p=>p.USER_ID).FirstOrDefault())
+
+        }
     }
 }
