@@ -34,12 +34,14 @@ namespace Database_course_design.Models
         {
             USERTABLE newUser = new USERTABLE
             {
+                USER_ID = UserAccount,
                 USER_NAME = UserName,
                 PASSWORD = UserKey,
                 DEPARTMENT = UserDepartment,
                 EMAIL = UserEmail,
                 IDENTITY = UserIdentity,
-                GRADE = UserGrade
+                GRADE = UserGrade,
+                UNIVERSITY = "同济大学"
             };
 
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
