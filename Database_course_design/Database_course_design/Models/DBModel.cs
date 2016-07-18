@@ -204,7 +204,6 @@ namespace Database_course_design.Models
                         newdy.Add(new actionInfo
                         {
                             UserName = userFriend.USER_NAME,
-                            UserUrl = userFriend.USER_URL,
                             UserPhotoUrl = userFriend.IMAGE,
                             UserOperation = dyamics.OPERATION,
                             RepertoryUrl = repositFriend.URL,
@@ -591,9 +590,6 @@ namespace Database_course_design.Models
                     REPOSITORY oldrepository = db.REPOSITORies.Where(p => p.REPOSITORY_ID == RepositoryId).FirstOrDefault();
                     oldrepository.DESCRIPTION = newDes;//新加属性（description）
                     oldrepository.NAME = newName;
-                    oldrepository.LABEL1 = newLabel1;
-                    oldrepository.LABEL2 = newLabel2;
-                    oldrepository.LABEL3 = newLabel3;
                     db.SaveChanges();
                     return true;
                 }
@@ -660,7 +656,7 @@ namespace Database_course_design.Models
         }
 
 
-        /// <summary>
+      /*  /// <summary>
         /// 显示关注者动态
         /// 输入：用户ID
         /// 输出：被关注者信息
@@ -721,7 +717,7 @@ namespace Database_course_design.Models
                     return null;
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// 创建仓库
@@ -1199,9 +1195,6 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                     {
                         REPOSITORY_ID = new_id,
                         NAME = origin.NAME,
-                        LABEL1 = origin.LABEL1,
-                        LABEL2 = origin.LABEL2,
-                        LABEL3 = origin.LABEL3,
                         ATTRIBUTE = origin.ATTRIBUTE,
                         AUTHORITY = origin.AUTHORITY,
                         //一致性?

@@ -26,11 +26,13 @@ namespace Database_course_design.Models
         }
     
         public virtual DbSet<COMMENTTABLE> COMMENTTABLEs { get; set; }
+        public virtual DbSet<COURSE> COURSEs { get; set; }
         public virtual DbSet<FILE_FILE> FILE_FILE { get; set; }
         public virtual DbSet<FILETABLE> FILETABLEs { get; set; }
         public virtual DbSet<MESSAGE> MESSAGEs { get; set; }
         public virtual DbSet<REPOSITORY> REPOSITORies { get; set; }
         public virtual DbSet<REPOSITORY_FILE> REPOSITORY_FILE { get; set; }
+        public virtual DbSet<TAKE> TAKES { get; set; }
         public virtual DbSet<USER_COMMENT_REPOSITORY> USER_COMMENT_REPOSITORY { get; set; }
         public virtual DbSet<USER_COMMENT_USER> USER_COMMENT_USER { get; set; }
         public virtual DbSet<USER_REPOSITORY_LOOKHISTORY> USER_REPOSITORY_LOOKHISTORY { get; set; }

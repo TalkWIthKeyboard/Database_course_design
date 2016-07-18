@@ -203,6 +203,9 @@
     <Compile Include="Models\COMMENTTABLE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\COURSE.cs">
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBModel.cs" />
     <Compile Include="Models\FILETABLE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
@@ -240,6 +243,9 @@
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\REPOSITORY_FILE.cs">
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TAKE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USERTABLE.cs">

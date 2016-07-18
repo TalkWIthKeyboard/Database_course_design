@@ -20,6 +20,7 @@ namespace Database_course_design.Models
             this.FILE_FILE = new HashSet<FILE_FILE>();
             this.FILE_FILE1 = new HashSet<FILE_FILE>();
             this.REPOSITORY_FILE = new HashSet<REPOSITORY_FILE>();
+            this.USER_REPOSITORY_OPERATION = new HashSet<USER_REPOSITORY_OPERATION>();
         }
     
         public string FILE_ID { get; set; }
@@ -37,5 +38,7 @@ namespace Database_course_design.Models
         public virtual ICollection<FILE_FILE> FILE_FILE1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REPOSITORY_FILE> REPOSITORY_FILE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USER_REPOSITORY_OPERATION> USER_REPOSITORY_OPERATION { get; set; }
     }
 }

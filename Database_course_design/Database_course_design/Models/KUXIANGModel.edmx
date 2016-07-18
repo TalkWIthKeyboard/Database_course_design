@@ -13,6 +13,15 @@
           <Property Name="COMMENT_DATE" Type="date" />
           <Property Name="CONTENT" Type="varchar2" MaxLength="300" Nullable="false" />
         </EntityType>
+        <EntityType Name="COURSE">
+          <Key>
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="COURSE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="LABEL1" Type="varchar2" MaxLength="20" />
+          <Property Name="LABEL2" Type="varchar2" MaxLength="20" />
+          <Property Name="LABEL3" Type="varchar2" MaxLength="20" />
+        </EntityType>
         <EntityType Name="FILE_FILE">
           <Key>
             <PropertyRef Name="FILE_ID1" />
@@ -52,9 +61,6 @@
           <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="NAME" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="AUTHORITY" Type="number" Precision="7" Scale="0" Nullable="false" />
-          <Property Name="LABEL1" Type="varchar2" MaxLength="20" />
-          <Property Name="LABEL2" Type="varchar2" MaxLength="20" />
-          <Property Name="LABEL3" Type="varchar2" MaxLength="20" />
           <Property Name="ATTRIBUTE" Type="number" Precision="7" Scale="0" />
           <Property Name="STAR_NUM" Type="number" Precision="7" Scale="0" />
           <Property Name="FORK_NUM" Type="number" Precision="7" Scale="0" />
@@ -62,14 +68,26 @@
           <Property Name="FORK_FROM" Type="varchar2" MaxLength="20" />
           <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
           <Property Name="URL" Type="varchar2" MaxLength="50" />
+          <Property Name="COURSE_ID" Type="varchar2" MaxLength="20" />
+          <Property Name="UPDATE_DATE" Type="date" />
         </EntityType>
         <EntityType Name="REPOSITORY_FILE">
           <Key>
-            <PropertyRef Name="REPOSITORY_FILE_ID" />
+            <PropertyRef Name="REPOSITORY_ID" />
+            <PropertyRef Name="FILE_ID" />
           </Key>
           <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="FILE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="REPOSITORY_FILE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAKES">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="COURSE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="TAKES_ID" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="USER_COMMENT_REPOSITORY">
           <Key>
@@ -96,7 +114,7 @@
           <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="LOOK_DATE" Type="date" Nullable="false" />
-          <Property Name="IS__STAR" Type="number" Precision="7" Scale="0" />
+          <Property Name="IS_STAR" Type="number" Precision="7" Scale="0" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_OPERATION">
           <Key>
@@ -109,6 +127,7 @@
           <Property Name="OPERATION_DATE" Type="date" Nullable="false" />
           <Property Name="OPERATION" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
+          <Property Name="FILE_ID" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
           <Key>
@@ -142,8 +161,10 @@
           <Property Name="IMAGE" Type="varchar2" MaxLength="100" />
           <Property Name="SIGNATURE" Type="varchar2" MaxLength="50" />
           <Property Name="CREATE_DATE" Type="date" />
-          <Property Name="IMAGE_PATH" Type="varchar2" MaxLength="50" />
-          <Property Name="USER_URL" Type="varchar2" MaxLength="50" />
+          <Property Name="NICKNAME" Type="varchar2" MaxLength="20" />
+          <Property Name="SELFURL" Type="varchar2" MaxLength="200" />
+          <Property Name="UNIVERSITY" Type="varchar2" MaxLength="20" />
+          <Property Name="ADDRESS" Type="varchar2" MaxLength="30" />
         </EntityType>
         <Association Name="FILE_FILE_FILETABLE_FK1">
           <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1">
@@ -180,6 +201,18 @@
             </Principal>
             <Dependent Role="MESSAGE">
               <PropertyRef Name="RECEIVER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REPOSITORY_COURSE_FK1">
+          <End Role="COURSE" Type="Self.COURSE" Multiplicity="0..1" />
+          <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSE">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="REPOSITORY">
+              <PropertyRef Name="COURSE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -220,6 +253,34 @@
             </Principal>
             <Dependent Role="REPOSITORY1">
               <PropertyRef Name="FORK_FROM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TAKES_COURSE_FK1">
+          <End Role="COURSE" Type="Self.COURSE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAKES" Type="Self.TAKES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSE">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="TAKES">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TAKES_USERTABLE_FK1">
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAKES" Type="Self.TAKES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERTABLE">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="TAKES">
+              <PropertyRef Name="USER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -353,6 +414,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="USER_REPOSITORY_OPERATION_FK3">
+          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="0..1" />
+          <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILETABLE">
+              <PropertyRef Name="FILE_ID" />
+            </Principal>
+            <Dependent Role="USER_REPOSITORY_OPERATION">
+              <PropertyRef Name="FILE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="USER_REPOSITORY_RELATIONS_FK1">
           <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
           <End Role="USER_REPOSITORY_RELATIONSHIP" Type="Self.USER_REPOSITORY_RELATIONSHIP" Multiplicity="*" />
@@ -405,11 +478,13 @@
         </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="COMMENTTABLE" EntityType="Self.COMMENTTABLE" Schema="C##SCOTT" store:Type="Tables" />
+          <EntitySet Name="COURSE" EntityType="Self.COURSE" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="FILE_FILE" EntityType="Self.FILE_FILE" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="FILETABLE" EntityType="Self.FILETABLE" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="MESSAGE" EntityType="Self.MESSAGE" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="REPOSITORY" EntityType="Self.REPOSITORY" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="REPOSITORY_FILE" EntityType="Self.REPOSITORY_FILE" Schema="C##SCOTT" store:Type="Tables" />
+          <EntitySet Name="TAKES" EntityType="Self.TAKES" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="USER_COMMENT_REPOSITORY" EntityType="Self.USER_COMMENT_REPOSITORY" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="USER_COMMENT_USER" EntityType="Self.USER_COMMENT_USER" Schema="C##SCOTT" store:Type="Tables" />
           <EntitySet Name="USER_REPOSITORY_LOOKHISTORY" EntityType="Self.USER_REPOSITORY_LOOKHISTORY" Schema="C##SCOTT" store:Type="Tables" />
@@ -429,6 +504,10 @@
             <End Role="USERTABLE" EntitySet="USERTABLE" />
             <End Role="MESSAGE" EntitySet="MESSAGE" />
           </AssociationSet>
+          <AssociationSet Name="REPOSITORY_COURSE_FK1" Association="Self.REPOSITORY_COURSE_FK1">
+            <End Role="COURSE" EntitySet="COURSE" />
+            <End Role="REPOSITORY" EntitySet="REPOSITORY" />
+          </AssociationSet>
           <AssociationSet Name="REPOSITORY_FILE_FILETABLE_FK1" Association="Self.REPOSITORY_FILE_FILETABLE_FK1">
             <End Role="FILETABLE" EntitySet="FILETABLE" />
             <End Role="REPOSITORY_FILE" EntitySet="REPOSITORY_FILE" />
@@ -440,6 +519,14 @@
           <AssociationSet Name="REPOSITORY_REPOSITORY_FK1" Association="Self.REPOSITORY_REPOSITORY_FK1">
             <End Role="REPOSITORY" EntitySet="REPOSITORY" />
             <End Role="REPOSITORY1" EntitySet="REPOSITORY" />
+          </AssociationSet>
+          <AssociationSet Name="TAKES_COURSE_FK1" Association="Self.TAKES_COURSE_FK1">
+            <End Role="COURSE" EntitySet="COURSE" />
+            <End Role="TAKES" EntitySet="TAKES" />
+          </AssociationSet>
+          <AssociationSet Name="TAKES_USERTABLE_FK1" Association="Self.TAKES_USERTABLE_FK1">
+            <End Role="USERTABLE" EntitySet="USERTABLE" />
+            <End Role="TAKES" EntitySet="TAKES" />
           </AssociationSet>
           <AssociationSet Name="USER_COMMENT_REPOSITORY_C_FK1" Association="Self.USER_COMMENT_REPOSITORY_C_FK1">
             <End Role="COMMENTTABLE" EntitySet="COMMENTTABLE" />
@@ -481,6 +568,10 @@
             <End Role="REPOSITORY" EntitySet="REPOSITORY" />
             <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
           </AssociationSet>
+          <AssociationSet Name="USER_REPOSITORY_OPERATION_FK3" Association="Self.USER_REPOSITORY_OPERATION_FK3">
+            <End Role="FILETABLE" EntitySet="FILETABLE" />
+            <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
+          </AssociationSet>
           <AssociationSet Name="USER_REPOSITORY_RELATIONS_FK1" Association="Self.USER_REPOSITORY_RELATIONS_FK1">
             <End Role="USERTABLE" EntitySet="USERTABLE" />
             <End Role="USER_REPOSITORY_RELATIONSHIP" EntitySet="USER_REPOSITORY_RELATIONSHIP" />
@@ -513,6 +604,17 @@
           <NavigationProperty Name="USER_COMMENT_REPOSITORY" Relationship="Self.USER_COMMENT_REPOSITORY_C_FK1" FromRole="COMMENTTABLE" ToRole="USER_COMMENT_REPOSITORY" />
           <NavigationProperty Name="USER_COMMENT_USER" Relationship="Self.USER_COMMENT_USER_COMMENT_FK1" FromRole="COMMENTTABLE" ToRole="USER_COMMENT_USER" />
         </EntityType>
+        <EntityType Name="COURSE">
+          <Key>
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="COURSE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LABEL1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LABEL2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LABEL3" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REPOSITORies" Relationship="Self.REPOSITORY_COURSE_FK1" FromRole="COURSE" ToRole="REPOSITORY" />
+          <NavigationProperty Name="TAKES" Relationship="Self.TAKES_COURSE_FK1" FromRole="COURSE" ToRole="TAKES" />
+        </EntityType>
         <EntityType Name="FILE_FILE">
           <Key>
             <PropertyRef Name="FILE_ID1" />
@@ -539,6 +641,7 @@
           <NavigationProperty Name="FILE_FILE" Relationship="Self.FILE_FILE_FILETABLE_FK1" FromRole="FILETABLE" ToRole="FILE_FILE" />
           <NavigationProperty Name="FILE_FILE1" Relationship="Self.FILE_FILE_FILETABLE_FK2" FromRole="FILETABLE" ToRole="FILE_FILE" />
           <NavigationProperty Name="REPOSITORY_FILE" Relationship="Self.REPOSITORY_FILE_FILETABLE_FK1" FromRole="FILETABLE" ToRole="REPOSITORY_FILE" />
+          <NavigationProperty Name="USER_REPOSITORY_OPERATION" Relationship="Self.USER_REPOSITORY_OPERATION_FK3" FromRole="FILETABLE" ToRole="USER_REPOSITORY_OPERATION" />
         </EntityType>
         <EntityType Name="MESSAGE">
           <Key>
@@ -558,9 +661,6 @@
           <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AUTHORITY" Type="Int32" Nullable="false" />
-          <Property Name="LABEL1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LABEL2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LABEL3" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ATTRIBUTE" Type="Int32" />
           <Property Name="STAR_NUM" Type="Int32" />
           <Property Name="FORK_NUM" Type="Int32" />
@@ -568,6 +668,9 @@
           <Property Name="FORK_FROM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COURSE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UPDATE_DATE" Type="DateTime" />
+          <NavigationProperty Name="COURSE" Relationship="Self.REPOSITORY_COURSE_FK1" FromRole="REPOSITORY" ToRole="COURSE" />
           <NavigationProperty Name="REPOSITORY_FILE" Relationship="Self.REPOSITORY_FILE_REPOSITOR_FK1" FromRole="REPOSITORY" ToRole="REPOSITORY_FILE" />
           <NavigationProperty Name="REPOSITORY1" Relationship="Self.REPOSITORY_REPOSITORY_FK1" FromRole="REPOSITORY" ToRole="REPOSITORY1" />
           <NavigationProperty Name="REPOSITORY2" Relationship="Self.REPOSITORY_REPOSITORY_FK1" FromRole="REPOSITORY1" ToRole="REPOSITORY" />
@@ -578,13 +681,25 @@
         </EntityType>
         <EntityType Name="REPOSITORY_FILE">
           <Key>
-            <PropertyRef Name="REPOSITORY_FILE_ID" />
+            <PropertyRef Name="REPOSITORY_ID" />
+            <PropertyRef Name="FILE_ID" />
           </Key>
           <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="REPOSITORY_FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="FILETABLE" Relationship="Self.REPOSITORY_FILE_FILETABLE_FK1" FromRole="REPOSITORY_FILE" ToRole="FILETABLE" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.REPOSITORY_FILE_REPOSITOR_FK1" FromRole="REPOSITORY_FILE" ToRole="REPOSITORY" />
+        </EntityType>
+        <EntityType Name="TAKE">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COURSE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TAKES_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="COURSE" Relationship="Self.TAKES_COURSE_FK1" FromRole="TAKES" ToRole="COURSE" />
+          <NavigationProperty Name="USERTABLE" Relationship="Self.TAKES_USERTABLE_FK1" FromRole="TAKES" ToRole="USERTABLE" />
         </EntityType>
         <EntityType Name="USER_COMMENT_REPOSITORY">
           <Key>
@@ -617,7 +732,7 @@
           <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LOOK_DATE" Type="DateTime" Nullable="false" />
-          <Property Name="IS__STAR" Type="Int32" />
+          <Property Name="IS_STAR" Type="Int32" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK2" FromRole="USER_REPOSITORY_LOOKHISTORY" ToRole="REPOSITORY" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK1" FromRole="USER_REPOSITORY_LOOKHISTORY" ToRole="USERTABLE" />
         </EntityType>
@@ -632,6 +747,8 @@
           <Property Name="OPERATION_DATE" Type="DateTime" Nullable="false" />
           <Property Name="OPERATION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FILETABLE" Relationship="Self.USER_REPOSITORY_OPERATION_FK3" FromRole="USER_REPOSITORY_OPERATION" ToRole="FILETABLE" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_OPERATION_FK2" FromRole="USER_REPOSITORY_OPERATION" ToRole="REPOSITORY" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_OPERATION_FK1" FromRole="USER_REPOSITORY_OPERATION" ToRole="USERTABLE" />
         </EntityType>
@@ -671,9 +788,12 @@
           <Property Name="IMAGE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SIGNATURE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CREATE_DATE" Type="DateTime" />
-          <Property Name="IMAGE_PATH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USER_URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NICKNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SELFURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UNIVERSITY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MESSAGEs" Relationship="Self.MESSAGE_USERTABLE_FK1" FromRole="USERTABLE" ToRole="MESSAGE" />
+          <NavigationProperty Name="TAKES" Relationship="Self.TAKES_USERTABLE_FK1" FromRole="USERTABLE" ToRole="TAKES" />
           <NavigationProperty Name="USER_COMMENT_REPOSITORY" Relationship="Self.USER_COMMENT_REPOSITORY_U_FK1" FromRole="USERTABLE" ToRole="USER_COMMENT_REPOSITORY" />
           <NavigationProperty Name="USER_COMMENT_USER" Relationship="Self.USER_COMMENT_USER_USERTAB_FK1" FromRole="USERTABLE" ToRole="USER_COMMENT_USER" />
           <NavigationProperty Name="USER_COMMENT_USER1" Relationship="Self.USER_COMMENT_USER_USERTAB_FK2" FromRole="USERTABLE" ToRole="USER_COMMENT_USER" />
@@ -708,6 +828,32 @@
             </Principal>
             <Dependent Role="USER_COMMENT_USER">
               <PropertyRef Name="COMMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REPOSITORY_COURSE_FK1">
+          <End Role="COURSE" Type="Self.COURSE" Multiplicity="0..1" />
+          <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSE">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="REPOSITORY">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TAKES_COURSE_FK1">
+          <End Role="COURSE" Type="Self.COURSE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAKES" Type="Self.TAKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSE">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="TAKES">
+              <PropertyRef Name="COURSE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -747,6 +893,18 @@
               <PropertyRef Name="FILE_ID" />
             </Principal>
             <Dependent Role="REPOSITORY_FILE">
+              <PropertyRef Name="FILE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="USER_REPOSITORY_OPERATION_FK3">
+          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="0..1" />
+          <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILETABLE">
+              <PropertyRef Name="FILE_ID" />
+            </Principal>
+            <Dependent Role="USER_REPOSITORY_OPERATION">
               <PropertyRef Name="FILE_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -842,6 +1000,20 @@
             </Principal>
             <Dependent Role="USER_REPOSITORY_RELATIONSHIP">
               <PropertyRef Name="REPOSITORY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TAKES_USERTABLE_FK1">
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAKES" Type="Self.TAKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERTABLE">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="TAKES">
+              <PropertyRef Name="USER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -943,11 +1115,13 @@
         </Association>
         <EntityContainer Name="KUXIANGDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="COMMENTTABLEs" EntityType="Self.COMMENTTABLE" />
+          <EntitySet Name="COURSEs" EntityType="Self.COURSE" />
           <EntitySet Name="FILE_FILE" EntityType="Self.FILE_FILE" />
           <EntitySet Name="FILETABLEs" EntityType="Self.FILETABLE" />
           <EntitySet Name="MESSAGEs" EntityType="Self.MESSAGE" />
           <EntitySet Name="REPOSITORies" EntityType="Self.REPOSITORY" />
           <EntitySet Name="REPOSITORY_FILE" EntityType="Self.REPOSITORY_FILE" />
+          <EntitySet Name="TAKES" EntityType="Self.TAKE" />
           <EntitySet Name="USER_COMMENT_REPOSITORY" EntityType="Self.USER_COMMENT_REPOSITORY" />
           <EntitySet Name="USER_COMMENT_USER" EntityType="Self.USER_COMMENT_USER" />
           <EntitySet Name="USER_REPOSITORY_LOOKHISTORY" EntityType="Self.USER_REPOSITORY_LOOKHISTORY" />
@@ -963,6 +1137,14 @@
             <End Role="COMMENTTABLE" EntitySet="COMMENTTABLEs" />
             <End Role="USER_COMMENT_USER" EntitySet="USER_COMMENT_USER" />
           </AssociationSet>
+          <AssociationSet Name="REPOSITORY_COURSE_FK1" Association="Self.REPOSITORY_COURSE_FK1">
+            <End Role="COURSE" EntitySet="COURSEs" />
+            <End Role="REPOSITORY" EntitySet="REPOSITORies" />
+          </AssociationSet>
+          <AssociationSet Name="TAKES_COURSE_FK1" Association="Self.TAKES_COURSE_FK1">
+            <End Role="COURSE" EntitySet="COURSEs" />
+            <End Role="TAKES" EntitySet="TAKES" />
+          </AssociationSet>
           <AssociationSet Name="FILE_FILE_FILETABLE_FK1" Association="Self.FILE_FILE_FILETABLE_FK1">
             <End Role="FILETABLE" EntitySet="FILETABLEs" />
             <End Role="FILE_FILE" EntitySet="FILE_FILE" />
@@ -974,6 +1156,10 @@
           <AssociationSet Name="REPOSITORY_FILE_FILETABLE_FK1" Association="Self.REPOSITORY_FILE_FILETABLE_FK1">
             <End Role="FILETABLE" EntitySet="FILETABLEs" />
             <End Role="REPOSITORY_FILE" EntitySet="REPOSITORY_FILE" />
+          </AssociationSet>
+          <AssociationSet Name="USER_REPOSITORY_OPERATION_FK3" Association="Self.USER_REPOSITORY_OPERATION_FK3">
+            <End Role="FILETABLE" EntitySet="FILETABLEs" />
+            <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
           </AssociationSet>
           <AssociationSet Name="MESSAGE_USERTABLE_FK1" Association="Self.MESSAGE_USERTABLE_FK1">
             <End Role="USERTABLE" EntitySet="USERTABLEs" />
@@ -1002,6 +1188,10 @@
           <AssociationSet Name="USER_REPOSITORY_RELATIONS_FK2" Association="Self.USER_REPOSITORY_RELATIONS_FK2">
             <End Role="REPOSITORY" EntitySet="REPOSITORies" />
             <End Role="USER_REPOSITORY_RELATIONSHIP" EntitySet="USER_REPOSITORY_RELATIONSHIP" />
+          </AssociationSet>
+          <AssociationSet Name="TAKES_USERTABLE_FK1" Association="Self.TAKES_USERTABLE_FK1">
+            <End Role="USERTABLE" EntitySet="USERTABLEs" />
+            <End Role="TAKES" EntitySet="TAKES" />
           </AssociationSet>
           <AssociationSet Name="USER_COMMENT_REPOSITORY_U_FK1" Association="Self.USER_COMMENT_REPOSITORY_U_FK1">
             <End Role="USERTABLE" EntitySet="USERTABLEs" />
@@ -1051,6 +1241,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="COURSEs">
+            <EntityTypeMapping TypeName="Model.COURSE">
+              <MappingFragment StoreEntitySet="COURSE">
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+                <ScalarProperty Name="LABEL1" ColumnName="LABEL1" />
+                <ScalarProperty Name="LABEL2" ColumnName="LABEL2" />
+                <ScalarProperty Name="LABEL3" ColumnName="LABEL3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FILE_FILE">
             <EntityTypeMapping TypeName="Model.FILE_FILE">
               <MappingFragment StoreEntitySet="FILE_FILE">
@@ -1091,9 +1291,6 @@
                 <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="AUTHORITY" ColumnName="AUTHORITY" />
-                <ScalarProperty Name="LABEL1" ColumnName="LABEL1" />
-                <ScalarProperty Name="LABEL2" ColumnName="LABEL2" />
-                <ScalarProperty Name="LABEL3" ColumnName="LABEL3" />
                 <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
                 <ScalarProperty Name="STAR_NUM" ColumnName="STAR_NUM" />
                 <ScalarProperty Name="FORK_NUM" ColumnName="FORK_NUM" />
@@ -1101,6 +1298,8 @@
                 <ScalarProperty Name="FORK_FROM" ColumnName="FORK_FROM" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1110,6 +1309,15 @@
                 <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
                 <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
                 <ScalarProperty Name="REPOSITORY_FILE_ID" ColumnName="REPOSITORY_FILE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAKES">
+            <EntityTypeMapping TypeName="Model.TAKE">
+              <MappingFragment StoreEntitySet="TAKES">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+                <ScalarProperty Name="TAKES_ID" ColumnName="TAKES_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1137,7 +1345,7 @@
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
                 <ScalarProperty Name="LOOK_DATE" ColumnName="LOOK_DATE" />
-                <ScalarProperty Name="IS__STAR" ColumnName="IS__STAR" />
+                <ScalarProperty Name="IS_STAR" ColumnName="IS_STAR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1149,6 +1357,7 @@
                 <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
                 <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1183,8 +1392,10 @@
                 <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
                 <ScalarProperty Name="SIGNATURE" ColumnName="SIGNATURE" />
                 <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
-                <ScalarProperty Name="IMAGE_PATH" ColumnName="IMAGE_PATH" />
-                <ScalarProperty Name="USER_URL" ColumnName="USER_URL" />
+                <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
+                <ScalarProperty Name="SELFURL" ColumnName="SELFURL" />
+                <ScalarProperty Name="UNIVERSITY" ColumnName="UNIVERSITY" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
