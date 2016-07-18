@@ -28,16 +28,17 @@ namespace Database_course_design.Models
         public string REPOSITORY_ID { get; set; }
         public string NAME { get; set; }
         public int AUTHORITY { get; set; }
-        public string LABEL1 { get; set; }
-        public string LABEL2 { get; set; }
-        public string LABEL3 { get; set; }
         public Nullable<int> ATTRIBUTE { get; set; }
         public Nullable<int> STAR_NUM { get; set; }
         public Nullable<int> FORK_NUM { get; set; }
         public Nullable<int> IS_CREATE { get; set; }
         public string FORK_FROM { get; set; }
         public string DESCRIPTION { get; set; }
+        public string URL { get; set; }
+        public string COURSE_ID { get; set; }
+        public Nullable<System.DateTime> UPDATE_DATE { get; set; }
     
+        public virtual COURSE COURSE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REPOSITORY_FILE> REPOSITORY_FILE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

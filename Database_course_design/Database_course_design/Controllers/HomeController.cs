@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Database_course_design.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static Database_course_design.Models.DBModel;
 using Database_course_design.Models;
 using System.Net;
 using System.IO;

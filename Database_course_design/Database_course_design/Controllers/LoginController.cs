@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Database_course_design.Models;
+using Database_course_design.Models.ItemModel;
 
 namespace WebApplication1.Controllers
 {
@@ -20,10 +21,26 @@ namespace WebApplication1.Controllers
         {
             string username = Request["email"];
             string passwd = Request["password"];
-            if (dbmodel.sureUserLoad(username, passwd))
-                Response.Redirect("/Home/Index");
+            var spiderOp = new PythonOperation();
+            var userInfo = spiderOp.spiderUserInfo(username, passwd);
+            if (userInfo.name == "")
+            {
+                Response.Redirect("/Login/Login");
+            }
             else
-                Response.Redirect("http://10.0.1.158:3000/");
+            {
+                short iden = 0;
+                if (userInfo.identity == "本科生" || userInfo.identity == "研究生")
+                {
+                    iden = 0;
+                }
+                else
+                {
+                    iden = 1;
+                }
+                dbmodel.addUserInfo(username,passwd,userInfo.name,userInfo.department,"",iden,0);
+                Response.Redirect("/Home/Index");
+            }
             return;
         }
 
