@@ -21,7 +21,6 @@ namespace Database_course_design.Models.ItemModel
     public class RepertorySearchResult
     {
         public string RepertoryName { get; set; }
-        public string RepertoryUrl { get; set; }
         public string RepertoryInfo { get; set; }
         public string RepertoryUpdateTime { get; set; }
         public int RepertoryStar { get; set; }
@@ -38,7 +37,6 @@ namespace Database_course_design.Models.ItemModel
         {
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             RepertoryName = _Repo.NAME;
-            RepertoryUrl = _Repo.URL;
             RepertoryInfo = _Repo.DESCRIPTION;
             RepertoryUpdateTime = _Repo.UPDATE_DATE.ToString();
             RepertoryStar = _Repo.STAR_NUM.Value;
@@ -52,6 +50,11 @@ namespace Database_course_design.Models.ItemModel
             RepertoryLabel1 = _Repo.COURSE.LABEL1;
             RepertoryLabel2 = _Repo.COURSE.LABEL2;
             RepertoryLabel3 = _Repo.COURSE.LABEL3;
+        }
+
+        public RepertorySearchResult()
+        {
+
         }
     }
 }
