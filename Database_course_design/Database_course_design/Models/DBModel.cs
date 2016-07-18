@@ -1490,5 +1490,41 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
             }
         }
 
+        /// <summary>
+        /// 检索功能--文件
+        /// 输入：检索仓库的关键字（标签，仓库名），标记变量d(d为true：标签检索，d为false：关键字检索）
+        /// 输出：检索出的仓库ID列表
+        /// </summary>
+        public string[] searchRepository(string zd, bool d)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    if (d)
+                    {
+                        var newRepositoryLabel = from p in db.REPOSITORies
+                                                 join c in db.COURSEs
+                                                 on p.COURSE_ID equals c.COURSE_ID
+                                                 where c.LABEL1.Contains(zd) || c.LABEL2.Contains(zd) || c.LABEL3.Contains(zd)
+                                                 select p.REPOSITORY_ID;
+                        return newRepositoryLabel.ToArray();
+                    }
+                    var newRepository = from p in db.REPOSITORies
+                                        join c in db.COURSEs
+                                        on p.COURSE_ID equals c.COURSE_ID
+                                        where c.LABEL1.Contains(zd) || c.LABEL2.Contains(zd) || c.LABEL3.Contains(zd) || p.NAME.Contains(zd)
+                                        select p.REPOSITORY_ID;
+                    return newRepository.ToArray();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("检索仓库操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+
+
+        }
     }
-}
