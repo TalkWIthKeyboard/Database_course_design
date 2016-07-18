@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="COMMENT_ID" />
           </Key>
-          <Property Name="COMMENT_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="COMMENT_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="COMMENT_DATE" Type="date" />
           <Property Name="CONTENT" Type="varchar2" MaxLength="300" Nullable="false" />
         </EntityType>
@@ -17,7 +17,7 @@
           <Key>
             <PropertyRef Name="COURSE_ID" />
           </Key>
-          <Property Name="COURSE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="COURSE_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="LABEL1" Type="varchar2" MaxLength="20" />
           <Property Name="LABEL2" Type="varchar2" MaxLength="20" />
           <Property Name="LABEL3" Type="varchar2" MaxLength="20" />
@@ -27,15 +27,15 @@
             <PropertyRef Name="FILE_ID1" />
             <PropertyRef Name="FILE_ID2" />
           </Key>
-          <Property Name="FILE_ID1" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="FILE_ID2" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="FILE_ID1" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="FILE_ID2" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="FILE_FILE_ID" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="FILETABLE">
           <Key>
             <PropertyRef Name="FILE_ID" />
           </Key>
-          <Property Name="FILE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="FILE_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="date" />
           <Property Name="PATH" Type="varchar2" MaxLength="20" />
           <Property Name="FILE_NAME" Type="varchar2" MaxLength="20" Nullable="false" />
@@ -48,18 +48,18 @@
           <Key>
             <PropertyRef Name="MESSAGE_ID" />
           </Key>
-          <Property Name="MESSAGE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="MESSAGE_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="MESSAGE_DATE" Type="date" />
           <Property Name="MESSAGE_CONTENT" Type="varchar2" MaxLength="300" Nullable="false" />
-          <Property Name="RECEIVER_ID" Type="varchar2" MaxLength="20" />
+          <Property Name="RECEIVER_ID" Type="varchar2" MaxLength="40" />
           <Property Name="IS_READ" Type="number" Precision="7" Scale="0" />
         </EntityType>
         <EntityType Name="REPOSITORY">
           <Key>
             <PropertyRef Name="REPOSITORY_ID" />
           </Key>
-          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="NAME" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="AUTHORITY" Type="number" Precision="7" Scale="0" Nullable="false" />
           <Property Name="ATTRIBUTE" Type="number" Precision="7" Scale="0" />
           <Property Name="STAR_NUM" Type="number" Precision="7" Scale="0" />
@@ -76,34 +76,34 @@
             <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="FILE_ID" />
           </Key>
-          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="FILE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="REPOSITORY_FILE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="FILE_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="REPOSITORY_FILE_ID" Type="varchar2" MaxLength="40" Nullable="false" />
         </EntityType>
         <EntityType Name="TAKES">
           <Key>
             <PropertyRef Name="USER_ID" />
             <PropertyRef Name="COURSE_ID" />
           </Key>
-          <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="COURSE_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="TAKES_ID" Type="varchar2" MaxLength="20" />
+          <Property Name="USER_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="COURSE_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="TAKES_ID" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USER_COMMENT_REPOSITORY">
           <Key>
             <PropertyRef Name="COMMENT_ID" />
           </Key>
-          <Property Name="COMMENT_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" />
-          <Property Name="ANNOUNCER" Type="varchar2" MaxLength="20" />
+          <Property Name="COMMENT_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" />
+          <Property Name="ANNOUNCER" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USER_COMMENT_USER">
           <Key>
             <PropertyRef Name="COMMENT_ID" />
           </Key>
-          <Property Name="COMMENT_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="USER_ID" Type="varchar2" MaxLength="20" />
-          <Property Name="ANNOUNCER" Type="varchar2" MaxLength="20" />
+          <Property Name="COMMENT_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="USER_ID" Type="varchar2" MaxLength="40" />
+          <Property Name="ANNOUNCER" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_LOOKHISTORY">
           <Key>
@@ -111,8 +111,8 @@
             <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="LOOK_DATE" />
           </Key>
-          <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="USER_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="LOOK_DATE" Type="date" Nullable="false" />
           <Property Name="IS_STAR" Type="number" Precision="7" Scale="0" />
         </EntityType>
@@ -122,20 +122,19 @@
             <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="OPERATION_DATE" />
           </Key>
-          <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="USER_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="OPERATION_DATE" Type="date" Nullable="false" />
           <Property Name="OPERATION" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
-          <Property Name="FILE_ID" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
           <Key>
             <PropertyRef Name="USER_ID" />
             <PropertyRef Name="REPOSITORY_ID" />
           </Key>
-          <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="USER_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="RELATIONSHIP" Type="number" Precision="7" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="USER_USER">
@@ -143,17 +142,17 @@
             <PropertyRef Name="USER_ID1" />
             <PropertyRef Name="USER_ID2" />
           </Key>
-          <Property Name="USER_ID1" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="USER_ID2" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="USER_USER_ID" Type="varchar2" MaxLength="20" />
+          <Property Name="USER_ID1" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="USER_ID2" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="USER_USER_ID" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USERTABLE">
           <Key>
             <PropertyRef Name="USER_ID" />
           </Key>
-          <Property Name="USER_ID" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="PASSWORD" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="USER_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="USER_ID" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="USER_NAME" Type="varchar2" MaxLength="40" />
           <Property Name="DEPARTMENT" Type="varchar2" MaxLength="20" />
           <Property Name="IDENTITY" Type="number" Precision="7" Scale="0" />
           <Property Name="EMAIL" Type="varchar2" MaxLength="30" />
@@ -414,18 +413,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="USER_REPOSITORY_OPERATION_FK3">
-          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="0..1" />
-          <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FILETABLE">
-              <PropertyRef Name="FILE_ID" />
-            </Principal>
-            <Dependent Role="USER_REPOSITORY_OPERATION">
-              <PropertyRef Name="FILE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="USER_REPOSITORY_RELATIONS_FK1">
           <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
           <End Role="USER_REPOSITORY_RELATIONSHIP" Type="Self.USER_REPOSITORY_RELATIONSHIP" Multiplicity="*" />
@@ -568,10 +555,6 @@
             <End Role="REPOSITORY" EntitySet="REPOSITORY" />
             <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
           </AssociationSet>
-          <AssociationSet Name="USER_REPOSITORY_OPERATION_FK3" Association="Self.USER_REPOSITORY_OPERATION_FK3">
-            <End Role="FILETABLE" EntitySet="FILETABLE" />
-            <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
-          </AssociationSet>
           <AssociationSet Name="USER_REPOSITORY_RELATIONS_FK1" Association="Self.USER_REPOSITORY_RELATIONS_FK1">
             <End Role="USERTABLE" EntitySet="USERTABLE" />
             <End Role="USER_REPOSITORY_RELATIONSHIP" EntitySet="USER_REPOSITORY_RELATIONSHIP" />
@@ -598,7 +581,7 @@
           <Key>
             <PropertyRef Name="COMMENT_ID" />
           </Key>
-          <Property Name="COMMENT_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COMMENT_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="COMMENT_DATE" Type="DateTime" />
           <Property Name="CONTENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="USER_COMMENT_REPOSITORY" Relationship="Self.USER_COMMENT_REPOSITORY_C_FK1" FromRole="COMMENTTABLE" ToRole="USER_COMMENT_REPOSITORY" />
@@ -608,7 +591,7 @@
           <Key>
             <PropertyRef Name="COURSE_ID" />
           </Key>
-          <Property Name="COURSE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COURSE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LABEL1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LABEL2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LABEL3" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -620,8 +603,8 @@
             <PropertyRef Name="FILE_ID1" />
             <PropertyRef Name="FILE_ID2" />
           </Key>
-          <Property Name="FILE_ID1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FILE_ID2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILE_ID1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILE_ID2" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FILE_FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="FILETABLE" Relationship="Self.FILE_FILE_FILETABLE_FK1" FromRole="FILE_FILE" ToRole="FILETABLE" />
           <NavigationProperty Name="FILETABLE1" Relationship="Self.FILE_FILE_FILETABLE_FK2" FromRole="FILE_FILE" ToRole="FILETABLE" />
@@ -630,7 +613,7 @@
           <Key>
             <PropertyRef Name="FILE_ID" />
           </Key>
-          <Property Name="FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="DateTime" />
           <Property Name="PATH" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FILE_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
@@ -641,16 +624,15 @@
           <NavigationProperty Name="FILE_FILE" Relationship="Self.FILE_FILE_FILETABLE_FK1" FromRole="FILETABLE" ToRole="FILE_FILE" />
           <NavigationProperty Name="FILE_FILE1" Relationship="Self.FILE_FILE_FILETABLE_FK2" FromRole="FILETABLE" ToRole="FILE_FILE" />
           <NavigationProperty Name="REPOSITORY_FILE" Relationship="Self.REPOSITORY_FILE_FILETABLE_FK1" FromRole="FILETABLE" ToRole="REPOSITORY_FILE" />
-          <NavigationProperty Name="USER_REPOSITORY_OPERATION" Relationship="Self.USER_REPOSITORY_OPERATION_FK3" FromRole="FILETABLE" ToRole="USER_REPOSITORY_OPERATION" />
         </EntityType>
         <EntityType Name="MESSAGE">
           <Key>
             <PropertyRef Name="MESSAGE_ID" />
           </Key>
-          <Property Name="MESSAGE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MESSAGE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MESSAGE_DATE" Type="DateTime" />
           <Property Name="MESSAGE_CONTENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RECEIVER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="IS_READ" Type="Int32" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.MESSAGE_USERTABLE_FK1" FromRole="MESSAGE" ToRole="USERTABLE" />
         </EntityType>
@@ -658,8 +640,8 @@
           <Key>
             <PropertyRef Name="REPOSITORY_ID" />
           </Key>
-          <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AUTHORITY" Type="Int32" Nullable="false" />
           <Property Name="ATTRIBUTE" Type="Int32" />
           <Property Name="STAR_NUM" Type="Int32" />
@@ -684,9 +666,9 @@
             <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="FILE_ID" />
           </Key>
-          <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="REPOSITORY_FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FILE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REPOSITORY_FILE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="FILETABLE" Relationship="Self.REPOSITORY_FILE_FILETABLE_FK1" FromRole="REPOSITORY_FILE" ToRole="FILETABLE" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.REPOSITORY_FILE_REPOSITOR_FK1" FromRole="REPOSITORY_FILE" ToRole="REPOSITORY" />
         </EntityType>
@@ -695,9 +677,9 @@
             <PropertyRef Name="USER_ID" />
             <PropertyRef Name="COURSE_ID" />
           </Key>
-          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="COURSE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TAKES_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COURSE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TAKES_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="COURSE" Relationship="Self.TAKES_COURSE_FK1" FromRole="TAKES" ToRole="COURSE" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.TAKES_USERTABLE_FK1" FromRole="TAKES" ToRole="USERTABLE" />
         </EntityType>
@@ -705,9 +687,9 @@
           <Key>
             <PropertyRef Name="COMMENT_ID" />
           </Key>
-          <Property Name="COMMENT_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ANNOUNCER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="COMMENT_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ANNOUNCER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="COMMENTTABLE" Relationship="Self.USER_COMMENT_REPOSITORY_C_FK1" FromRole="USER_COMMENT_REPOSITORY" ToRole="COMMENTTABLE" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_COMMENT_REPOSITORY_R_FK1" FromRole="USER_COMMENT_REPOSITORY" ToRole="REPOSITORY" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_COMMENT_REPOSITORY_U_FK1" FromRole="USER_COMMENT_REPOSITORY" ToRole="USERTABLE" />
@@ -716,9 +698,9 @@
           <Key>
             <PropertyRef Name="COMMENT_ID" />
           </Key>
-          <Property Name="COMMENT_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ANNOUNCER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="COMMENT_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ANNOUNCER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="COMMENTTABLE" Relationship="Self.USER_COMMENT_USER_COMMENT_FK1" FromRole="USER_COMMENT_USER" ToRole="COMMENTTABLE" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_COMMENT_USER_USERTAB_FK1" FromRole="USER_COMMENT_USER" ToRole="USERTABLE" />
           <NavigationProperty Name="USERTABLE1" Relationship="Self.USER_COMMENT_USER_USERTAB_FK2" FromRole="USER_COMMENT_USER" ToRole="USERTABLE" />
@@ -729,8 +711,8 @@
             <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="LOOK_DATE" />
           </Key>
-          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LOOK_DATE" Type="DateTime" Nullable="false" />
           <Property Name="IS_STAR" Type="Int32" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK2" FromRole="USER_REPOSITORY_LOOKHISTORY" ToRole="REPOSITORY" />
@@ -742,13 +724,11 @@
             <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="OPERATION_DATE" />
           </Key>
-          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OPERATION_DATE" Type="DateTime" Nullable="false" />
           <Property Name="OPERATION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FILE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="FILETABLE" Relationship="Self.USER_REPOSITORY_OPERATION_FK3" FromRole="USER_REPOSITORY_OPERATION" ToRole="FILETABLE" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_OPERATION_FK2" FromRole="USER_REPOSITORY_OPERATION" ToRole="REPOSITORY" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_OPERATION_FK1" FromRole="USER_REPOSITORY_OPERATION" ToRole="USERTABLE" />
         </EntityType>
@@ -757,8 +737,8 @@
             <PropertyRef Name="USER_ID" />
             <PropertyRef Name="REPOSITORY_ID" />
           </Key>
-          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="REPOSITORY_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RELATIONSHIP" Type="Int32" Nullable="false" />
           <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_RELATIONS_FK2" FromRole="USER_REPOSITORY_RELATIONSHIP" ToRole="REPOSITORY" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_RELATIONS_FK1" FromRole="USER_REPOSITORY_RELATIONSHIP" ToRole="USERTABLE" />
@@ -768,9 +748,9 @@
             <PropertyRef Name="USER_ID1" />
             <PropertyRef Name="USER_ID2" />
           </Key>
-          <Property Name="USER_ID1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USER_ID2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USER_USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="USER_ID1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ID2" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_USER_USERTABLE_FK1" FromRole="USER_USER" ToRole="USERTABLE" />
           <NavigationProperty Name="USERTABLE1" Relationship="Self.USER_USER_USERTABLE_FK2" FromRole="USER_USER" ToRole="USERTABLE" />
         </EntityType>
@@ -778,9 +758,9 @@
           <Key>
             <PropertyRef Name="USER_ID" />
           </Key>
-          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PASSWORD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USER_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="DEPARTMENT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IDENTITY" Type="Int32" />
           <Property Name="EMAIL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -893,18 +873,6 @@
               <PropertyRef Name="FILE_ID" />
             </Principal>
             <Dependent Role="REPOSITORY_FILE">
-              <PropertyRef Name="FILE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="USER_REPOSITORY_OPERATION_FK3">
-          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="0..1" />
-          <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FILETABLE">
-              <PropertyRef Name="FILE_ID" />
-            </Principal>
-            <Dependent Role="USER_REPOSITORY_OPERATION">
               <PropertyRef Name="FILE_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1157,10 +1125,6 @@
             <End Role="FILETABLE" EntitySet="FILETABLEs" />
             <End Role="REPOSITORY_FILE" EntitySet="REPOSITORY_FILE" />
           </AssociationSet>
-          <AssociationSet Name="USER_REPOSITORY_OPERATION_FK3" Association="Self.USER_REPOSITORY_OPERATION_FK3">
-            <End Role="FILETABLE" EntitySet="FILETABLEs" />
-            <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
-          </AssociationSet>
           <AssociationSet Name="MESSAGE_USERTABLE_FK1" Association="Self.MESSAGE_USERTABLE_FK1">
             <End Role="USERTABLE" EntitySet="USERTABLEs" />
             <End Role="MESSAGE" EntitySet="MESSAGEs" />
@@ -1357,7 +1321,6 @@
                 <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
                 <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="FILE_ID" ColumnName="FILE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -291,6 +291,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Home\Personal.cshtml" />
+    <Content Include="Views\Test\test.cshtml" />
     <EntityDeploy Include="Models\KUXIANGModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
@@ -298,7 +299,6 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Test\test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

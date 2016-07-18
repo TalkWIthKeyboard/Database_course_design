@@ -30,7 +30,7 @@ namespace Database_course_design.Controllers
         {
             List<RepertorySearchResult> SearchResut = null;
             ErrorMessage errorInfo = null;
-            iweb.getRepositoryByLabel(user_id, out SearchResut, out errorInfo);
+            iweb.getRepositoryByLabel("1234", out SearchResut, out errorInfo);
             ViewBag.SearchResut = SearchResut;
             ViewBag.errorInfo = errorInfo;
             return View();
