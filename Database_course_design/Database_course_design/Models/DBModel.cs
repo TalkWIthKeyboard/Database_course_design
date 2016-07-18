@@ -9,8 +9,6 @@ namespace Database_course_design.Models
 {
     public class DBModel
     {
-
-
         /// <summary>
         /// 创建主码ID
         /// 输入：表名

@@ -21,11 +21,5 @@ namespace Database_course_design.Controllers
         {
             return View();
         }
-
-        public List<FileInfo> GetFile(string resipositoryId)
-        {
-            List<FileInfo> res = db.showFile(resipositoryId); //name,type,size
-            return res;
-        }
     }
 }

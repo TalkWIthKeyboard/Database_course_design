@@ -18,11 +18,10 @@ namespace Database_course_design.Models
 {
     public class PythonOperation
     {
-        private const string URL = "http://urp.tongji.edu.cn/index.portal";
-        private const string IE_DRIVER_PATH = @"C:\Path";
-
-        public UserInfo spider(string userid,string userkey)
+        public UserInfo spiderUserInfo(string userid, string userkey)
         {
+            string URL = "http://urp.tongji.edu.cn/index.portal";
+            const string IE_DRIVER_PATH = @"C:\Path";
             var userInfo = new UserInfo();
             var options = new InternetExplorerOptions()
             {
@@ -60,5 +59,36 @@ namespace Database_course_design.Models
             driver.Close(); // closes browser
             driver.Quit(); //
         }
+
+        public void spiderClass(string userid, string userkey)
+        {
+            string URL = "http://4m3.tongji.edu.cn/eams/samlCheck";
+            const string IE_DRIVER_PATH = @"C:\Path";
+            var options = new InternetExplorerOptions()
+            {
+                InitialBrowserUrl = URL,
+                IntroduceInstabilityByIgnoringProtectedModeSettings = true,
+                IgnoreZoomLevel = true
+            };
+
+            //爬虫4m3 获取个人信息
+            var driver = new InternetExplorerDriver(IE_DRIVER_PATH, options);
+            driver.Navigate();
+            Thread.Sleep(2000);
+            var userIdElement = driver.FindElement(By.Id("username"));
+            userIdElement.SendKeys(userid);
+            var passwordElement = driver.FindElement(By.Id("password"));
+            passwordElement.SendKeys(userkey);
+            var submitElement = driver.FindElement(By.Name("submit"));
+            submitElement.Submit();
+            Thread.Sleep(5000);
+
+            var page = driver.PageSource;
+
+            var selector = driver.FindElement(By.XPath("//*[@id=\"menu_panel\"]/ul/li[3]/ul/div/li[3]"));
+            selector.Click();
+            Console.WriteLine("Hello");
+        }
     }
+}
 }
