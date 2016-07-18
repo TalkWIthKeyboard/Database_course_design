@@ -734,7 +734,7 @@ namespace Database_course_design.Models
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// 显示仓库文件
         /// 输入：仓库ID
         /// 输出：文件名,文件类型，文件大小
@@ -785,7 +785,7 @@ namespace Database_course_design.Models
                     return null;
                 }
             }
-        }
+        }*/
 
 
        /* /// <summary>
@@ -1483,7 +1483,7 @@ namespace Database_course_design.Models
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// 显示文件夹中文件
         /// 输入：文件夹ID
         /// 输出：文件信息List
@@ -1527,7 +1527,7 @@ namespace Database_course_design.Models
                     return null;
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// 删除文件
