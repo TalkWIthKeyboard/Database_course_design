@@ -6,9 +6,16 @@ using System.Collections;
 
 namespace Database_course_design.Models
 {
-
     public class DBModel
     {
+        /// <summary>
+        /// 创建主码ID
+        /// 输入：表名
+        /// 输出：该表的主码ID
+        /// 待测试
+        /// </summary>
+
+
         ///宋伟
         /// <summary>
         /// 添加新用户到数据库
@@ -45,56 +52,6 @@ namespace Database_course_design.Models
             }
         }
 
-
-        /// <summary>
-        /// 显示仓库文件
-        /// 输入：仓库ID
-        /// 输出：文件名,文件类型，文件大小
-        /// 待测试
-        /// </summary>
-        public struct FileInfo
-        {
-            public string name;
-            public string type;
-            public string size;
-        }
-        public List<FileInfo> showFile(string resipositoryId, ref string resipositoryName)
-        {
-            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
-            {
-                try
-                {
-                    List<FileInfo> res = new List<FileInfo>();
-                    var file = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == resipositoryId);
-                    resipositoryName = (from a in db.REPOSITORies
-                                        where a.REPOSITORY_ID == resipositoryId
-                                        select a.NAME).FirstOrDefault();
-                    foreach (var str in file)
-                    {
-                        FileInfo temp = new FileInfo();
-                        temp.name = (from s in db.FILETABLEs
-                                     where s.FILE_ID == str.FILE_ID
-                                     select s.FILE_NAME).FirstOrDefault();
-                        temp.type = (from q in db.FILETABLEs
-                                     where q.FILE_ID == str.FILE_ID
-                                     select q.FILE_TYPE).FirstOrDefault();
-                        temp.size = Convert.ToString((from p in db.FILETABLEs
-                                                      where p.FILE_ID == str.FILE_ID
-                                                      select p.FILE_SIZE).FirstOrDefault());
-                        res.Add(temp);
-                    }
-                    return res;
-                }
-
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine("文件显示异常");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    return null;
-                }
-            }
-        }
-
         /// <summary>
         /// 修改用户信息（只能修改用户名，邮箱）
         /// 输入：用户id，用户名，用户邮箱
@@ -121,6 +78,7 @@ namespace Database_course_design.Models
                 }
             }
         }
+
 
         /// <summary>
         /// 改变用户的积分
@@ -152,30 +110,6 @@ namespace Database_course_design.Models
                 }
             }
 
-        }
-
-        /// <summary>
-        /// 确认登录
-        /// 输入：用户id，用户的密码
-        /// 输出：是否登录成功
-        /// </summary>
-        public bool sureUserLoad(string UserId, string UserKey)
-        {
-            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
-            {
-                try
-                {
-                    USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == UserId & p.PASSWORD == UserKey).FirstOrDefault();
-                    if (user == null) return false;
-                    else return true;
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine("用户登录异常");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    return false;
-                }
-            }
         }
 
         /// <summary>

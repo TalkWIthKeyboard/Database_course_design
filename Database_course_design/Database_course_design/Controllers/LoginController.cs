@@ -20,8 +20,10 @@ namespace WebApplication1.Controllers
         {
             string username = Request["email"];
             string passwd = Request["password"];
-            //if(dbmodel.sureUserLoad(username,passwd))
+            if (dbmodel.sureUserLoad(username, passwd))
                 Response.Redirect("/Home/Index");
+            else
+                Response.Redirect("http://10.0.1.158:3000/");
             return;
         }
 

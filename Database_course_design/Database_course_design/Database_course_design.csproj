@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -120,16 +121,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ChilkatDotNet46.dll" />
     <Content Include="Content\fileicon.css" />
-    <Content Include="Content\Personal.css" />
+    <Content Include="Content\indexStyle.css" />
+    <Content Include="Content\personalStyle.css" />
     <Content Include="img\head.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="Content\loginStyle.css" />
     <Content Include="Content\normalize.css" />
     <Content Include="Content\register.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\main.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\otherHead.png" />
     <Content Include="Models\KUXIANGModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
@@ -141,7 +145,9 @@
       <LastGenOutput>KUXIANGModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\echarts.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\personal.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\ScatterDiagram.js" />
     <Content Include="Web.config">
@@ -166,9 +172,6 @@
     <Compile Include="Models\FILE_FILE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ItemModel\anctionInfo.cs" />
-    <Compile Include="Models\ItemModel\RepertorySearchResult.cs" />
-    <Compile Include="Models\ItemModel\UserSearchResult.cs" />
     <Compile Include="Models\KUXIANGModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -233,6 +236,8 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\Personal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
