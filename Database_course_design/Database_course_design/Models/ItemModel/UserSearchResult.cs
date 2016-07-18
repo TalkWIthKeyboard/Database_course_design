@@ -15,10 +15,10 @@ namespace Database_course_design.Models.ItemModel
     /// </summary>
     public class UserSearchResult
     {
-        public string UserName;
-        public string UserState;
-        public string UserPhotoUrl;
-        public string UserCreateTime;
-        public string UserEmail;
+        public string UserName { get; set; }
+        public string UserState { get; set; }
+        public string UserPhotoUrl { get; set; }
+        public DateTime  UserCreateTime { get; set; }
+        public string UserEmail { get; set; }
     }
 }

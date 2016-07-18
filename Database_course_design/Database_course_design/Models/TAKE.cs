@@ -12,14 +12,13 @@ namespace Database_course_design.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MESSAGE
+    public partial class TAKE
     {
-        public string MESSAGE_ID { get; set; }
-        public Nullable<System.DateTime> MESSAGE_DATE { get; set; }
-        public string MESSAGE_CONTENT { get; set; }
-        public string RECEIVER_ID { get; set; }
-        public Nullable<int> IS_READ { get; set; }
+        public string USER_ID { get; set; }
+        public string COURSE_ID { get; set; }
+        public string TAKES_ID { get; set; }
     
+        public virtual COURSE COURSE { get; set; }
         public virtual USERTABLE USERTABLE { get; set; }
     }
 }

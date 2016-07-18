@@ -15,6 +15,6 @@ namespace Database_course_design.Models.ItemModel
     public class DayHeat
     {
         public List<HeatOpItem> OpList = new List<HeatOpItem>();
-        public  int Count; 
+        public int Count;
     }
 }

@@ -20,15 +20,15 @@ namespace Database_course_design.Models.ItemModel
     /// </summary>
     public class RepertorySearchResult
     {
-        public string RepertoryName;
-        public string RepertoryUrl;
-        public string RepertoryInfo;
-        public string RepertoryUpdateTime;
-        public int RepertoryStar;
-        public int RepertoryFork;
-        public string RepertoryCreater;
-        public string RepertoryLabel1;
-        public string RepertoryLabel2;
-        public string RepertoryLabel3;
+        public string RepertoryName { get; set; }
+        public string RepertoryUrl { get; set; }
+        public string RepertoryInfo { get; set; }
+        public string RepertoryUpdateTime { get; set; }
+        public int RepertoryStar { get; set; }
+        public int RepertoryFork { get; set; }
+        public string RepertoryCreater { get; set; }
+        public string RepertoryLabel1 { get; set; }
+        public string RepertoryLabel2 { get; set; }
+        public string RepertoryLabel3 { get; set; }
     }
 }

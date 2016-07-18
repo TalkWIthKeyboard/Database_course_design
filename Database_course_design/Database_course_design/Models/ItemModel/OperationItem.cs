@@ -11,6 +11,6 @@ namespace Database_course_design.Models.ItemModel
         public string OPERATION { get; set; }
         public string REPOSITORY_ID { get; set; }
         public string REPOSITORY_NAME { get; set; }
-        public DateTime DATE { get; set; } 
+        public DateTime DATE { get; set; }
     }
 }

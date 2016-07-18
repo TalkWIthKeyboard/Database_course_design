@@ -17,9 +17,11 @@ namespace Database_course_design.Models
         public string USER_ID { get; set; }
         public string REPOSITORY_ID { get; set; }
         public System.DateTime OPERATION_DATE { get; set; }
-        public string OPERATION { get; set; } //词表: upload, fork, download, create, delete
-
-
+        public string OPERATION { get; set; }
+        public string DESCRIPTION { get; set; }
+        public string FILE_ID { get; set; }
+    
+        public virtual FILETABLE FILETABLE { get; set; }
         public virtual REPOSITORY REPOSITORY { get; set; }
         public virtual USERTABLE USERTABLE { get; set; }
     }

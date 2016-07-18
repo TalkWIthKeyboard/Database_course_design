@@ -18,6 +18,7 @@ namespace Database_course_design.Models
         public USERTABLE()
         {
             this.MESSAGEs = new HashSet<MESSAGE>();
+            this.TAKES = new HashSet<TAKE>();
             this.USER_COMMENT_REPOSITORY = new HashSet<USER_COMMENT_REPOSITORY>();
             this.USER_COMMENT_USER = new HashSet<USER_COMMENT_USER>();
             this.USER_COMMENT_USER1 = new HashSet<USER_COMMENT_USER>();
@@ -35,9 +36,18 @@ namespace Database_course_design.Models
         public Nullable<int> IDENTITY { get; set; }
         public string EMAIL { get; set; }
         public Nullable<int> GRADE { get; set; }
+        public string IMAGE { get; set; }
+        public string SIGNATURE { get; set; }
+        public Nullable<System.DateTime> CREATE_DATE { get; set; }
+        public string NICKNAME { get; set; }
+        public string SELFURL { get; set; }
+        public string UNIVERSITY { get; set; }
+        public string ADDRESS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MESSAGE> MESSAGEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TAKE> TAKES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER_COMMENT_REPOSITORY> USER_COMMENT_REPOSITORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

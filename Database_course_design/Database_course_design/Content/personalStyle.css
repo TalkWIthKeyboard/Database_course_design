@@ -1,0 +1,186 @@
+﻿#t2 {
+    width: 82%;
+}
+
+#personal {
+    width: calc(82% - 12px);
+    height: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 10px;
+    float: right;
+    margin-right: 6px;
+}
+
+#personalInfo {
+    width: 18%;
+    float: left;
+}
+
+#personalInfo img {
+    width: 100%;
+    border-radius: 4px;
+}
+
+#personalInfo button {
+    height: 25px;
+    width: 65px;
+    border-radius: 4px;
+    color: white;
+    position: absolute;
+}
+
+#personalInfo #words {
+    position: relative;
+}
+
+#personalInfo #words #edit {
+    background-color: #00FBCD;
+    right: 10px;
+    box-shadow: #00C9FA 5px 4px 0 0;
+}
+
+#personalInfo h2 {
+    margin: 10px auto;
+}
+
+#personalInfo #motto {
+    width: 100%;
+    color: #888888;
+    margin-top: 0;
+}
+
+#personalInfo #social {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    padding-bottom: 0;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    position: relative;
+}
+
+#social button#follow {
+    background-color: #00FBCD;
+    z-index: 1;
+    right: 10px;
+}
+
+#social button#unfollow {
+    background-color: #00C9FA;
+    top: 19px;
+    right: 5px;
+}
+
+#social div {
+    margin-bottom: 15px;
+    vertical-align: middle;
+}
+
+#social div a {
+    font-size: 25px;
+    color: #0EA2C2;
+    display: inline-block;
+    margin-right: 12px;
+}
+
+#social div span {
+    font-size: 14px;
+    color: #999999;
+}
+
+#otherInfo li {
+    padding: 0 15px;
+}
+
+#otherInfo li p {
+    display: inline-block;
+    margin: 10px 0;
+}
+
+#repository {
+    width: 80%;
+    height: 100%;
+    float: left;
+    margin: 0 1%;
+}
+
+#repository nav {
+    border: 2px solid #F3F3F3;
+    border-bottom: none;
+    display: inline-block;
+    text-align: center;
+}
+
+#repository nav a {
+    width: 120px;
+    height: 50px;
+    float: left;
+    line-height: 50px;
+    color: #464646;
+    transform: translateZ(0);
+}
+
+#repository nav a.selected::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #F3F3F3 #F3F3F3;
+}
+
+#repository ul {
+    margin: 0;
+    margin-top: -2px;
+    height: calc(100% - 380px);
+    width: 100%;
+    /*border: 1px solid #F3F3F3;*/
+}
+
+#repository ul li {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 15px;
+    border: 1px solid #F3F3F3;
+}
+
+#repository ul li a {
+    color: #0EA2C2;
+    font-size: 20px;
+}
+
+#repository ul li .label {
+    padding: 4px;
+    font-size: 14px;
+    color: white;
+    border-radius: 4px;
+    vertical-align: text-top;
+}
+
+.label.offical {
+    background-color: #EFC52A;
+}
+
+.label.original {
+    background-color: #3EF1C4;
+}
+
+.label.contribute {
+    background-color: #9e6bcb;
+}
+
+#repository ul li p {
+    color: #858585;
+    margin-left: 20px;
+}
+
+#repository .bottom {
+    color: #898989;
+    font-size: 20px;
+}
+
+#repository .bottom #chart {
+    height: 260px;
+}

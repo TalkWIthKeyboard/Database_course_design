@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,11 +52,47 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.Modules.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.SQLite, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Wpf, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\IronPython.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.AspNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.5\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.12.1.24160419\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
       <Private>True</Private>
@@ -83,6 +120,14 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="TestToolsToXunitProxy, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TestToolsToXunitProxy.0.0.2\lib\net452\TestToolsToXunitProxy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebDriver, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.2.53.0\lib\net40\WebDriver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -120,11 +165,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ChilkatDotNet46.dll" />
     <Content Include="Content\fileicon.css" />
+    <Content Include="Content\indexStyle.css" />
+    <Content Include="Content\personalStyle.css" />
+    <Content Include="img\head.jpg" />
+    <Content Include="img\logo.png" />
+    <Content Include="Content\loginStyle.css" />
     <Content Include="Content\normalize.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\register.css" />
+    <Content Include="Content\main.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\otherHead.png" />
     <Content Include="Models\KUXIANGModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
@@ -136,8 +189,11 @@
       <LastGenOutput>KUXIANGModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\echarts.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\personal.js" />
     <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\ScatterDiagram.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -153,6 +209,9 @@
     <Compile Include="Models\COMMENTTABLE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\COURSE.cs">
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBModel.cs" />
     <Compile Include="Models\FILETABLE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
@@ -164,6 +223,7 @@
     <Compile Include="Models\ItemModel\HeatItem.cs" />
     <Compile Include="Models\ItemModel\OperationItem.cs" />
     <Compile Include="Models\ItemModel\RepertorySearchResult.cs" />
+    <Compile Include="Models\ItemModel\UserInfo.cs" />
     <Compile Include="Models\ItemModel\UserSearchResult.cs" />
     <Compile Include="Models\KUXIANGModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -184,10 +244,14 @@
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrclDBContext.cs" />
+    <Compile Include="Models\PythonOperation.cs" />
     <Compile Include="Models\REPOSITORY.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\REPOSITORY_FILE.cs">
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TAKE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USERTABLE.cs">
@@ -222,6 +286,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Home\Personal.cshtml" />
     <EntityDeploy Include="Models\KUXIANGModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
