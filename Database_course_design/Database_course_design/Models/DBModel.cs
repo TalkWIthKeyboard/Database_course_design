@@ -268,6 +268,7 @@ namespace Database_course_design.Models
                     {
                         var dyamics = (from row in db.USER_REPOSITORY_OPERATION
                                        where row.USER_ID == friend.USER_ID2
+                                       orderby row.OPERATION_DATE descending
                                        select row).FirstOrDefault();
                         var userFriend = (from fname in db.USERTABLEs
                                           where fname.USER_ID == friend.USER_ID2
@@ -329,20 +330,45 @@ namespace Database_course_design.Models
         /// 输出：所有收藏的仓库名（是否要链接）
         /// 待测试
         /// </summary>
-        public string[] showOthersStar(string UserId)
+        public List<RepertorySearchResult> showOthersStar(string UserId)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
+                    List<RepertorySearchResult> res = new List<RepertorySearchResult>();
+
                     var result =
                     from reposit in db.REPOSITORies
                     join user_reposit in db.USER_REPOSITORY_RELATIONSHIP
                     on reposit.REPOSITORY_ID equals user_reposit.REPOSITORY_ID
-                    where user_reposit.RELATIONSHIP == 2
-                    where user_reposit.USER_ID == UserId
-                    select reposit.NAME;
-                    return result.ToArray();
+                    where (user_reposit.USER_ID == UserId && user_reposit.RELATIONSHIP == 2)
+                    select reposit;
+
+                    foreach (var row in result)
+                    {
+                        var labels = db.COURSEs.Where(p => p.COURSE_ID == row.COURSE_ID).FirstOrDefault();
+                        var createrName = from user in db.USERTABLEs
+                                          join relation in db.USER_REPOSITORY_RELATIONSHIP
+                                          on user.USER_ID equals relation.USER_ID
+                                          where relation.RELATIONSHIP == 0
+                                          select user.USER_NAME;
+
+                        RepertorySearchResult newres = new RepertorySearchResult
+                        {
+                            RepertoryName = row.NAME,
+                            RepertoryFork = (int)row.FORK_NUM,
+                            RepertoryStar = (int)row.STAR_NUM,
+                            RepertoryUpdateTime = row.UPDATE_DATE.ToString(),
+                            RepertoryInfo = row.DESCRIPTION,
+                            RepertoryLabel1 = labels.LABEL1,
+                            RepertoryLabel2 = labels.LABEL2,
+                            RepertoryLabel3 = labels.LABEL3,
+                            RepertoryCreater = createrName.FirstOrDefault()
+                        };
+                        res.Add(newres);
+                    }
+                    return res;
                 }
                 catch (Exception ex)
                 {
@@ -359,19 +385,44 @@ namespace Database_course_design.Models
         /// 输出：所有相关的仓库名（是否要链接）
         /// 待测试
         /// </summary>
-        public string[] showOthersRepertory(string UserId)
+        public List<RepertorySearchResult> showOthersRepertory(string UserId)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
+                    List<RepertorySearchResult> res = new List<RepertorySearchResult>();
                     var result =
                     from reposit in db.REPOSITORies
                     join user_reposit in db.USER_REPOSITORY_RELATIONSHIP
                     on reposit.REPOSITORY_ID equals user_reposit.REPOSITORY_ID
                     where user_reposit.USER_ID == UserId
-                    select reposit.NAME;
-                    return result.ToArray();
+                    select reposit;
+
+                    foreach (var row in result)
+                    {
+                        var labels = db.COURSEs.Where(p => p.COURSE_ID == row.COURSE_ID).FirstOrDefault();
+                        var name = from user in db.USERTABLEs
+                                   join relation in db.USER_REPOSITORY_RELATIONSHIP
+                                   on user.USER_ID equals relation.USER_ID
+                                   where relation.RELATIONSHIP == 0
+                                   select user.USER_NAME;
+
+                        RepertorySearchResult newres = new RepertorySearchResult
+                        {
+                            RepertoryName = row.NAME,
+                            RepertoryFork = (int)row.FORK_NUM,
+                            RepertoryStar = (int)row.STAR_NUM,
+                            RepertoryUpdateTime = row.UPDATE_DATE.ToString(),
+                            RepertoryInfo = row.DESCRIPTION,
+                            RepertoryLabel1 = labels.LABEL1,
+                            RepertoryLabel2 = labels.LABEL2,
+                            RepertoryLabel3 = labels.LABEL3,
+                            RepertoryCreater = name.FirstOrDefault()
+                        };
+                        res.Add(newres);
+                    }
+                    return res;
                 }
                 catch (Exception ex)
                 {
@@ -403,11 +454,12 @@ namespace Database_course_design.Models
                         DESCRIPTION = description
                     };
                     db.USER_REPOSITORY_OPERATION.Add(rep_operation);
-
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine("记录操作历史异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
                     return false;
                 }
             }
@@ -427,6 +479,15 @@ namespace Database_course_design.Models
                 {
                     string userId = db.USER_REPOSITORY_RELATIONSHIP.Where(q => q.REPOSITORY_ID == RepositoryId).FirstOrDefault().USER_ID;
                     recordOperation(userId, RepositoryId, "Delete", null);
+                    var res_file = from row in db.REPOSITORY_FILE
+                                   where row.REPOSITORY_ID == RepositoryId
+                                   select row;
+                    foreach (var file in res_file)
+                    {
+                        db.FILETABLEs.Remove(db.FILETABLEs.Where(p => p.FILE_ID == file.FILE_ID).First());
+                        db.REPOSITORY_FILE.Remove(db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == RepositoryId).FirstOrDefault());
+                    }
+
                     db.REPOSITORies.Remove(db.REPOSITORies.Where(p => p.REPOSITORY_ID == RepositoryId).FirstOrDefault());
                     db.SaveChanges();
                     return true;
@@ -440,6 +501,7 @@ namespace Database_course_design.Models
             }
 
         }
+
         ///<summary>
         ///消息推送
         ///输入： 接收者的编号
@@ -452,10 +514,9 @@ namespace Database_course_design.Models
             {
                 try
                 {
-                    var message = db.MESSAGEs.Where(a => a.RECEIVER_ID == receiver_ID);
+                    var message = db.MESSAGEs.Where(a => a.RECEIVER_ID == receiver_ID && a.IS_READ == 0);
                     return message.ToList();
                 }
-
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine("消息推送操作异常");
@@ -471,7 +532,7 @@ namespace Database_course_design.Models
         ///输出： 操作历史(是否要链接）
         ///待测试
         ///</summary>
-        public List<Database_course_design.Models.ItemModel.OperationItem> showOperationHistory(string userId, DateTime start)
+        public List<Database_course_design.Models.ItemModel.OperationItem> showOperationHistory(string userId)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
@@ -479,19 +540,17 @@ namespace Database_course_design.Models
                 {
                     List<Database_course_design.Models.ItemModel.OperationItem> Operation = new List<Database_course_design.Models.ItemModel.OperationItem>();
                     Database_course_design.Models.ItemModel.OperationItem res = new ItemModel.OperationItem();
-                    var history = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == userId && p.OPERATION_DATE >= start);
+                    var history = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == userId);
                     foreach (var str in history)
                     {
                         string reposit, operation, username;
                         username = (from s in db.USERTABLEs
                                     where s.USER_ID == userId
-
                                     select s.USER_NAME).FirstOrDefault();
                         operation = str.OPERATION;
                         DateTime date = str.OPERATION_DATE;
                         reposit = (from r in db.REPOSITORies
                                    where r.REPOSITORY_ID == str.REPOSITORY_ID
-
                                    select r.NAME).FirstOrDefault();
                         res.DATE = date;
                         res.OPERATION = operation;
@@ -515,18 +574,20 @@ namespace Database_course_design.Models
         ///张尹嘉
         /// <summary>
         ///对仓库进行评论
-        /// 输入：评论内容，评论Id,评论日期，仓库id，发布者id，
+        /// 输入：评论内容，评论日期，仓库id，发布者id，
         /// 输出：布尔类型，判断评论是否成功
         /// </summary>   KUXIANGDBEntities
-        public bool addCommentToRepository(Nullable<System.DateTime> CommentData, string content, string RepositoryID, string AnnouncerID)
+        public bool addCommentToRepository(Nullable<System.DateTime> CommentDate, string content, string RepositoryID, string AnnouncerID)
         {
             COMMENTTABLE newComment = new COMMENTTABLE
             {
-                COMMENT_DATE = CommentData,
+                COMMENT_ID = createNewId("COMMENTTABLE"),
+                COMMENT_DATE = CommentDate,
                 CONTENT = content
             };
             USER_COMMENT_REPOSITORY newCommentRepository = new USER_COMMENT_REPOSITORY
             {
+                COMMENT_ID = newComment.COMMENT_ID,
                 REPOSITORY_ID = RepositoryID,
                 ANNOUNCER = AnnouncerID
             };
@@ -536,8 +597,6 @@ namespace Database_course_design.Models
                 try
                 {
                     db.COMMENTTABLEs.Add(newComment);
-                    db.SaveChanges();
-                    newCommentRepository.COMMENT_ID = newComment.COMMENT_ID;
                     db.USER_COMMENT_REPOSITORY.Add(newCommentRepository);
                     db.SaveChanges();
                     return true;
@@ -552,31 +611,29 @@ namespace Database_course_design.Models
 
         }
         /// <summary>
-        ///对仓库进行评论
-        /// 输入：评论内容，评论Id,Y用户id，评论日期，仓库id，发布者id，
+        ///对用户进行评论
+        /// 输入：评论内容，评论日期，被评论者id，发布者id，
         /// 输出：布尔类型，判断评论是否成功
         /// </summary>  
         public bool addCommentToUser(Nullable<System.DateTime> CommentData, string content, string UserId, string AnnouncerID)
         {
-
-
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
                     COMMENTTABLE newComment = new COMMENTTABLE
                     {
+                        COMMENT_ID = createNewId("COMMENTTABLE"),
                         COMMENT_DATE = CommentData,
                         CONTENT = content
                     };
                     USER_COMMENT_USER newCommentUser = new USER_COMMENT_USER
                     {
+                        COMMENT_ID = newComment.COMMENT_ID,
                         USER_ID = UserId,
                         ANNOUNCER = AnnouncerID
                     };
                     db.COMMENTTABLEs.Add(newComment);
-                    db.SaveChanges();
-                    newCommentUser.COMMENT_ID = newComment.COMMENT_ID;
                     db.USER_COMMENT_USER.Add(newCommentUser);
                     db.SaveChanges();
                     return true;
@@ -593,7 +650,7 @@ namespace Database_course_design.Models
         ///张志强
         /// <summary>
         /// 邀请管理者
-        /// 输入:用户ID
+        /// 输入: 用户ID，仓库ID
         /// 输出：返回布尔类型，确定是否添加成功
         /// 待测试
         //</summary>
@@ -645,26 +702,26 @@ namespace Database_course_design.Models
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                     return false;
                 }
-
             }
-
         }
 
         /// <summary>
         /// 修改仓库信息
-        /// 输入：仓库描述des，仓库id,仓库权限，仓库
+        /// 输入：仓库描述des，仓库id
         /// 输出：返回布尔类型，确定是否添加描述成功
         /// 待测试
         /// /// </summary>
-        public bool ModifyInformation(string RepositoryId, string newDes, string newName, string newLabel1, string newLabel2, string newLabel3)
+        public bool ModifyInformation(string RepositoryId, string newDes)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
                     REPOSITORY oldrepository = db.REPOSITORies.Where(p => p.REPOSITORY_ID == RepositoryId).FirstOrDefault();
-                    oldrepository.DESCRIPTION = newDes;//新加属性（description）
-                    oldrepository.NAME = newName;
+                    if (newDes != "")
+                    {
+                        oldrepository.DESCRIPTION = newDes;
+                    }
                     db.SaveChanges();
                     return true;
                 }
@@ -731,7 +788,7 @@ namespace Database_course_design.Models
         }
 
 
-      /*  /// <summary>
+       /* /// <summary>
         /// 显示关注者动态
         /// 输入：用户ID
         /// 输出：被关注者信息
@@ -752,9 +809,7 @@ namespace Database_course_design.Models
                         temp.UserName = (from s in db.USERTABLEs
                                          where s.USER_ID == str.USER_ID2
                                          select s.USER_NAME).FirstOrDefault();
-                        temp.UserUrl = (from q in db.USERTABLEs
-                                        where q.USER_ID == str.USER_ID2
-                                        select q.USER_URL).FirstOrDefault();
+                        temp.UserId = str.USER_ID2;
                         temp.UserPhotoUrl = (from a in db.USERTABLEs
                                              where a.USER_ID == str.USER_ID2
                                              select a.IMAGE).FirstOrDefault();
@@ -767,12 +822,9 @@ namespace Database_course_design.Models
                         temp.UserOperation = (from c in db.USER_REPOSITORY_OPERATION
                                               where c.USER_ID == str.USER_ID2 && c.OPERATION_DATE == latest
                                               select c.OPERATION).FirstOrDefault();
-                        temp.RepertoryName = (from d in db.REPOSITORies
-                                              where d.REPOSITORY_ID == latest_repertory
-                                              select d.NAME).FirstOrDefault();
-                        temp.RepertoryUrl = (from d in db.REPOSITORies
-                                             where d.REPOSITORY_ID == latest_repertory
-                                             select d.URL).FirstOrDefault();
+                        temp.RepositoryName = (from d in db.REPOSITORies
+                                               where d.REPOSITORY_ID == latest_repertory
+                                               select d.NAME).FirstOrDefault();
                         temp.UpdateInfo = (from e in db.USER_REPOSITORY_OPERATION
                                            where e.USER_ID == str.USER_ID2 && e.OPERATION_DATE == latest
                                            select e.DESCRIPTION).FirstOrDefault();
@@ -800,36 +852,40 @@ namespace Database_course_design.Models
         /// 输出：创建成功与否
         /// 待测试
         /// </summary>
-        public bool CreateRepository(string userid, string name, int authority, string description)
+        public bool CreateRepository(string userid, string name, int authority, string description,string label3)
         {
-
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
-                    String rname;
-                    if (name != null)
-                        rname = name;
-                    else
+                    USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == userid).FirstOrDefault();
+                    COURSE newCourse = new COURSE
                     {
-                        String timeStr = DateTime.Now.Ticks.ToString();
-                        String time = timeStr.Substring(timeStr.Length - 10, 10);
-                        rname = userid.Substring(userid.Length - 10, 10) + "_" + time;
-                    }
+                        LABEL1 = user.UNIVERSITY,
+                        LABEL2 = user.DEPARTMENT,
+                        LABEL3 = label3,
+                        COURSE_ID = createNewId("COURSE")
+                    };
+
                     string repositoryid = createNewId("REPOSITORY");
                     short attri = 0;
+                    //1是创建 0是fork
                     short iscreate = 1;
                     String forkfrom = "";
                     short relationship = 0;
                     REPOSITORY newRep = new REPOSITORY
                     {
                         REPOSITORY_ID = repositoryid,
-                        NAME = rname,
+                        NAME = name,
                         AUTHORITY = authority,
                         ATTRIBUTE = attri,
                         IS_CREATE = iscreate,
                         FORK_FROM = forkfrom,
-                        DESCRIPTION = description
+                        DESCRIPTION = description,
+                        COURSE_ID = newCourse.COURSE_ID,
+                        STAR_NUM = 0,
+                        FORK_NUM = 0,
+                        UPDATE_DATE = DateTime.Now
                     };
 
                     USER_REPOSITORY_RELATIONSHIP userrepr = new USER_REPOSITORY_RELATIONSHIP
@@ -838,7 +894,9 @@ namespace Database_course_design.Models
                         REPOSITORY_ID = newRep.REPOSITORY_ID,
                         RELATIONSHIP = relationship
                     };
+
                     recordOperation(userid, repositoryid, "Create", description);
+                    db.COURSEs.Add(newCourse);
                     db.REPOSITORies.Add(newRep);
                     db.USER_REPOSITORY_RELATIONSHIP.Add(userrepr);
                     db.SaveChanges();
@@ -852,9 +910,6 @@ namespace Database_course_design.Models
                 }
             }
         }
-
-
-
 
         /// <summary>
         /// 删除仓库
@@ -870,18 +925,17 @@ namespace Database_course_design.Models
                 try
                 {
                     numb =
-        (from p
-         in db.USER_REPOSITORY_RELATIONSHIP
-         where repositoryid == p.REPOSITORY_ID
-         where userid == p.USER_ID
-         where p.RELATIONSHIP == 0
-         select p
-        ).Count();
+                        (from p
+                         in db.USER_REPOSITORY_RELATIONSHIP
+                         where repositoryid == p.REPOSITORY_ID
+                         where userid == p.USER_ID
+                         where p.RELATIONSHIP == 0
+                         select p
+                        ).Count();
+
                     if (numb != 0)
                     {
-                        db.REPOSITORies.Remove(db.REPOSITORies.Where(p =>
-
-p.REPOSITORY_ID == repositoryid).FirstOrDefault());
+                        db.REPOSITORies.Remove(db.REPOSITORies.Where(p =>p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                         db.SaveChanges();
                         return true;
                     }
@@ -897,8 +951,6 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
             }
         }
 
-
-
         /// <summary>
         /// 修改文件状态
         /// 输入：文件id
@@ -912,7 +964,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                 try
                 {
                     var mfile =
-                   from p
+                    from p
                    in db.FILETABLEs
                    where p.FILE_ID == fileid
                    select p;
@@ -932,6 +984,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
 
             }
         }
+
         ///<summary>
         ///留言板显示
         ///输入： 接收者的编号
@@ -986,6 +1039,43 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                 }
             }
         }
+
+        /// <summary>
+        /// 检索功能--文件
+        /// 输入：检索仓库的关键字（标签，仓库名），标记变量d(d为true：标签检索，d为false：关键字检索）
+        /// 输出：检索出的仓库ID列表
+        /// </summary>
+        public string[] searchRepository(string zd, bool d)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                try
+                {
+                    if (d)
+                    {
+                        var newRepositoryLabel = from p in db.REPOSITORies
+                                                 join c in db.COURSEs
+                                                 on p.COURSE_ID equals c.COURSE_ID
+                                                 where c.LABEL1.Contains(zd) || c.LABEL2.Contains(zd) || c.LABEL3.Contains(zd)
+                                                 select p.REPOSITORY_ID;
+                        return newRepositoryLabel.ToArray();
+                    }
+                    var newRepository = from p in db.REPOSITORies
+                                        join c in db.COURSEs
+                                        on p.COURSE_ID equals c.COURSE_ID
+                                        where c.LABEL1.Contains(zd) || c.LABEL2.Contains(zd) || c.LABEL3.Contains(zd) || p.NAME.Contains(zd)
+                                        select p.REPOSITORY_ID;
+                    return newRepository.ToArray();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("检索仓库操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
         /// <summary>
         /// 检索功能--文件
         /// 输入：要检索的文件的名称
@@ -1110,6 +1200,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                 }
             }
         }
+
         /// <summary>
         /// 推荐--按用户浏览历史推荐
         /// 输入：用户ID
@@ -1450,7 +1541,7 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
             {
                 try
                 {
-                    string UserId = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == repositoryId).FirstOrDefault().USER_ID;
+                    string UserId = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == repositoryId && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault().USER_ID;
                     //更新操作
                     USER_REPOSITORY_OPERATION operation = new USER_REPOSITORY_OPERATION
                     {
@@ -1465,18 +1556,15 @@ p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                     while (files.Count > 0)
                     {
                         var cur = files.Dequeue().ToString();
-                        var subFiles = db.FILE_FILE.Where(q => q.FILE_ID1 == fileId);
+                        var subFiles = db.FILE_FILE.Where(q => q.FILE_ID1 == cur);
                         foreach (var temp in subFiles)
                         {
                             files.Enqueue(temp.FILE_ID2);
+                            db.FILE_FILE.Remove(db.FILE_FILE.Where(t => t.FILE_ID1 == cur && t.FILE_ID2 == temp.FILE_ID2).FirstOrDefault());
                         }
-                        var belongs = db.FILE_FILE.Where(t => t.FILE_ID2 == cur).FirstOrDefault();
-                        while (belongs != null)
-                        {
-                            db.FILE_FILE.Remove(db.FILE_FILE.Where(t => t.FILE_ID2 == cur).FirstOrDefault());
-                        }
-                        db.FILETABLEs.Remove(db.FILETABLEs.Where(p => p.FILE_ID == cur).FirstOrDefault());
-                        db.REPOSITORY_FILE.Remove(db.REPOSITORY_FILE.Where(r => r.FILE_ID == cur).FirstOrDefault());
+                        db.FILETABLEs.Remove(db.FILETABLEs.Where(t => t.FILE_ID == cur).FirstOrDefault());
+                       // var deep = db.FILETABLEs.Where(t => t.FILE_ID == cur).FirstOrDefault().FILE_DEEP;
+                        db.REPOSITORY_FILE.Remove(db.REPOSITORY_FILE.Where(t => t.FILE_ID == cur).FirstOrDefault());    
                     }
                     db.SaveChanges();
                     return true;
