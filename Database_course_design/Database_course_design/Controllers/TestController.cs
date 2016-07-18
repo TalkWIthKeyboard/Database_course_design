@@ -28,11 +28,16 @@ namespace Database_course_design.Controllers
 
         public ActionResult test()
         {
-            List<RepertorySearchResult> SearchResut = null;
+            /*List<RepertorySearchResult> SearchResut = null;
             ErrorMessage errorInfo = null;
             iweb.getRepositoryByLabel("1234", out SearchResut, out errorInfo);
             ViewBag.SearchResut = SearchResut;
-            ViewBag.errorInfo = errorInfo;
+            ViewBag.errorInfo = errorInfo;*/
+
+            ErrorMessage errorInfo = null;
+            int? num = 0;
+            iweb.getForkNum("REPOSITORY_1863516702", out num,out errorInfo);
+            ViewBag.Num = num;
             return View();
         }
 
