@@ -858,15 +858,27 @@ namespace Database_course_design.Models
             {
                 try
                 {
+                    string tempCourseid = null;
                     USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == userid).FirstOrDefault();
-                    COURSE newCourse = new COURSE
+                    var exist =
+                        (from p
+                       in db.COURSEs
+                         where p.LABEL3 == label3
+                         select p).FirstOrDefault();
+                    if (exist == null)
                     {
-                        LABEL1 = user.UNIVERSITY,
-                        LABEL2 = user.DEPARTMENT,
-                        LABEL3 = label3,
-                        COURSE_ID = createNewId("COURSE")
-                    };
-
+                        COURSE newCourse = new COURSE
+                        {
+                            LABEL1 = user.UNIVERSITY,
+                            LABEL2 = user.DEPARTMENT,
+                            LABEL3 = label3,
+                            COURSE_ID = createNewId("COURSE")
+                        };
+                        db.COURSEs.Add(newCourse);
+                        tempCourseid = newCourse.COURSE_ID;
+                    }
+                    else
+                        tempCourseid = exist.COURSE_ID;
                     string repositoryid = createNewId("REPOSITORY");
                     short attri = 0;
                     //1是创建 0是fork
@@ -882,7 +894,7 @@ namespace Database_course_design.Models
                         IS_CREATE = iscreate,
                         FORK_FROM = forkfrom,
                         DESCRIPTION = description,
-                        COURSE_ID = newCourse.COURSE_ID,
+                        COURSE_ID = tempCourseid,
                         STAR_NUM = 0,
                         FORK_NUM = 0,
                         UPDATE_DATE = DateTime.Now
@@ -896,7 +908,7 @@ namespace Database_course_design.Models
                     };
 
                     recordOperation(userid, repositoryid, "Create", description);
-                    db.COURSEs.Add(newCourse);
+                   
                     db.REPOSITORies.Add(newRep);
                     db.USER_REPOSITORY_RELATIONSHIP.Add(userrepr);
                     db.SaveChanges();
@@ -1363,23 +1375,29 @@ namespace Database_course_design.Models
                     {
                         REPOSITORY_ID = new_id,
                         NAME = origin.NAME,
-                        ATTRIBUTE = origin.ATTRIBUTE,
+                        ATTRIBUTE =0,
                         AUTHORITY = origin.AUTHORITY,
                         //一致性?
                         FORK_NUM = 0,
                         STAR_NUM = 0,
                         FORK_FROM = RepositoryId,
-                        IS_CREATE = 0
-
+                        IS_CREATE = 0,
+                        COURSE_ID = origin.COURSE_ID,
+                        UPDATE_DATE = System.DateTime.Now
                     };
                     USER_REPOSITORY_RELATIONSHIP relationship = new USER_REPOSITORY_RELATIONSHIP
                     {
                         REPOSITORY_ID = new_id,
                         USER_ID = UserId
                     };
-                    db.USER_REPOSITORY_OPERATION.Add(operation);
+                   
+                    //db.SaveChanges();
                     db.REPOSITORies.Add(reposit);
+                    db.SaveChanges();
+                    db.USER_REPOSITORY_OPERATION.Add(operation);
                     db.USER_REPOSITORY_RELATIONSHIP.Add(relationship);
+                    db.SaveChanges();
+
                     //db.SaveChanges();
 
                     var newfile = ofile;
