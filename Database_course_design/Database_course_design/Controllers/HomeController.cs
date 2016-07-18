@@ -8,6 +8,7 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using Database_course_design.Models.ItemModel;
+using WebApplication1.Controllers;
 
 namespace Database_course_design.Controllers
 {
@@ -15,7 +16,10 @@ namespace Database_course_design.Controllers
     {
         private DBModel dbmodel = new DBModel();
         private IndexWebInterface iweb = new IndexWebInterface();
+        private LoginController lgc = new LoginController();
         string user_id;
+
+        public HomeController(){}
 
         public HomeController(string user_id)
         {
@@ -24,6 +28,13 @@ namespace Database_course_design.Controllers
 
         public ActionResult Index()
         {
+            List<IndexWebInterface.FileItem> ret = null;
+            ErrorMessage errorInfo = null;
+            iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
+            ViewBag.CardContent = ret;
+
+
+
             return View();
         }
 
@@ -44,34 +55,14 @@ namespace Database_course_design.Controllers
             ViewBag.ErrorInfo = errorInfo;
         }
 
-        public ActionResult Download()
+        public ActionResult Download(string url,string file)
         {
             using (var client = new WebClient())
             {
-                var buffer = client.DownloadData("http://10.0.1.158:3000/images/1.jpg");
-                return File(buffer, "/img", "1.jpg");
+                /*url.ToLower(); file.ToLower();*/ 
+               var buffer = client.DownloadData(url);
+                return File(buffer, "/img", file);
             }
-        }
-
-        public ActionResult Upload(HttpPostedFileBase file)
-        {
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    string path = Path.Combine(Server.MapPath("ftp://10.0.1.158/public/"),
-                                               Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                    ViewBag.Message = "File uploaded successfully";
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
-            else
-            {
-                ViewBag.Message = "You have not specified a file.";
-            }
-            return View();
         }
 
         public ActionResult Personal()

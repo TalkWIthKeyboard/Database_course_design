@@ -300,6 +300,8 @@
     <Content Include="Models\KUXIANGDBEntities.edmx.diagram">
       <DependentUpon>KUXIANGDBEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\Upload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

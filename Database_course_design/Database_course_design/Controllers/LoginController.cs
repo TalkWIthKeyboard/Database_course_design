@@ -11,6 +11,7 @@ namespace WebApplication1.Controllers
     public class LoginController : Controller
     {
         private DBModel dbmodel = new DBModel();
+        private static string user_id = "";
 
         public ActionResult Login()
         {
@@ -20,6 +21,7 @@ namespace WebApplication1.Controllers
         public void Save()
         {
             string username = Request["email"];
+            user_id = username;
             string passwd = Request["password"];
             var spiderOp = new PythonOperation();
             var userInfo = spiderOp.spiderUserInfo(username, passwd);
@@ -42,6 +44,11 @@ namespace WebApplication1.Controllers
                 Response.Redirect("/Home/Index");
             }
             return;
+        }
+
+        public string getUser_id()
+        {
+            return user_id;
         }
 
     }
