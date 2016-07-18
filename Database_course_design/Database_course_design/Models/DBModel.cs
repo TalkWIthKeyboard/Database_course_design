@@ -1131,34 +1131,36 @@ namespace Database_course_design.Models
 
         /// <summary>
         /// 推荐--按仓库热度推荐
-        /// 输入：无
+        /// 输入：用户id
         /// 输出：检索出的仓库列表
         /// 待测试
         /// </summary>
-        public List<REPOSITORY> recommendRepositoryByHeat()
+        public List<REPOSITORY> recommendRepositoryByAttribute(string userId)
         {
 
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
+                    var userDepartment = db.USERTABLEs.Where(p => p.USER_ID == userId).FirstOrDefault().DEPARTMENT;
                     List<REPOSITORY> heatrepository = new List<REPOSITORY>();
-                    int forkfigure = 20;
-                    int starfigure = 50;
                     var temps =
                         (from s in db.REPOSITORies
-                         where s.FORK_NUM >= forkfigure || s.STAR_NUM >= starfigure
-                         orderby s.FORK_NUM descending, s.STAR_NUM descending
+                         where s.ATTRIBUTE == 1
+                         orderby s.STAR_NUM descending, s.FORK_FROM descending
                          select s);
                     foreach (var temp in temps)
                     {
-                        heatrepository.Add(temp);
+                        if (userDepartment == temp.COURSE.LABEL2)
+                        {
+                            heatrepository.Add(temp);
+                        }
                     }
                     return heatrepository;
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("按热度推荐仓库读取异常");
+                    System.Diagnostics.Debug.WriteLine("按官方库推荐仓库读取异常");
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                     return null;
                 }

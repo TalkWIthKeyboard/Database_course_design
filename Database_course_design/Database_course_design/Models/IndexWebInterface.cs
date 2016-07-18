@@ -13,20 +13,27 @@ namespace Database_course_design.Models
         ///  输入：用户的Id， 返回的参数， 错误信息
         ///  输出：是否成功
         /// </summary>
-        public bool getRepositoryByLabel(string _UserId, out List<ItemModel.RepertorySearchResult> SearchResut, out ItemModel.ErrorMessage ErrorInfo)
+        public bool getRepositoryByLabel(string _UserId, out List<ItemModel.RepertorySearchResult> SearchResult, out ItemModel.ErrorMessage ErrorInfo)
         {
             try
             {
                 DBModel func = new DBModel();
                 KUXIANGDBEntities db = new KUXIANGDBEntities();
-                SearchResut = new List<ItemModel.RepertorySearchResult>();
+                SearchResult = new List<ItemModel.RepertorySearchResult>();
                 ErrorInfo = null;
                 /*根据用户的仓库获取用户所有的Course*/
-                List<string> LabelList = new List<string>();
-                LabelList = db.TAKES.Where(p => p.USER_ID == _UserId).Select(p => p.COURSE.LABEL3).ToList();
+                List<string> LabelList = db.TAKES.Where(p => p.USER_ID == _UserId).Select(p => p.COURSE.LABEL3).ToList();
+                if (null == LabelList)
+                {
+                    SearchResult = null;
+                    ErrorInfo = new ItemModel.ErrorMessage();
+                    ErrorInfo.ErrorOperation = "getRepositoryByLabel";
+                    ErrorInfo.ErrorReason = "用户没有参加课程";
+                    ErrorInfo.ErrorTime = DateTime.Now;
+                    return false;
+                }
                 /*获取该用户所有的仓库，用于下面从结果序列中排除*/
                 var UserRepoRelaTuples = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == _UserId).Select(p => p.REPOSITORY_ID);
-
                 /*获取所有标签下除去用户的仓库之外其他所有的仓库*/
                 //获取所有的仓库
                 foreach (var label in LabelList)//对于每个label
@@ -53,10 +60,10 @@ namespace Database_course_design.Models
                             continue;
                         //插入该仓库结果项到结果中
                         ItemModel.RepertorySearchResult ResultItem = new ItemModel.RepertorySearchResult(RepoItem);
-                        SearchResut.Add(ResultItem);
+                        SearchResult.Add(ResultItem);
                     }//foreach(var repoid in RepoLabelList): end
                 }
-                SearchResut.Sort(
+                SearchResult.Sort(
                     delegate (ItemModel.RepertorySearchResult x, ItemModel.RepertorySearchResult y)
                     {
                         return (x.RepertoryStar + x.RepertoryFork) > (y.RepertoryStar + y.RepertoryFork) ? 1 : 0;
@@ -71,7 +78,53 @@ namespace Database_course_design.Models
                 ErrorInfo.ErrorOperation = " getRepositoryByLabel";
                 ErrorInfo.ErrorReason = ex.Message;
                 ErrorInfo.ErrorTime = DateTime.Now;
-                SearchResut = null;
+                SearchResult = null;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 官方库按热度推荐
+        /// 输入：用户的id
+        /// </summary>
+        public bool getRepertoryByAttribute(string _UserId, out List<ItemModel.RepertorySearchResult> SearchResult, out ItemModel.ErrorMessage ErrorInfo)
+        {
+            DBModel func = new DBModel();
+            KUXIANGDBEntities db = new KUXIANGDBEntities();
+            try
+            {
+                var result = func.recommendRepositoryByAttribute(_UserId);
+                if (result != null)
+                {
+                    List<ItemModel.RepertorySearchResult> allResult = null;
+                    foreach (var each in result)
+                    {
+                        var s = new ItemModel.RepertorySearchResult(each);
+                        allResult.Add(s);
+                    }
+                    SearchResult = allResult;
+                    ErrorInfo = null;
+                    return true;
+                }
+                else
+                {
+                    var er = new ItemModel.ErrorMessage();
+                    er.ErrorOperation = "官方库按热度推荐异常";
+                    er.ErrorReason = "数据库检索不到信息";
+                    er.ErrorTime = DateTime.Now;
+                    ErrorInfo = er;
+                    SearchResult = null;
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                var er = new ItemModel.ErrorMessage();
+                er.ErrorOperation = "官方库按热度推荐异常";
+                er.ErrorReason = ex.Message;
+                er.ErrorTime = DateTime.Now;
+                ErrorInfo = er;
+                SearchResult = null;
                 return false;
             }
         }
@@ -82,15 +135,27 @@ namespace Database_course_design.Models
         /// 输出：是否成功
         /// 未测试
         /// </summary>
-        public bool getFriendDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
+        public bool getFriendDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResult, out ItemModel.ErrorMessage ErrorInfo)
         {
             DBModel func = new DBModel();
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             try
             {
-                SearchResul = func.showFriendDynamics(_UserId);
-                ErrorInfo = null;
-                return true;
+                SearchResult = func.showFriendDynamics(_UserId);
+                if (SearchResult != null)
+                {
+                    ErrorInfo = null;
+                    return true;
+                }
+                else
+                {
+                    var er = new ItemModel.ErrorMessage();
+                    er.ErrorOperation = "获取好友动态时异常";
+                    er.ErrorReason = "搜索不到所要求的值";
+                    er.ErrorTime = DateTime.Now;
+                    ErrorInfo = er;
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -99,7 +164,7 @@ namespace Database_course_design.Models
                 er.ErrorReason = ex.Message;
                 er.ErrorTime = DateTime.Now;
                 ErrorInfo = er;
-                SearchResul = null;
+                SearchResult = null;
                 return false;
             }
         }
