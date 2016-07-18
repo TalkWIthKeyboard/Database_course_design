@@ -28,7 +28,7 @@ namespace Database_course_design.Models
         /// 添加新用户到数据库
         /// 输入：用户账号，用户密码，用户名，所在院系，邮箱地址，用户身份，用户积分
         /// 输出：是否创建成功
-        /// 待测试
+        /// 已测试
         /// </summary>
         public bool addUserInfo(string UserAccount, string UserKey, string UserName, string UserDepartment, string UserEmail, short UserIdentity, short UserGrade)
         {
@@ -67,15 +67,38 @@ namespace Database_course_design.Models
         /// 输出：是否修改成功
         /// 待测试
         /// </summary>
-        public bool changeUserInfo(string UserId, string UserName, string UserEmail)
+        public bool changeUserInfo(string UserId, string UserEmail,string UserImage,string UserSignature,string UserNickname,string UserSelfUrl,string UserAddress)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
                     USERTABLE oldUserInfo = db.USERTABLEs.Where(p => p.USER_ID == UserId).FirstOrDefault();
-                    oldUserInfo.USER_NAME = UserName;
-                    oldUserInfo.EMAIL = UserEmail;
+
+                    if (UserEmail != "")
+                    {
+                        oldUserInfo.EMAIL = UserEmail;
+                    }
+                    if (UserImage != "")
+                    {
+                        oldUserInfo.IMAGE = UserImage;
+                    }
+                    if (UserSignature != "")
+                    {
+                        oldUserInfo.SIGNATURE = UserSignature;
+                    }
+                    if (UserNickname != "")
+                    {
+                        oldUserInfo.NICKNAME = UserNickname;
+                    }
+                    if (UserSelfUrl != "")
+                    {
+                        oldUserInfo.SELFURL = UserSelfUrl;
+                    }
+                    if (UserAddress != "")
+                    {
+                        oldUserInfo.ADDRESS = UserAddress;
+                    }     
                     db.SaveChanges();
                     return true;
                 }
@@ -101,7 +124,6 @@ namespace Database_course_design.Models
             {
                 try
                 {
-
                     USERTABLE oldUser = db.USERTABLEs.Where(p => p.USER_ID == UserId).FirstOrDefault();
                     oldUser.GRADE += changeGrade;
                     if (oldUser.GRADE < 0)
@@ -183,7 +205,7 @@ namespace Database_course_design.Models
         /// 输出：所有好友的最近动态
         /// 待测试
         /// </summary>
-        public List<actionInfo> showFriendDynamics(string UserId, DateTime start)
+        public List<actionInfo> showFriendDynamics(string UserId)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
@@ -195,7 +217,6 @@ namespace Database_course_design.Models
                     {
                         var dyamics = (from row in db.USER_REPOSITORY_OPERATION
                                        where row.USER_ID == friend.USER_ID2
-                                       where row.OPERATION_DATE >= start
                                        select row).FirstOrDefault();
                         var userFriend = (from fname in db.USERTABLEs
                                           where fname.USER_ID == friend.USER_ID2
@@ -205,12 +226,13 @@ namespace Database_course_design.Models
                                              select reposit).FirstOrDefault();
                         newdy.Add(new actionInfo
                         {
+                            UserId = userFriend.USER_ID,
                             UserName = userFriend.USER_NAME,
                             UserPhotoUrl = userFriend.IMAGE,
                             UserOperation = dyamics.OPERATION,
-                            RepertoryUrl = repositFriend.URL,
-                            RepertoryName = repositFriend.NAME,
-                            UpdateInfo = dyamics.OPERATION
+                            RepositoryName = repositFriend.NAME,
+                            RepositoryId = repositFriend.REPOSITORY_ID,
+                            UpdateInfo = dyamics.DESCRIPTION
                         });
                     }
                     return newdy;
