@@ -7,7 +7,6 @@ using Database_course_design.Models.ItemModel;
 
 namespace Database_course_design.Models
 {
-
     public class DBModel
     {
         /// <summary>
@@ -1575,46 +1574,197 @@ namespace Database_course_design.Models
             }
         }
 
-
         /// <summary>
-        /// 上传文件
-        /// 输入：仓库id，上传位置
-        /// 输出：文件id
+        /// 创建文件或者文件夹（type为0是文件，1是文件夹）
+        /// 输入：仓库id，文件（夹）名字，文件类型（是否为文件夹），文件大小，所在位置，父节点是仓库还是文件夹（0是仓库），操作描述
+        /// 输出：是否创建成功，文件id
         /// 待测试
         /// </summary>
-        public string uploadFile(string repositoryId, string name, string type, string path, int size, string description)
+        public bool createFile(string rep_id,string name,string type,int size,string position,int flag,string description, out string file_id)
         {
-            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            var db = new KUXIANGDBEntities();
+
+            string newFileId = createNewId("FILETABLE");
+            string newPath = "";
+            if (flag == 0)
             {
+                newPath = db.REPOSITORies.Where(p => p.REPOSITORY_ID == position).FirstOrDefault().URL;
+            }
+            else
+            {
+                newPath = db.FILETABLEs.Where(p => p.FILE_ID == position).FirstOrDefault().PATH;
+            }
+            FILETABLE new_file = new FILETABLE
+            {
+                FILE_ID = newFileId,
+                PATH = newPath + @"/" + name,
+                FILE_NAME = name,
+                FILE_TYPE = type,
+                FILE_STATE = 0,
+                FILE_SIZE = size
+            };
+            //文件夹因为判断了权限问题，所以可以直接完成，不需要审核
+            if (type == "1")
+            {
+                new_file.FILE_STATE = 1;
+            }
+            try
+            {
+                db.FILETABLEs.Add(new_file);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("创建文件操作异常");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                file_id = "";
+                return false;
+            }
+
+            if (flag == 0)
+            {
+                var repo_file = new REPOSITORY_FILE
+                {
+                    REPOSITORY_ID = position,
+                    FILE_ID = newFileId,
+                    REPOSITORY_FILE_ID = ""
+                };
                 try
                 {
-                    string newFileId = createNewId("FILETABLE");
-                    FILETABLE new_file = new FILETABLE
-                    {
-                        FILE_ID = newFileId,
-                        PATH = path,
-                        FILE_NAME = name,
-                        FILE_TYPE = type,
-                        FILE_STATE = 0,
-                        FILE_SIZE = size
-                    };
-                    REPOSITORY_FILE repo_file = new REPOSITORY_FILE
-                    {
-                        REPOSITORY_ID = repositoryId,
-                        FILE_ID = newFileId
-                    };
                     db.REPOSITORY_FILE.Add(repo_file);
-                    db.FILETABLEs.Add(new_file);
-                    string userId = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == repositoryId).FirstOrDefault().USER_ID;
-                    recordOperation(userId, repositoryId, "Upload", description);
-                    db.SaveChanges();
-                    return newFileId;
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("新建文件操作异常");
+                    System.Diagnostics.Debug.WriteLine("创建仓库与文件表操作异常");
                     System.Diagnostics.Debug.WriteLine(ex.Message);
-                    return null;
+                    file_id = "";
+                    return false;
+                }
+            }
+            else
+            {
+                var file_file = new FILE_FILE
+                {
+                    FILE_ID1 = position,
+                    FILE_ID2 = new_file.FILE_ID,
+                    FILE_FILE_ID = ""
+                };
+                try
+                {
+                    db.FILE_FILE.Add(file_file);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("创建文件与文件表操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    file_id = "";
+                    return false;
+                }
+            }
+            db.SaveChanges();
+
+            string userId = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == rep_id).FirstOrDefault().USER_ID;
+            if (type == "0")
+            {
+                if (!recordOperation(userId, rep_id, "Upload", description))
+                {
+                    System.Diagnostics.Debug.WriteLine("创建文件操作表操作异常");
+                    file_id = "";
+                    return false;
+                }
+                else
+                {
+                    file_id = new_file.FILE_ID;
+                    return true;
+                }
+            }
+            else
+            {
+                if (!recordOperation(userId, rep_id, "Create", description))
+                {
+                    System.Diagnostics.Debug.WriteLine("创建文件操作表操作异常");
+                    file_id = "";
+                    return false;
+                }
+                else
+                {
+                    file_id = new_file.FILE_ID;
+                    return true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 创建文件夹（权限检查）
+        /// 输入：仓库id，操作者id，文件夹名字，所在位置，父节点是仓库还是文件夹（0是仓库）
+        /// 输出：文件夹id，错误信息
+        /// 待测试
+        /// </summary>
+        public bool createFolder(string rep_id, string user_id, string name, string position, int fatherIsFolder,out string fileId, out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            var flag = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == user_id 
+                                                             && p.REPOSITORY_ID == rep_id 
+                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
+            if (flag == null)
+            {
+                var error = new ErrorMessage();
+                error.ErrorOperation = "创建文件夹";
+                error.ErrorReason = "没有权限创建文件夹";
+                error.ErrorTime = DateTime.Now;
+                errorMessage = error;
+                fileId = "";
+                return false;
+            }
+            else
+            {
+                string file_id = "";
+                if (!createFile(rep_id, name, "1", 0, position, fatherIsFolder, "创建了一个文件夹",out file_id))
+                {
+                    var error = new ErrorMessage();
+                    error.ErrorOperation = "创建文件夹";
+                    error.ErrorReason = "创建文件夹失败";
+                    error.ErrorTime = DateTime.Now;
+                    errorMessage = error;
+                    fileId = "";
+                    return false;
+                } 
+                else
+                {
+                    errorMessage = null;
+                    fileId = file_id;
+                    return true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 上传文件
+        /// 输入：仓库id，文件名，文件类型，文件大小，操作描述，当前所在位置，flag在仓库下还是文件夹下(0是仓库，1是文件夹)
+        /// 输出：文件id
+        /// 待测试
+        /// </summary>
+        public bool uploadFile(string rep_id,string name, string type, int size, string description, string position,int flag, out string fileId,out ErrorMessage errorMessage)
+        {
+            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            {
+                var file_id = "";
+                if (!createFile(rep_id, name, "0", size, position, flag, description,out file_id))
+                {
+                    var error = new ErrorMessage()
+                    {
+                        ErrorOperation = "创建文件",
+                        ErrorReason = "创建文件失败",
+                        ErrorTime = DateTime.Now
+                    };
+                    errorMessage = error;
+                    fileId = "";
+                    return false;
+                }
+                else
+                {
+                    errorMessage = null;
+                    fileId = file_id;
+                    return true;
                 }
             }
         }
