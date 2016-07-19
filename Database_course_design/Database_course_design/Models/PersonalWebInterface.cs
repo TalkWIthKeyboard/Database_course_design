@@ -128,15 +128,7 @@ namespace Database_course_design.Models
 
         }
 
-        /// <summary>
-        /// 修改用户好友关系
-        /// 输入：用户自己的Id, 对象用户的Id, 关注或取消关注（true是关注）, 错误信息
-        /// 输出：是否成功
-        /// </summary>
-        public bool changeFriend(string _SelfUserId, string _TarUserId, bool Focus, out ItemModel.ErrorMessage ErrorInfo)
-        {
-
-        }*/
+     */
 
         /// <summary>
         /// 查询用户该月每天的操作和热度

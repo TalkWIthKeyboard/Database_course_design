@@ -20,21 +20,20 @@ namespace Database_course_design.Controllers
         string user_id;
 
         public HomeController(){}
-
+        
         public HomeController(string user_id)
         {
             this.user_id = user_id;
         }
-
+        
         public ActionResult Index()
         {
             List<IndexWebInterface.FileItem> ret = null;
             ErrorMessage errorInfo = null;
             iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
             ViewBag.CardContent = ret;
-
-
-
+            var s = dbmodel.showOperationHistory("1452716");
+        
             return View();
         }
 
