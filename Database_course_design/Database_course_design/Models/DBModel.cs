@@ -128,7 +128,7 @@ namespace Database_course_design.Models
         /// 显示仓库文件
         /// 输入：仓库ID
         /// 输出：文件名,文件类型，文件大小
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public struct FileInfo
         {
@@ -290,7 +290,7 @@ namespace Database_course_design.Models
         /// 删除好友
         /// 输入：用户的id，朋友的id
         /// 输出：操作是否成功
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool deleteFriend(string UserId, string FriendId)
         {
@@ -413,7 +413,7 @@ namespace Database_course_design.Models
         /// 展示这个用户的所有收藏
         /// 输入：用户的id
         /// 输出：所有收藏的仓库名（是否要链接）
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public List<RepertorySearchResult> showOthersStar(string UserId)
         {
@@ -468,7 +468,7 @@ namespace Database_course_design.Models
         /// 展示这个用户的所有相关仓库
         /// 输入：用户的id
         /// 输出：所有相关的仓库名（是否要链接）
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public List<RepertorySearchResult> showOthersRepertory(string UserId)
         {
@@ -1115,7 +1115,7 @@ namespace Database_course_design.Models
         ///留言板显示
         ///输入： 接收者的编号
         ///输出：评论队列
-        ///待测试
+        ///测试成功
         ///</summary>
         public List<COMMENTTABLE> showUserComment(string userid)
         {
@@ -1144,7 +1144,7 @@ namespace Database_course_design.Models
         ///浏览历史显示
         ///输入： 接收者的编号
         ///输出： 浏览历史（是否要链接？）
-        ///待测试
+        ///测试成功
         ///</summary> 
         public List<USER_REPOSITORY_LOOKHISTORY> showLookHistory(string userId)
         {
@@ -1377,7 +1377,7 @@ namespace Database_course_design.Models
         /// 下载头像
         /// 输入：用户id
         /// 输出：头像图片url
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public string DownloadImage(string userid)
         {
@@ -1385,10 +1385,10 @@ namespace Database_course_design.Models
             {
                 try
                 {
-                    string url = "";
+                    string url = null;
                     url = (from s in db.USERTABLEs
                            where s.USER_ID == userid
-                           select s.USER_ID).FirstOrDefault();
+                           select s.IMAGE ).FirstOrDefault();
                     return url;
                 }
                 catch (Exception ex)
@@ -1819,7 +1819,7 @@ namespace Database_course_design.Models
         /// 删除文件
         /// 输入：仓库id，文件id
         /// 输出：bool(是否删除成功)
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool deleteFile(string repositoryId, string fileId)
         {
