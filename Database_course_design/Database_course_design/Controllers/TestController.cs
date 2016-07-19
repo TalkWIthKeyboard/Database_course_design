@@ -62,7 +62,7 @@ namespace Database_course_design.Controllers
             pweb.getUserHeat("1452716", out dayheat, out errorInfo);
             ViewBag.DayHeat = dayheat;*/
 
-            //向数据库注入数据
+            //向数据库注入仓库数据
             /*DBModel fun = new DBModel();
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             var sArray = new List<string>();
@@ -73,7 +73,6 @@ namespace Database_course_design.Controllers
                 var realStr = str.Split('\t');
                 sArray.Add(realStr[0]);
             }
-            return View();
             st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\course.in");
             while (st.Peek() != -1)
             {
@@ -89,6 +88,43 @@ namespace Database_course_design.Controllers
 
                 } 
             }*/
+
+            /*//向数据库注入评论数据
+            DBModel fun = new DBModel();
+            KUXIANGDBEntities db = new KUXIANGDBEntities();
+            var sArray = new List<string>();
+            StreamReader st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\data.in", Encoding.Default);
+            while (st.Peek() != -1)
+            {
+                string str = st.ReadLine();
+                var realStr = str.Split('\t');
+                sArray.Add(realStr[0]);
+            }
+            int i = 0;
+            while (i < 100)
+            {
+                var rand = new Random();
+                int a = rand.Next(0, sArray.Count());
+                int b = rand.Next(0, sArray.Count());
+                if (a != b)
+                {
+                    try
+                    {
+                        var la = sArray[a];
+                        var userA = db.USERTABLEs.Where(p => p.USER_ID == la).FirstOrDefault().USER_NAME;
+                        var lb = sArray[b];
+                        var userB = db.USERTABLEs.Where(p => p.USER_ID == lb).FirstOrDefault().USER_NAME;
+                        fun.addCommentToUser(userA + "喜欢" + userB, sArray[a], sArray[b]);
+                        i++;
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }*/
+
+            return View();
         }
 
         public JsonResult GetPersonInfo()

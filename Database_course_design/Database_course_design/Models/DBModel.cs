@@ -726,12 +726,12 @@ namespace Database_course_design.Models
         /// 输入：评论内容，评论日期，仓库id，发布者id，
         /// 输出：布尔类型，判断评论是否成功
         /// </summary>   KUXIANGDBEntities
-        public bool addCommentToRepository(Nullable<System.DateTime> CommentDate, string content, string RepositoryID, string AnnouncerID)
+        public bool addCommentToRepository(string content, string RepositoryID, string AnnouncerID)
         {
             COMMENTTABLE newComment = new COMMENTTABLE
             {
                 COMMENT_ID = createNewId("COMMENTTABLE"),
-                COMMENT_DATE = CommentDate,
+                COMMENT_DATE = DateTime.Now,
                 CONTENT = content
             };
             USER_COMMENT_REPOSITORY newCommentRepository = new USER_COMMENT_REPOSITORY
@@ -765,7 +765,7 @@ namespace Database_course_design.Models
         /// 输出：布尔类型，判断评论是否成功
         /// 测试成功
         /// </summary>  
-        public bool addCommentToUser(Nullable<System.DateTime> CommentData, string content, string UserId, string AnnouncerID)
+        public bool addCommentToUser(string content, string UserId, string AnnouncerID)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
@@ -774,7 +774,7 @@ namespace Database_course_design.Models
                     COMMENTTABLE newComment = new COMMENTTABLE
                     {
                         COMMENT_ID = createNewId("COMMENTTABLE"),
-                        COMMENT_DATE = CommentData,
+                        COMMENT_DATE = DateTime.Now,
                         CONTENT = content
                     };
                     USER_COMMENT_USER newCommentUser = new USER_COMMENT_USER
@@ -797,8 +797,6 @@ namespace Database_course_design.Models
             }
         }
 
-
-        ///张志强
         /// <summary>
         /// 邀请管理者
         /// 输入: 用户ID，仓库ID
@@ -836,7 +834,7 @@ namespace Database_course_design.Models
         /// 输入：用户ID
         /// 输出：返回布尔类型，确定是否删除成功
         /// 测试成功
-
+        /// </summary>
         public bool DeletPartner(string UserID, string RepositoryID)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
@@ -1995,6 +1993,5 @@ namespace Database_course_design.Models
                 }
             }
         }
-
     }
 }
