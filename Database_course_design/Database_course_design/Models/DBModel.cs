@@ -93,6 +93,37 @@ namespace Database_course_design.Models
 
         }
 
+        /// <summary>
+        /// 获取一个仓库的管理者人数
+        /// 输入：仓库ID
+        /// 输出：管理者的人数
+        /// 测试成功
+        /// </summary>
+        public int getRepertoryManageNum(string RepertoryId)
+        {
+            var db = new KUXIANGDBEntities();
+            try
+            {
+                var result = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == RepertoryId 
+                                                                && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).ToList();
+                int num = 0;
+                if (result == null)
+                {
+                    return num;
+                }
+                else
+                {
+                    return result.Count();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("查找仓库的管理者人数异常");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return -1;
+            }
+        }
+
 
         /// <summary>
         /// 显示仓库文件

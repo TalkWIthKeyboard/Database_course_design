@@ -61,6 +61,7 @@ namespace Database_course_design.Controllers
             //测试personal页面
             var person = new PersonalWebInterface();
             var fun = new KUXIANGDBEntities();
+            var db = new DBModel();
             var resultArray = new List<actionInfo>();
             var error = new ErrorMessage();
 
