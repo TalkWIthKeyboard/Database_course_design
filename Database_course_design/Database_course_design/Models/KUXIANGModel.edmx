@@ -180,7 +180,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FILE_FILE_FILETABLE_FK2">
-          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1" />
+          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="FILE_FILE" Type="Self.FILE_FILE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FILETABLE">
@@ -312,7 +314,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_COMMENT_REPOSITORY_U_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_COMMENT_REPOSITORY" Type="Self.USER_COMMENT_REPOSITORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -338,7 +342,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_COMMENT_USER_USERTAB_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_COMMENT_USER" Type="Self.USER_COMMENT_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -350,7 +356,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_COMMENT_USER_USERTAB_FK2">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_COMMENT_USER" Type="Self.USER_COMMENT_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -362,7 +370,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_REPOSITORY_LOOKHISTO_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_REPOSITORY_LOOKHISTORY" Type="Self.USER_REPOSITORY_LOOKHISTORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -388,7 +398,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_REPOSITORY_RELATIONS_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_REPOSITORY_RELATIONSHIP" Type="Self.USER_REPOSITORY_RELATIONSHIP" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -414,7 +426,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_USER_USERTABLE_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_USER" Type="Self.USER_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -426,7 +440,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_USER_USERTABLE_FK2">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_USER" Type="Self.USER_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -814,7 +830,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FILE_FILE_FILETABLE_FK2">
-          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1" />
+          <End Role="FILETABLE" Type="Self.FILETABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="FILE_FILE" Type="Self.FILE_FILE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FILETABLE">
@@ -920,7 +938,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_COMMENT_REPOSITORY_U_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_COMMENT_REPOSITORY" Type="Self.USER_COMMENT_REPOSITORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -932,7 +952,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_COMMENT_USER_USERTAB_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_COMMENT_USER" Type="Self.USER_COMMENT_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -944,7 +966,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_COMMENT_USER_USERTAB_FK2">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_COMMENT_USER" Type="Self.USER_COMMENT_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -956,7 +980,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_REPOSITORY_LOOKHISTO_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_REPOSITORY_LOOKHISTORY" Type="Self.USER_REPOSITORY_LOOKHISTORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -982,7 +1008,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_REPOSITORY_RELATIONS_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_REPOSITORY_RELATIONSHIP" Type="Self.USER_REPOSITORY_RELATIONSHIP" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -994,7 +1022,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_USER_USERTABLE_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_USER" Type="Self.USER_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -1006,7 +1036,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_USER_USERTABLE_FK2">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_USER" Type="Self.USER_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
