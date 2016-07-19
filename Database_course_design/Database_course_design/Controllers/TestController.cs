@@ -36,18 +36,6 @@ namespace Database_course_design.Controllers
              ErrorMessage errorInfo = null;
              iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
              ViewBag.He = ret;*/
-            //向数据库注入数据
-            /*DBModel fun = new DBModel();
-            KUXIANGDBEntities db = new KUXIANGDBEntities();
-            var sArray = new List<string>();
-            StreamReader st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\data.in",Encoding.Default);
-            while (st.Peek() != -1)
-            {
-                string str = st.ReadLine();
-                var realStr = str.Split('\t');
-                sArray.Add(realStr[0]);
-            }
-
 
             //测试2
             /*ErrorMessage errorInfo = null;
@@ -74,6 +62,17 @@ namespace Database_course_design.Controllers
             pweb.getUserHeat("1452716", out dayheat, out errorInfo);
             ViewBag.DayHeat = dayheat;*/
 
+            //向数据库注入数据
+            /*DBModel fun = new DBModel();
+            KUXIANGDBEntities db = new KUXIANGDBEntities();
+            var sArray = new List<string>();
+            StreamReader st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\data.in",Encoding.Default);
+            while (st.Peek() != -1)
+            {
+                string str = st.ReadLine();
+                var realStr = str.Split('\t');
+                sArray.Add(realStr[0]);
+            }
             return View();
             st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\course.in");
             while (st.Peek() != -1)
