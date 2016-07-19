@@ -30,38 +30,33 @@ namespace Database_course_design.Controllers
 
         public ActionResult test()
         {
-            //测试1
-            /*List<RepertorySearchResult> SearchResut = null;
-            ErrorMessage errorInfo = null;
-            iweb.getRepositoryByLabel("1234", out SearchResut, out errorInfo);
-            ViewBag.SearchResut = SearchResut;
-            ViewBag.errorInfo = errorInfo;*/
+            /*DBModel fun = new DBModel();
+            KUXIANGDBEntities db = new KUXIANGDBEntities();
+            var sArray = new List<string>();
+            StreamReader st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\data.in",Encoding.Default);
+            while (st.Peek() != -1)
+            {
+                string str = st.ReadLine();
+                var realStr = str.Split('\t');
+                sArray.Add(realStr[0]);
+            }
 
+            st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\course.in");
+            while (st.Peek() != -1)
+            {
+                string str = st.ReadLine();
+                var rand = new Random();
+                int a = rand.Next(0, sArray.Count());
+                try
+                {
+                   fun.CreateRepository(sArray[a], str + "仓库", 0, "这是一个仓库", str);
+                }
+                catch
+                {
 
-            //测试2
-            /*ErrorMessage errorInfo = null;
-            int? num = 0;
-            iweb.getForkNum("REPOSITORY_1863516702", out num,out errorInfo);
-            ViewBag.Num = num;*/
-
-            //测试3
-            /*List<actionInfo> SearchResult = null;
-            ErrorMessage errorInfo = null;
-            iweb.getFriendDynamic("1452706",out SearchResult,out errorInfo);
-            ViewBag.SearchResult = SearchResult;*/
-
-            //测试4
-            List<IndexWebInterface.FileItem> ret = null;
-            ErrorMessage errorInfo = null;
-            iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
-
-            ViewBag.He = ret;
-
-
-
+                } 
+            }*/
             return View();
-
         }
-
     }
 }

@@ -62,6 +62,37 @@ namespace Database_course_design.Models
             }
         }
 
+        /// <summary>
+        /// 创建课程
+        /// 输入：三级label（1级学校、2级院系、3级课程）
+        /// 输出：是否插入成功
+        /// 待测试
+        /// </summary>
+        public bool createCourse(string label1,string label2, string label3)
+        {
+            KUXIANGDBEntities db = new KUXIANGDBEntities();
+            var newCourse = new COURSE()
+            {
+                COURSE_ID = createNewId("COURSE"),
+                LABEL1 = label1,
+                LABEL2 = label2,
+                LABEL3 = label3
+            };
+            try
+            {
+                db.COURSEs.Add(newCourse);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("创建课程异常");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return false;
+            }
+
+        }
+
 
         /// <summary>
         /// 显示仓库文件
@@ -454,6 +485,7 @@ namespace Database_course_design.Models
                         DESCRIPTION = description
                     };
                     db.USER_REPOSITORY_OPERATION.Add(rep_operation);
+                    db.SaveChanges();
                     return true;
                 }
                 catch (Exception ex)
@@ -848,7 +880,7 @@ namespace Database_course_design.Models
 
         /// <summary>
         /// 创建仓库
-        /// 输入：用户名，库的名称，创建库的公私级别
+        /// 输入：用户名，库的名称，创建库的公私级别，库的描述，课程的名字
         /// 输出：创建成功与否
         /// 待测试
         /// </summary>
@@ -859,13 +891,21 @@ namespace Database_course_design.Models
                 try
                 {
                     USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == userid).FirstOrDefault();
-                    COURSE newCourse = new COURSE
+                    COURSE oldCourse = db.COURSEs.Where(p => p.LABEL3 == label3 
+                                                        && p.LABEL1 == user.UNIVERSITY 
+                                                        && p.LABEL2 == user.DEPARTMENT).FirstOrDefault();
+                    if (oldCourse == null)
                     {
-                        LABEL1 = user.UNIVERSITY,
-                        LABEL2 = user.DEPARTMENT,
-                        LABEL3 = label3,
-                        COURSE_ID = createNewId("COURSE")
-                    };
+                        COURSE newCourse = new COURSE
+                        {
+                            LABEL1 = user.UNIVERSITY,
+                            LABEL2 = user.DEPARTMENT,
+                            LABEL3 = label3,
+                            COURSE_ID = createNewId("COURSE")
+                        };
+                        db.COURSEs.Add(newCourse);
+                        oldCourse = newCourse;
+                    }
 
                     string repositoryid = createNewId("REPOSITORY");
                     short attri = 0;
@@ -882,11 +922,12 @@ namespace Database_course_design.Models
                         IS_CREATE = iscreate,
                         FORK_FROM = forkfrom,
                         DESCRIPTION = description,
-                        COURSE_ID = newCourse.COURSE_ID,
+                        COURSE_ID = oldCourse.COURSE_ID,
                         STAR_NUM = 0,
                         FORK_NUM = 0,
                         UPDATE_DATE = DateTime.Now
                     };
+                    db.REPOSITORies.Add(newRep);
 
                     USER_REPOSITORY_RELATIONSHIP userrepr = new USER_REPOSITORY_RELATIONSHIP
                     {
@@ -894,12 +935,10 @@ namespace Database_course_design.Models
                         REPOSITORY_ID = newRep.REPOSITORY_ID,
                         RELATIONSHIP = relationship
                     };
-
-                    recordOperation(userid, repositoryid, "Create", description);
-                    db.COURSEs.Add(newCourse);
-                    db.REPOSITORies.Add(newRep);
                     db.USER_REPOSITORY_RELATIONSHIP.Add(userrepr);
                     db.SaveChanges();
+
+                    recordOperation(userid, repositoryid, "Create", description);
                     return true;
                 }
                 catch (Exception ex)
