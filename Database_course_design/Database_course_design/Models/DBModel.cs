@@ -65,7 +65,7 @@ namespace Database_course_design.Models
         /// 创建课程
         /// 输入：三级label（1级学校、2级院系、3级课程）
         /// 输出：是否插入成功
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool createCourse(string label1,string label2, string label3)
         {
@@ -1604,7 +1604,8 @@ namespace Database_course_design.Models
                 FILE_TYPE = type,
                 FILE_STATE = 0,
                 FILE_SIZE = size,
-                FILE_DEEP = deepInt
+                FILE_DEEP = deepInt,
+                UPDATE_DATE = System.DateTime.Now
             };
             //文件夹因为判断了权限问题，所以可以直接完成，不需要审核
             if (type == "1")
@@ -1629,7 +1630,7 @@ namespace Database_course_design.Models
                 {
                     REPOSITORY_ID = position,
                     FILE_ID = newFileId,
-                    REPOSITORY_FILE_ID = ""
+                    REPOSITORY_FILE_ID = "r_f_id"
                 };
                 try
                 {
