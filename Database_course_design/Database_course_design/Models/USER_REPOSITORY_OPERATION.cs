@@ -19,6 +19,7 @@ namespace Database_course_design.Models
         public System.DateTime OPERATION_DATE { get; set; }
         public string OPERATION { get; set; }
         public string DESCRIPTION { get; set; }
+        public string REPOSITORY_NAME { get; set; }
     
         public virtual USERTABLE USERTABLE { get; set; }
     }

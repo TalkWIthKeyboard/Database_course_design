@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b5e8b481e0274330898635f4bd7f3382" Name="Diagram1">
+      <Diagram DiagramId="a786f8cd958a4d6ba410515ecf73ef50" Name="Diagram1">
         <EntityTypeShape EntityType="Model.COMMENTTABLE" Width="1.5" PointX="3.75" PointY="30.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.COURSE" Width="1.5" PointX="1.5" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.FILE_FILE" Width="1.5" PointX="8" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.FILETABLE" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MESSAGE" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.REPOSITORY" Width="1.5" PointX="3.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.REPOSITORY_FILE" Width="1.5" PointX="8" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TAKE" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.USER_COMMENT_REPOSITORY" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.USER_COMMENT_USER" Width="1.5" PointX="6" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.USER_REPOSITORY_LOOKHISTORY" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.USER_REPOSITORY_OPERATION" Width="1.5" PointX="3" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.USER_REPOSITORY_RELATIONSHIP" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.USER_USER" Width="1.5" PointX="3" PointY="28" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.USERTABLE" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.COURSE" Width="1.5" PointX="1.5" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FILE_FILE" Width="1.5" PointX="8" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FILETABLE" Width="1.5" PointX="5.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MESSAGE" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.REPOSITORY" Width="1.5" PointX="3.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.REPOSITORY_FILE" Width="1.5" PointX="8" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TAKE" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_COMMENT_REPOSITORY" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_COMMENT_USER" Width="1.5" PointX="6" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_REPOSITORY_LOOKHISTORY" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_REPOSITORY_OPERATION" Width="1.5" PointX="3" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_REPOSITORY_RELATIONSHIP" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_USER" Width="1.5" PointX="3" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USERTABLE" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
         <AssociationConnector Association="Model.USER_COMMENT_REPOSITORY_C_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.USER_COMMENT_USER_COMMENT_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.REPOSITORY_COURSE_FK1" ManuallyRouted="false" />

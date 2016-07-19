@@ -31,7 +31,7 @@ namespace Database_course_design.Controllers
         public ActionResult test()
         {
             //向数据库注入数据
-            /*DBModel fun = new DBModel();
+            DBModel fun = new DBModel();
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             var sArray = new List<string>();
             StreamReader st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\data.in",Encoding.Default);
@@ -56,14 +56,14 @@ namespace Database_course_design.Controllers
                 {
 
                 } 
-            }*/
+            }
 
-            //测试personal页面
+            /*//测试personal页面
             var person = new PersonalWebInterface();
             var fun = new KUXIANGDBEntities();
             var db = new DBModel();
             var resultArray = new List<actionInfo>();
-            var error = new ErrorMessage();
+            var error = new ErrorMessage();*/
 
             return View();
         }

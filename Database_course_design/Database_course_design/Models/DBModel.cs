@@ -530,13 +530,15 @@ namespace Database_course_design.Models
             {
                 try
                 {
+                    var name = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repositoryID).FirstOrDefault().NAME;
                     USER_REPOSITORY_OPERATION rep_operation = new USER_REPOSITORY_OPERATION
                     {
                         USER_ID = userId,
                         REPOSITORY_ID = repositoryID,
                         OPERATION_DATE = DateTime.Now,
                         OPERATION = operation,
-                        DESCRIPTION = description
+                        DESCRIPTION = description,
+                        REPOSITORY_NAME = name
                     };
                     db.USER_REPOSITORY_OPERATION.Add(rep_operation);
                     db.SaveChanges();

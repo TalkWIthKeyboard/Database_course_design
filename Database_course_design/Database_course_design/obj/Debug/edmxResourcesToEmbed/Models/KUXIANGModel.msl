@@ -115,6 +115,7 @@
           <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
           <ScalarProperty Name="LOOK_DATE" ColumnName="LOOK_DATE" />
           <ScalarProperty Name="IS_STAR" ColumnName="IS_STAR" />
+          <ScalarProperty Name="REPOSITORY_NAME" ColumnName="REPOSITORY_NAME" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -126,6 +127,7 @@
           <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
           <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
           <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="REPOSITORY_NAME" ColumnName="REPOSITORY_NAME" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

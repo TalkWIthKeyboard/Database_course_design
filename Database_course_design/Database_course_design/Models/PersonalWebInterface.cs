@@ -43,7 +43,7 @@ namespace Database_course_design.Models
                         newAction.UserOperation = row.OPERATION;
                         newAction.UserPhotoUrl = row.USERTABLE.IMAGE;
                         newAction.RepositoryId = _RepoId;
-                        newAction.RepositoryName = row.REPOSITORY.NAME;
+                       // newAction.RepositoryName = row.REPOSITORY.NAME;
                         SearchResul.Add(newAction);
                     }
                     flag = true;

@@ -114,6 +114,7 @@
           <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="LOOK_DATE" Type="date" Nullable="false" />
           <Property Name="IS_STAR" Type="number" Precision="7" Scale="0" />
+          <Property Name="REPOSITORY_NAME" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_OPERATION">
           <Key>
@@ -125,6 +126,7 @@
           <Property Name="OPERATION_DATE" Type="date" Nullable="false" />
           <Property Name="OPERATION" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
+          <Property Name="REPOSITORY_NAME" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
           <Key>
@@ -676,6 +678,7 @@
           <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LOOK_DATE" Type="DateTime" Nullable="false" />
           <Property Name="IS_STAR" Type="Int32" />
+          <Property Name="REPOSITORY_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK1" FromRole="USER_REPOSITORY_LOOKHISTORY" ToRole="USERTABLE" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_OPERATION">
@@ -688,6 +691,7 @@
           <Property Name="OPERATION_DATE" Type="DateTime" Nullable="false" />
           <Property Name="OPERATION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="REPOSITORY_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_OPERATION_FK1" FromRole="USER_REPOSITORY_OPERATION" ToRole="USERTABLE" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
@@ -1234,6 +1238,7 @@
                 <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
                 <ScalarProperty Name="LOOK_DATE" ColumnName="LOOK_DATE" />
                 <ScalarProperty Name="IS_STAR" ColumnName="IS_STAR" />
+                <ScalarProperty Name="REPOSITORY_NAME" ColumnName="REPOSITORY_NAME" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1245,6 +1250,7 @@
                 <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
                 <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="REPOSITORY_NAME" ColumnName="REPOSITORY_NAME" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
