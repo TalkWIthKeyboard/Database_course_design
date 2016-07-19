@@ -726,12 +726,12 @@ namespace Database_course_design.Models
         /// 输入：评论内容，评论日期，仓库id，发布者id，
         /// 输出：布尔类型，判断评论是否成功
         /// </summary>   KUXIANGDBEntities
-        public bool addCommentToRepository(Nullable<System.DateTime> CommentDate, string content, string RepositoryID, string AnnouncerID)
+        public bool addCommentToRepository(string content, string RepositoryID, string AnnouncerID)
         {
             COMMENTTABLE newComment = new COMMENTTABLE
             {
                 COMMENT_ID = createNewId("COMMENTTABLE"),
-                COMMENT_DATE = CommentDate,
+                COMMENT_DATE = DateTime.Now,
                 CONTENT = content
             };
             USER_COMMENT_REPOSITORY newCommentRepository = new USER_COMMENT_REPOSITORY
@@ -765,7 +765,7 @@ namespace Database_course_design.Models
         /// 输出：布尔类型，判断评论是否成功
         /// 测试成功
         /// </summary>  
-        public bool addCommentToUser(Nullable<System.DateTime> CommentData, string content, string UserId, string AnnouncerID)
+        public bool addCommentToUser(string content, string UserId, string AnnouncerID)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
@@ -774,7 +774,7 @@ namespace Database_course_design.Models
                     COMMENTTABLE newComment = new COMMENTTABLE
                     {
                         COMMENT_ID = createNewId("COMMENTTABLE"),
-                        COMMENT_DATE = CommentData,
+                        COMMENT_DATE = DateTime.Now,
                         CONTENT = content
                     };
                     USER_COMMENT_USER newCommentUser = new USER_COMMENT_USER
@@ -797,8 +797,6 @@ namespace Database_course_design.Models
             }
         }
 
-
-        ///张志强
         /// <summary>
         /// 邀请管理者
         /// 输入: 用户ID，仓库ID
@@ -836,7 +834,7 @@ namespace Database_course_design.Models
         /// 输入：用户ID
         /// 输出：返回布尔类型，确定是否删除成功
         /// 测试成功
-
+        /// </summary>
         public bool DeletPartner(string UserID, string RepositoryID)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
@@ -1745,15 +1743,18 @@ namespace Database_course_design.Models
 
         /// <summary>
         /// 上传文件
-        /// 输入：仓库id，文件名，文件类型，文件大小，操作描述，当前所在位置，flag在仓库下还是文件夹下(0是仓库，1是文件夹)
+        /// 输入：用户id, 仓库id，文件名，文件类型，文件大小，操作描述，当前所在位置，flag在仓库下还是文件夹下(0是仓库，1是文件夹)
         /// 输出：文件id
         /// 待测试
         /// </summary>
-        public bool uploadFile(string rep_id,string name, string type, int size, string description, string position,int flag, out string fileId,out ErrorMessage errorMessage)
+        public bool uploadFile(string userid, string rep_id, string name, string type, int size, string description, string position,int flag, out string fileId,out ErrorMessage errorMessage)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 var file_id = "";
+                var result = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userid
+                                                                    && p.REPOSITORY_ID == rep_id
+                                                                    && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
                 if (!createFile(rep_id, name, "0", size, position, flag, description,out file_id))
                 {
                     var error = new ErrorMessage()
@@ -1768,16 +1769,21 @@ namespace Database_course_design.Models
                 }
                 else
                 {
-                    errorMessage = null;
-                    fileId = file_id;
-                    var manageArray = new List<USER_REPOSITORY_RELATIONSHIP>();
-                    manageArray = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == rep_id
-                                                                        && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).ToList();
-                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == rep_id).FirstOrDefault();
-                    foreach (var each in manageArray)
+                    //没有权限，需要给管理员发信息获得许可
+                    if (result == null)
                     {
-                        addMessageToUser(each.USER_ID, "您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？");
+                        var manageArray = new List<USER_REPOSITORY_RELATIONSHIP>();
+                        manageArray = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == rep_id
+                                                                            && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).ToList();
+                        var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == rep_id).FirstOrDefault();
+                        foreach (var each in manageArray)
+                        {
+                            addMessageToUser(each.USER_ID, "您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？");
+                        }
                     }
+                    fileId = file_id;
+                    errorMessage = null;
+                    changeUserGrade(userid, 1);
                     return true;
                 }
             }
@@ -1787,6 +1793,7 @@ namespace Database_course_design.Models
         /// 审核请求
         /// 输入：用户id，仓库id，文件id，是否许可(0是许可，1是不许可)
         /// 输出：是否操作成功，错误信息
+        /// 待测试
         /// </summary>
         public bool verifyRequest(string userId, string repId,string fileId, int flag,out ErrorMessage errorMessage)
         {
@@ -1809,6 +1816,7 @@ namespace Database_course_design.Models
                 {
                     var file = db.FILETABLEs.Where(p => p.FILE_ID == fileId).FirstOrDefault();
                     file.FILE_STATE = 1;
+                    changeUserGrade(userId, 1);
                     errorMessage = null;
                     return true;
                 }
@@ -1986,6 +1994,5 @@ namespace Database_course_design.Models
                 }
             }
         }
-
     }
 }
