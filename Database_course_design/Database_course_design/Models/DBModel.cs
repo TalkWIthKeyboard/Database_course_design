@@ -518,6 +518,36 @@ namespace Database_course_design.Models
             }
         }
 
+        /// <summary>
+        /// 添加浏览历史
+        /// 输入：用户的id，仓库的id
+        /// 输出：操作是否成功
+        /// </summary>
+        public bool recordLookHistory(string userId,string repositoryId)
+        {
+            var db = new KUXIANGDBEntities();
+            var name = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repositoryId).FirstOrDefault().NAME;
+            var lookHistory = new USER_REPOSITORY_LOOKHISTORY
+            {
+                USER_ID = userId,
+                REPOSITORY_ID = repositoryId,
+                REPOSITORY_NAME = name,
+                LOOK_DATE = DateTime.Now
+            };
+
+            try
+            {
+                db.USER_REPOSITORY_LOOKHISTORY.Add(lookHistory);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("记录浏览历史异常");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
         ///<summary>
         ///记录操作历史
         ///输入：用户的编号，仓库编号，操作
@@ -978,7 +1008,6 @@ namespace Database_course_design.Models
             {
                 try
                 {
-                    string tempCourseid = null;
                     USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == userid).FirstOrDefault();
                     COURSE oldCourse = db.COURSEs.Where(p => p.LABEL3 == label3 
                                                         && p.LABEL1 == user.UNIVERSITY 
@@ -1114,6 +1143,81 @@ namespace Database_course_design.Models
                     errorMessage = error;
                     return false;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 改变用户对仓库的star状态
+        /// 输入：用户id，仓库id
+        /// 输出：是否成功，错误信息
+        /// 待测试
+        /// </summary>
+        public bool changeStar(string userId,string repositoryId,out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            var result = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
+                                                               && p.REPOSITORY_ID == repositoryId
+                                                               && p.RELATIONSHIP == 2).FirstOrDefault();
+            var username = db.USERTABLEs.Where(p => p.USER_ID == userId).FirstOrDefault().NICKNAME;
+            var repname = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repositoryId).FirstOrDefault().NAME;
+            try
+            {
+                if (result != null)
+                {
+                    db.USER_REPOSITORY_RELATIONSHIP.Remove(result);
+                    var error = new ErrorMessage();
+                    if (recordOperation(userId, repositoryId, "Unstar", username + "取消收藏了" + repname))
+                    {
+                        error.ErrorOperation = "添加操作信息操作";
+                        error.ErrorReason = "内部函数异常";
+                        error.ErrorTime = DateTime.Now;    
+                    }
+                    else
+                    {
+                        error = null;
+                    }
+
+                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repositoryId).FirstOrDefault();
+                    rep.STAR_NUM--;
+                    db.SaveChanges();
+                    errorMessage = error;
+                    return true;
+                }
+                else
+                {
+                    var newRelation = new USER_REPOSITORY_RELATIONSHIP
+                    {
+                        USER_ID = userId,
+                        REPOSITORY_ID = repositoryId,
+                        RELATIONSHIP = 2
+                    };
+                    db.USER_REPOSITORY_RELATIONSHIP.Add(newRelation);
+                    var error = new ErrorMessage();
+                    if (recordOperation(userId, repositoryId, "Star", username + "收藏了" + repname))
+                    {
+                        error.ErrorOperation = "添加操作信息操作";
+                        error.ErrorReason = "内部函数异常";
+                        error.ErrorTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        error = null;
+                    }
+                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repositoryId).FirstOrDefault();
+                    rep.STAR_NUM++;
+                    db.SaveChanges();
+                    errorMessage = error;
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage();
+                error.ErrorOperation = "修改仓库star状态失败！";
+                error.ErrorReason = ex.Message;
+                error.ErrorTime = DateTime.Now;
+                errorMessage = error;
+                return false;
             }
         }
 
@@ -1378,6 +1482,7 @@ namespace Database_course_design.Models
                 }
             }
         }
+
         */
         /// <summary>
         /// 下载头像
@@ -1592,14 +1697,18 @@ namespace Database_course_design.Models
 
             string newFileId = createNewId("FILETABLE");
             string newPath = "";
+            int? deepInt = 0;
             if (flag == 0)
             {
                 newPath = db.REPOSITORies.Where(p => p.REPOSITORY_ID == position).FirstOrDefault().URL;
+                deepInt = 1;
             }
             else
             {
                 newPath = db.FILETABLEs.Where(p => p.FILE_ID == position).FirstOrDefault().PATH;
+                deepInt = db.FILETABLEs.Where(p => p.FILE_ID == position).FirstOrDefault().FILE_DEEP + 1;
             }
+
             FILETABLE new_file = new FILETABLE
             {
                 FILE_ID = newFileId,
@@ -1607,7 +1716,8 @@ namespace Database_course_design.Models
                 FILE_NAME = name,
                 FILE_TYPE = type,
                 FILE_STATE = 0,
-                FILE_SIZE = size
+                FILE_SIZE = size,
+                FILE_DEEP = deepInt
             };
             //文件夹因为判断了权限问题，所以可以直接完成，不需要审核
             if (type == "1")
