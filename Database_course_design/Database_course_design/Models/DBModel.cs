@@ -14,7 +14,7 @@ namespace Database_course_design.Models
         /// 创建主码ID
         /// 输入：表名
         /// 输出：该表的主码ID
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public string createNewId(string tableName)
         {
@@ -198,7 +198,7 @@ namespace Database_course_design.Models
         /// 关注好友
         /// 输入：用户的id，朋友的id
         /// 输出：操作是否成功
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool makeFriend(string UserId, string FriendId)
         {
@@ -254,7 +254,7 @@ namespace Database_course_design.Models
         /// 展示好友的动态
         /// 输入：用户的id
         /// 输出：所有好友的最近动态
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public List<actionInfo> showFriendDynamics(string UserId)
         {
@@ -437,7 +437,7 @@ namespace Database_course_design.Models
         ///记录操作历史
         ///输入：用户的编号，仓库编号，操作
         ///输出： 布尔值，true为成功，false为失败
-        ///待测试
+        ///测试成功
         ///</summary>
         public bool recordOperation(string userId, string repositoryID, string operation, string description)
         {
@@ -454,6 +454,7 @@ namespace Database_course_design.Models
                         DESCRIPTION = description
                     };
                     db.USER_REPOSITORY_OPERATION.Add(rep_operation);
+                    db.SaveChanges();
                     return true;
                 }
                 catch (Exception ex)
@@ -501,12 +502,42 @@ namespace Database_course_design.Models
             }
 
         }
-
+        ///王冠淞
+        /// <summary>
+        /// 创建系统消息
+        /// 输入: 用户ID，消息内容
+        /// 输出：返回布尔类型，确定是否创建成功
+        /// 测试成功
+        //</summary>
+        public bool addMessageToUser(string userid,string content)
+        {
+            using (KUXIANGDBEntities db=new Models.KUXIANGDBEntities())
+            {
+                try
+                {
+                    MESSAGE newMessage = new MESSAGE();
+                    newMessage.IS_READ = 0;
+                    newMessage.MESSAGE_CONTENT = content;
+                    newMessage.MESSAGE_DATE = System.DateTime.Now;
+                    newMessage.RECEIVER_ID = userid;
+                    newMessage.MESSAGE_ID = createNewId("MESSAGE");
+                    db.MESSAGEs.Add(newMessage);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("添加消息到用户操作异常");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }
+        }
         ///<summary>
         ///消息推送
         ///输入： 接收者的编号
         ///输出： 消息队列
-        ///待测试
+        ///测试成功
         ///</summary>
         public List<MESSAGE> pushMessage(string receiver_ID)
         {
@@ -530,7 +561,7 @@ namespace Database_course_design.Models
         ///操作历史显示
         ///输入：用户的编号
         ///输出： 操作历史(是否要链接）
-        ///待测试
+        ///测试成功
         ///</summary>
         public List<Database_course_design.Models.ItemModel.OperationItem> showOperationHistory(string userId)
         {
@@ -560,7 +591,7 @@ namespace Database_course_design.Models
                     }
                     return Operation;
                 }
-
+                
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine("操作历史显示异常");
@@ -648,6 +679,7 @@ namespace Database_course_design.Models
             }
         }
 
+
         ///张志强
         /// <summary>
         /// 邀请管理者
@@ -685,7 +717,7 @@ namespace Database_course_design.Models
         /// 删除管理者
         /// 输入：用户ID
         /// 输出：返回布尔类型，确定是否删除成功
-        /// 待测试
+        /// 测试成功
 
         public bool DeletPartner(string UserID, string RepositoryID)
         {
@@ -928,7 +960,7 @@ namespace Database_course_design.Models
         /// 删除仓库
         /// 输入：用户ID，仓库ID
         /// 输出：删除成功与否
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool RemoveRepository(string userid, string repositoryid)
         {
@@ -968,7 +1000,7 @@ namespace Database_course_design.Models
         /// 修改文件状态
         /// 输入：文件id
         /// 输出：修改状态是否成功
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool ModifyFileState(string fileid)
         {
@@ -1054,9 +1086,10 @@ namespace Database_course_design.Models
         }
 
         /// <summary>
-        /// 检索功能--文件
+        /// 检索功能——仓库
         /// 输入：检索仓库的关键字（标签，仓库名），标记变量d(d为true：标签检索，d为false：关键字检索）
         /// 输出：检索出的仓库ID列表
+        /// 测试成功
         /// </summary>
         public string[] searchRepository(string zd, bool d)
         {
@@ -1093,6 +1126,7 @@ namespace Database_course_design.Models
         /// 检索功能--文件
         /// 输入：要检索的文件的名称
         /// 输出：检索出的文件ID列表
+        /// 测试成功
         /// </summary>
         public string[] searchFile(string FileName, string repositoryId)
         {
@@ -1120,6 +1154,7 @@ namespace Database_course_design.Models
         /// 检索功能--用户
         /// 输入：要检索的用户的名称
         /// 输出：检索出的用户ID列表
+        /// 测试成功
         /// </summary>
         public List<USERTABLE> searchUser(string UserName)
         {
@@ -1146,7 +1181,7 @@ namespace Database_course_design.Models
         /// 推荐--按仓库热度推荐
         /// 输入：用户id
         /// 输出：检索出的仓库列表
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public List<REPOSITORY> recommendRepositoryByAttribute(string userId)
         {
@@ -1179,7 +1214,7 @@ namespace Database_course_design.Models
                 }
             }
         }
-
+        /*
         /// <summary>
         /// 推荐--按老师推荐
         /// 输入：老师的ID列表
@@ -1215,7 +1250,7 @@ namespace Database_course_design.Models
                 }
             }
         }
-
+        
         /// <summary>
         /// 推荐--按用户浏览历史推荐
         /// 输入：用户ID
@@ -1256,7 +1291,7 @@ namespace Database_course_design.Models
                 }
             }
         }
-
+        */
         /// <summary>
         /// 下载头像
         /// 输入：用户id
