@@ -29,7 +29,7 @@ namespace Database_course_design.Models
         /// 添加新用户到数据库
         /// 输入：用户账号，用户密码，用户名，所在院系，邮箱地址，用户身份，用户积分
         /// 输出：是否创建成功
-        /// 已测试
+        /// 测试成功
         /// </summary>
         public bool addUserInfo(string UserAccount, string UserKey, string UserName, string UserDepartment, string UserEmail, short UserIdentity, short UserGrade)
         {
@@ -116,7 +116,7 @@ namespace Database_course_design.Models
         /// 修改用户信息（只能修改用户名，邮箱）
         /// 输入：用户id，用户名，用户邮箱
         /// 输出：是否修改成功
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool changeUserInfo(string UserId, string UserEmail,string UserImage,string UserSignature,string UserNickname,string UserSelfUrl,string UserAddress)
         {
@@ -167,7 +167,7 @@ namespace Database_course_design.Models
         /// 改变用户的积分
         /// 输入：用户id,修改的分数值（+为正，-为负）
         /// 输出：修改后的分数(失败后返回-1)
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public short changeUserGrade(string UserId, short changeGrade)
         {
@@ -469,7 +469,7 @@ namespace Database_course_design.Models
         /// 删除副本仓库
         /// 输入：副本仓库的id
         /// 输出：是否操作成功
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool deleteForkRepertory(string RepositoryId)
         {
@@ -614,6 +614,7 @@ namespace Database_course_design.Models
         ///对用户进行评论
         /// 输入：评论内容，评论日期，被评论者id，发布者id，
         /// 输出：布尔类型，判断评论是否成功
+        /// 测试成功
         /// </summary>  
         public bool addCommentToUser(Nullable<System.DateTime> CommentData, string content, string UserId, string AnnouncerID)
         {
@@ -652,7 +653,7 @@ namespace Database_course_design.Models
         /// 邀请管理者
         /// 输入: 用户ID，仓库ID
         /// 输出：返回布尔类型，确定是否添加成功
-        /// 待测试
+        /// 测试成功
         //</summary>
         public bool AddPartner(string UserID, string RepositoryID)
         {
@@ -709,7 +710,7 @@ namespace Database_course_design.Models
         /// 修改仓库信息
         /// 输入：仓库描述des，仓库id
         /// 输出：返回布尔类型，确定是否添加描述成功
-        /// 待测试
+        /// 测试成功
         /// /// </summary>
         public bool ModifyInformation(string RepositoryId, string newDes)
         {
@@ -850,7 +851,7 @@ namespace Database_course_design.Models
         /// 创建仓库
         /// 输入：用户名，库的名称，创建库的公私级别
         /// 输出：创建成功与否
-        /// 待测试
+        /// 测试成功
         /// </summary>
         public bool CreateRepository(string userid, string name, int authority, string description,string label3)
         {
@@ -1340,7 +1341,7 @@ namespace Database_course_design.Models
         /// 添加副本仓库
         /// 输入：用户id，被添加副本的仓库id
         /// 输出：副本仓库
-        /// 待测试
+        /// 多级文件部分未测试
         /// </summary>
         public REPOSITORY addForkRepertory(string UserId, string RepositoryId)
         {
@@ -1393,10 +1394,8 @@ namespace Database_course_design.Models
                    
                     //db.SaveChanges();
                     db.REPOSITORies.Add(reposit);
-                    db.SaveChanges();
                     db.USER_REPOSITORY_OPERATION.Add(operation);
                     db.USER_REPOSITORY_RELATIONSHIP.Add(relationship);
-                    db.SaveChanges();
 
                     //db.SaveChanges();
 
