@@ -28,7 +28,7 @@ namespace Database_course_design.Controllers
              ViewBag.errorInfo = errorInfo;
              retu
          }*/
-
+/*
         public ActionResult test()
         {
             //测试1
@@ -88,9 +88,9 @@ namespace Database_course_design.Controllers
                 {
 
                 } 
-            }*/
+            }
         }
-
+        */
         public JsonResult GetPersonInfo()
         {
             List<DayHeat> dayheat = null;

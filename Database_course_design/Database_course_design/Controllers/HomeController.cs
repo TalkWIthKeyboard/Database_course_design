@@ -33,10 +33,16 @@ namespace Database_course_design.Controllers
             ErrorMessage errorInfo = null;
             iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
             ViewBag.CardContent = ret;
+            string field = null;
+            ErrorMessage ex = new ErrorMessage();
 
-
+            for (int i = 0; i <  20; i++)
+            {
+                var ss = dbmodel.createFolder("REPOSITORY_2392485163", "1452802", "王冠淞测试文件夹" + i.ToString(), "REPOSITORY_2392485163", 0, out field, out ex);
+            }
+            //var s = dbmodel.createFile("REPOSITORY_2405964274", "王家慧测试文件.exe", "1", 23, "FILETABLE_6976112805", 1, "", out field);
             /*被赞次数*/
-            int? StarNum = 0;
+            int ? StarNum = 0;
             iweb.getStarNum("REPOSITORY_8111840549",out StarNum,out errorInfo);
             ViewBag.StarNum = StarNum;
 
