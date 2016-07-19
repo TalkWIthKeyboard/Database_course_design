@@ -553,6 +553,7 @@ namespace Database_course_design.Models
                                    where r.REPOSITORY_ID == str.REPOSITORY_ID
                                    select r.NAME).FirstOrDefault();
                         res.DATE = date;
+                        res.REPOSITORY_ID = str.REPOSITORY_ID;
                         res.OPERATION = operation;
                         res.REPOSITORY_NAME = reposit;
                         res.USER_NAME = username;

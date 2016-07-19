@@ -17,6 +17,7 @@ namespace Database_course_design.Models
         }
         public bool getFIleByRepoId(string _RepoId, out List<FileItem> ret, out ItemModel.ErrorMessage ErrorInfo)
         {
+
             try
             {
                 ret = new List<FileItem>();
@@ -39,7 +40,6 @@ namespace Database_course_design.Models
                     NewFileItem.RepositoryName = db.REPOSITORies.Where(p => p.REPOSITORY_ID == _RepoId).Select(p => p.NAME).FirstOrDefault();
                     NewFileItem.FileName = FileList.FILE_NAME;
                     NewFileItem.FileType = FileList.FILE_TYPE;
-                    NewFileItem.Url = FileList.PATH;
                     ret.Add(NewFileItem);
                 }
                 return true;
@@ -55,6 +55,7 @@ namespace Database_course_design.Models
                 return false;
             }
         }
+
         /// <summary>
         ///  根据用户的所有Label获取推荐的仓库
         ///  输入：用户的Id， 返回的参数， 错误信息

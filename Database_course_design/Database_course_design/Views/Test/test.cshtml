@@ -3,17 +3,10 @@
     ViewBag.Title = "test";
 }
 @{ 
-    var temp = ViewBag.He;
+    var dayheat = ViewBag.DayHeat;
 }
-
-
-@foreach(var x in temp)
-{
-    <p>@x.FileName</p>
-    <p>@x.FileType</p>
-    <p>@x.Url</p>
-    <p>@x.RepositoryName</p>
-}
-
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/test.js"></script>
+<p id="friendContent"></p>
 
 

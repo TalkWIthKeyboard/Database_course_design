@@ -194,6 +194,7 @@
     <Content Include="Scripts\personal.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\ScatterDiagram.js" />
+    <Content Include="Scripts\test.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -228,6 +229,7 @@
     <Compile Include="Models\ItemModel\RepertorySearchResult.cs" />
     <Compile Include="Models\ItemModel\UserInfo.cs" />
     <Compile Include="Models\ItemModel\UserSearchResult.cs" />
+    <Compile Include="Models\JsonConvert.cs" />
     <Compile Include="Models\KUXIANGModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

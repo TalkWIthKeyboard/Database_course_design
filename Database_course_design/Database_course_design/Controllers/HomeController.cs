@@ -17,6 +17,7 @@ namespace Database_course_design.Controllers
         private DBModel dbmodel = new DBModel();
         private IndexWebInterface iweb = new IndexWebInterface();
         private LoginController lgc = new LoginController();
+        private PersonalWebInterface pweb = new PersonalWebInterface();
         string user_id;
 
         public HomeController(){}
@@ -32,6 +33,22 @@ namespace Database_course_design.Controllers
             ErrorMessage errorInfo = null;
             iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
             ViewBag.CardContent = ret;
+
+
+            /*被赞次数*/
+            int? StarNum = 0;
+            iweb.getStarNum("REPOSITORY_8111840549",out StarNum,out errorInfo);
+            ViewBag.StarNum = StarNum;
+
+            /*Fork次数*/
+            int? Forknum = 0;
+            iweb.getForkNum("REPOSITORY_8111840549",out Forknum,out errorInfo);
+            ViewBag.ForkNum = Forknum;
+
+            /*好友动态*/
+            List<actionInfo> SearchResult = null;
+            iweb.getFriendDynamic("1452739",out SearchResult,out errorInfo);
+            ViewBag.FriendDynamic = SearchResult;
 
 
 
@@ -60,15 +77,32 @@ namespace Database_course_design.Controllers
             using (var client = new WebClient())
             {
                 /*url.ToLower(); file.ToLower();*/ 
-               var buffer = client.DownloadData(url);
+                var buffer = client.DownloadData(url);
                 return File(buffer, "/img", file);
             }
         }
 
+       public JsonResult statistics()
+        {
+            /*统计图表*/
+            List<DayHeat> dayheat = null;
+            ErrorMessage error = null;
+            pweb.getUserHeat("1452716", out dayheat, out error);
+            /*dayheat[0].OpList[0].OPERATION
+            dayheat[0].OpList[0].TARGET_REPOSITORY_NAME
+                dayheat[0].OpList[0].TARGET_USER_NAME*/
+            JsonResult js = Json(dayheat);
+            return js;
+        }
+
         public ActionResult Personal()
         {
+           
+
+
             return View();
         }
+
 
 
     }

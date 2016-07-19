@@ -6,7 +6,6 @@ $(
 
         if ($title.html() !== 'login') {
             $body.height($window.height() - 50);
-            alert(1);
         } else {
             $body.height($window.height());
         }

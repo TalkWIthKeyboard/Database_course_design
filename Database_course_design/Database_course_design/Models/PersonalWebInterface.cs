@@ -118,25 +118,6 @@ namespace Database_course_design.Models
 
         }
 
-        /*/// <summary>
-        /// 修改用户资料（对DBmodel的封装）
-        /// 输入：待定参数， 错误信息
-        /// 输出：是否成功
-        /// </summary>
-        public bool changeUserInfo( out ItemModel.ErrorMessage)
-        {
-
-        }
-
-        /// <summary>
-        /// 修改用户好友关系
-        /// 输入：用户自己的Id, 对象用户的Id, 关注或取消关注（true是关注）, 错误信息
-        /// 输出：是否成功
-        /// </summary>
-        public bool changeFriend(string _SelfUserId, string _TarUserId, bool Focus, out ItemModel.ErrorMessage ErrorInfo)
-        {
-
-        }*/
 
         /// <summary>
         /// 查询用户该月每天的操作和热度
@@ -158,7 +139,8 @@ namespace Database_course_design.Models
                 //创建返回列表
                 List<Database_course_design.Models.ItemModel.DayHeat> ret = new List<ItemModel.DayHeat>();
                 //插入本月的天数
-                for (int i = 1; i <= DateTime.Now.Day; i++)
+
+                for (int i = 0; i <= DateTime.Now.Day; i++)
                 {
                     ret.Add(new ItemModel.DayHeat() { Count = 0 });
                 }
@@ -200,5 +182,77 @@ namespace Database_course_design.Models
                 return false;
             }
         }
+
+        
+        /// <summary>
+        /// 修改用户资料（对DBmodel的封装）
+        /// 输入：待定参数， 错误信息
+        /// 输出：是否成功
+        /// </summary>
+        public bool modifyBasicUserInfo(string _UserId, string _ImgUrl, string _NickName, string _Signature, string _Email, string _PersonalUrl/*这个参数什么意思*/,
+                                                            string _Address, out ItemModel.ErrorMessage ErrorInfo)
+        {
+            try
+            {
+                ErrorInfo = null;
+                //修改表项信息
+                DBModel func = new DBModel();
+                if (func.changeUserInfo(_UserId, _Email, _ImgUrl, _Signature, _NickName, _PersonalUrl, _Address))
+                {
+                    throw new Exception("Modify error!");
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorInfo = new ItemModel.ErrorMessage();
+                ErrorInfo.ErrorOperation = "changeBasicUserInfo";
+                ErrorInfo.ErrorReason = ex.Message;
+                ErrorInfo.ErrorTime = DateTime.Now;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// 输入：用户ID， 旧密码，新密码
+        ///输出：是否修改成功
+        /// </summary>
+        public bool modifyPassword(string _UserId, string _OldPassword, string _NewPassword, out ItemModel.ErrorMessage ErrorInfo)
+        {
+            try
+            {
+                //实例化数据库
+                KUXIANGDBEntities db = new KUXIANGDBEntities();
+                //提取旧密码
+                string OldPassword = db.USERTABLEs.Where(p => p.USER_ID == _UserId).Select(P => P.PASSWORD).FirstOrDefault();
+                //旧密码正确
+                if (0 == string.Compare(_OldPassword, OldPassword))
+                {
+                    //修改密码
+                    var User = from p in db.USERTABLEs
+                               where p.USER_ID == _UserId
+                               select p;
+                    User.FirstOrDefault().PASSWORD = _NewPassword;
+                    db.SaveChanges();
+                    ErrorInfo = null;
+                    return true;
+                }
+                //密码不正确，抛出异常
+                else
+                {
+                    throw new Exception("Password Wrong!");
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorInfo = new ItemModel.ErrorMessage();
+                ErrorInfo.ErrorOperation = "modifyPassword";
+                ErrorInfo.ErrorReason = ex.Message;
+                ErrorInfo.ErrorTime = DateTime.Now;
+                return false;
+            }
+        }
+
     }
 }

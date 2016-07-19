@@ -8,32 +8,32 @@ using System.Web.Mvc;
 
 namespace Database_course_design.Controllers
 {
-    public class TestController :Controller
+    public class TestController : Controller
     {
         private IndexWebInterface iweb = new IndexWebInterface();
-        string user_id;
+        private PersonalWebInterface pweb = new PersonalWebInterface();
+        // string user_id;
 
         /*得到卡片的内容*/
-       /* private ActionResult getCardContent()
-        {
-            List<RepertorySearchResult> SearchResut = null;
-            ErrorMessage errorInfo = null;
-            iweb.getRepositoryByLabel(user_id, out SearchResut, out errorInfo);
-            ViewBag.SearchResut = SearchResut;
+        /* private ActionResult getCardContent()
+         {
+             List<RepertorySearchResult> SearchResut = null;
+             ErrorMessage errorInfo = null;
+             iweb.getRepositoryByLabel(user_id, out SearchResut, out errorInfo);
+             ViewBag.SearchResut = SearchResut;
 
 
-            ViewBag.errorInfo = errorInfo;
-            retu
-        }*/
+             ViewBag.errorInfo = errorInfo;
+             retu
+         }*/
 
         public ActionResult test()
         {
             //测试1
-            /*List<RepertorySearchResult> SearchResut = null;
-            ErrorMessage errorInfo = null;
-            iweb.getRepositoryByLabel("1234", out SearchResut, out errorInfo);
-            ViewBag.SearchResut = SearchResut;
-            ViewBag.errorInfo = errorInfo;*/
+            /* Dictionary<string,IndexWebInterface.FileItem> ret = null;
+             ErrorMessage errorInfo = null;
+             iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
+             ViewBag.He = ret;*/
 
 
             //测试2
@@ -49,16 +49,42 @@ namespace Database_course_design.Controllers
             ViewBag.SearchResult = SearchResult;*/
 
             //测试4
-            List<IndexWebInterface.FileItem> ret = null;
+            /*List<IndexWebInterface.FileItem> ret = null;
+             ErrorMessage errorInfo = null;
+             iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
+
+             ViewBag.He = ret;*/
+
+            //测试4
+            /*List<DayHeat> dayheat = null;
             ErrorMessage errorInfo = null;
-            iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
-
-            ViewBag.He = ret;
-
-
+            pweb.getUserHeat("1452716", out dayheat, out errorInfo);
+            ViewBag.DayHeat = dayheat;*/
 
             return View();
 
+        }
+
+        public JsonResult GetPersonInfo()
+        {
+            List<DayHeat> dayheat = null;
+            ErrorMessage error = null;
+            pweb.getUserHeat("1452716", out dayheat, out error);
+            // dayheat[0].Count;
+            //    dayheat[0].OpList[0].TARGET_USER_NAME;
+
+           /* var person = new
+            {
+                Count = dayheat[i].Count,
+                Op = new {
+                    Name = dayheat[i].OpList[j].TARGET_USER_NAME,
+                    Operation = dayheat[i].OpList[0].OPERATION,
+                    ReName = dayheat[19].OpList[0].TARGET_REPOSITORY_NAME
+                },
+             };*/
+            JsonResult js = Json(dayheat);
+
+            return js;
         }
 
     }
