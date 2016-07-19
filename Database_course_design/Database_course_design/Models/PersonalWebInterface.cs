@@ -24,9 +24,12 @@ namespace Database_course_design.Models
                 SearchResul = new List<ItemModel.actionInfo>();
                 if (_RepoId == null)
                 {
-                    var res = dbmodel.showFriendDynamics(_UserId);
-                    if (res != null)
-                    { flag = true; SearchResul = res; }
+                    var result = dbmodel.getUserDynamics(_UserId);
+                    if (result != null)
+                    {
+                        flag = true;
+                        SearchResul = result;
+                    }
                 }
                 else
                 {

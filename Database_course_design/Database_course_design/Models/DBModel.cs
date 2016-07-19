@@ -282,6 +282,45 @@ namespace Database_course_design.Models
         }
 
         /// <summary>
+        /// 展示这个用户的动态
+        /// 输入：用户的id
+        /// 输出：这个用户的最近动态
+        /// 待测试
+        /// </summary>
+        public List<actionInfo> getUserDynamics(string _UserId)
+        {
+            var db = new KUXIANGDBEntities();
+            var results = new List<ItemModel.actionInfo>();
+            try
+            {
+                var ans = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == _UserId).ToList();
+                var user = db.USERTABLEs.Where(p => p.USER_ID == _UserId).FirstOrDefault();
+                foreach (var each in ans)
+                {
+                    var repo = db.REPOSITORies.Where(p => p.REPOSITORY_ID == each.REPOSITORY_ID).FirstOrDefault();
+                    var result = new ItemModel.actionInfo
+                    {
+                        UserId = user.USER_ID,
+                        UserName = user.USER_NAME,
+                        UserPhotoUrl = user.IMAGE,
+                        UserOperation = each.OPERATION,
+                        RepositoryName = repo.NAME,
+                        RepositoryId = repo.REPOSITORY_ID,
+                        UpdateInfo = each.DESCRIPTION
+                    };
+                    results.Add(result);
+                }
+                return results;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("查找个人动态操作异常");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 展示好友的动态
         /// 输入：用户的id
         /// 输出：所有好友的最近动态
@@ -297,32 +336,17 @@ namespace Database_course_design.Models
                     var friends = db.USER_USER.Where(p => p.USER_ID1 == UserId).ToArray();
                     foreach (var friend in friends)
                     {
-                        var dyamics = (from row in db.USER_REPOSITORY_OPERATION
-                                       where row.USER_ID == friend.USER_ID2
-                                       orderby row.OPERATION_DATE descending
-                                       select row).FirstOrDefault();
-                        var userFriend = (from fname in db.USERTABLEs
-                                          where fname.USER_ID == friend.USER_ID2
-                                          select fname).FirstOrDefault();
-                        var repositFriend = (from reposit in db.REPOSITORies
-                                             where reposit.REPOSITORY_ID == dyamics.REPOSITORY_ID
-                                             select reposit).FirstOrDefault();
-                        newdy.Add(new actionInfo
+                        var result = getUserDynamics(friend.USER_ID2);
+                        foreach (var each in result)
                         {
-                            UserId = userFriend.USER_ID,
-                            UserName = userFriend.USER_NAME,
-                            UserPhotoUrl = userFriend.IMAGE,
-                            UserOperation = dyamics.OPERATION,
-                            RepositoryName = repositFriend.NAME,
-                            RepositoryId = repositFriend.REPOSITORY_ID,
-                            UpdateInfo = dyamics.DESCRIPTION
-                        });
+                            newdy.Add(each);
+                        }
                     }
                     return newdy;
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("显示好友动态操作异常");
+                    System.Diagnostics.Debug.WriteLine("查找好友动态操作异常");
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                     return null;
                 }

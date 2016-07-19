@@ -30,6 +30,7 @@ namespace Database_course_design.Controllers
 
         public ActionResult test()
         {
+            //向数据库注入数据
             /*DBModel fun = new DBModel();
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             var sArray = new List<string>();
@@ -56,6 +57,13 @@ namespace Database_course_design.Controllers
 
                 } 
             }*/
+
+            //测试personal页面
+            var person = new PersonalWebInterface();
+            var fun = new KUXIANGDBEntities();
+            var resultArray = new List<actionInfo>();
+            var error = new ErrorMessage();
+            var result = person.getSelfDynamic("1452741", "REPOSITORY_2407814216", out resultArray,out error);
             return View();
         }
     }
