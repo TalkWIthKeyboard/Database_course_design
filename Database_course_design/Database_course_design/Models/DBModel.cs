@@ -263,7 +263,7 @@ namespace Database_course_design.Models
                 try
                 {
                     List<actionInfo> newdy = new List<ItemModel.actionInfo>();
-                    var friends = db.USER_USER.Where(p => p.USER_ID1 == UserId);
+                    var friends = db.USER_USER.Where(p => p.USER_ID1 == UserId).ToArray();
                     foreach (var friend in friends)
                     {
                         var dyamics = (from row in db.USER_REPOSITORY_OPERATION

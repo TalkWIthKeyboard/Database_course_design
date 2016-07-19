@@ -2,9 +2,18 @@
 @{
     ViewBag.Title = "test";
 }
+@{ 
+    var temp = ViewBag.He;
+}
 
-<p>@ViewBag.Num</p>
 
+@foreach(var x in temp)
+{
+    <p>@x.FileName</p>
+    <p>@x.FileType</p>
+    <p>@x.Url</p>
+    <p>@x.RepositoryName</p>
+}
 
 
 

@@ -8,6 +8,53 @@ namespace Database_course_design.Models
 {
     public class IndexWebInterface
     {
+        public struct FileItem
+        {
+            public string RepositoryName;
+            public string FileName;
+            public string FileType;
+            public string Url;
+        }
+        public bool getFIleByRepoId(string _RepoId, out List<FileItem> ret, out ItemModel.ErrorMessage ErrorInfo)
+        {
+            try
+            {
+                ret = new List<FileItem>();
+                ErrorInfo = null;
+                KUXIANGDBEntities db = new KUXIANGDBEntities();
+                var FileIdList = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == _RepoId);
+                if (null == FileIdList)
+                {
+                    ErrorInfo = new ItemModel.ErrorMessage();
+                    ErrorInfo.ErrorOperation = "getFIleByRepoId";
+                    ErrorInfo.ErrorReason = "No File Found";
+                    ErrorInfo.ErrorTime = DateTime.Now;
+                    ret = null;
+                    return false;
+                }
+                foreach (var item in FileIdList)
+                {
+                    var FileList = db.FILETABLEs.Where(p => p.FILE_ID == item.FILE_ID).FirstOrDefault();
+                    FileItem NewFileItem = new FileItem();
+                    NewFileItem.RepositoryName = db.REPOSITORies.Where(p => p.REPOSITORY_ID == _RepoId).Select(p => p.NAME).FirstOrDefault();
+                    NewFileItem.FileName = FileList.FILE_NAME;
+                    NewFileItem.FileType = FileList.FILE_TYPE;
+                    NewFileItem.Url = FileList.PATH;
+                    ret.Add(NewFileItem);
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                ErrorInfo = new ItemModel.ErrorMessage();
+                ErrorInfo.ErrorOperation = "getFIleByRepoId";
+                ErrorInfo.ErrorReason = ex.Message;
+                ErrorInfo.ErrorTime = DateTime.Now;
+                ret = null;
+                return false;
+            }
+        }
         /// <summary>
         ///  根据用户的所有Label获取推荐的仓库
         ///  输入：用户的Id， 返回的参数， 错误信息
@@ -135,7 +182,7 @@ namespace Database_course_design.Models
         /// 输出：是否成功
         /// 未测试
         /// </summary>
-        public bool getFriendDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResult, out ItemModel.ErrorMessage ErrorInfo)
+        public bool getFriendDynamic(string _UserId,out List<ItemModel.actionInfo> SearchResult, out ItemModel.ErrorMessage ErrorInfo)
         {
             DBModel func = new DBModel();
             KUXIANGDBEntities db = new KUXIANGDBEntities();

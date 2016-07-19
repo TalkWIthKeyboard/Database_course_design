@@ -2,7 +2,9 @@
 using Database_course_design.Models.ItemModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -28,17 +30,37 @@ namespace Database_course_design.Controllers
 
         public ActionResult test()
         {
+            //测试1
             /*List<RepertorySearchResult> SearchResut = null;
             ErrorMessage errorInfo = null;
             iweb.getRepositoryByLabel("1234", out SearchResut, out errorInfo);
             ViewBag.SearchResut = SearchResut;
             ViewBag.errorInfo = errorInfo;*/
 
-            ErrorMessage errorInfo = null;
+
+            //测试2
+            /*ErrorMessage errorInfo = null;
             int? num = 0;
             iweb.getForkNum("REPOSITORY_1863516702", out num,out errorInfo);
-            ViewBag.Num = num;
+            ViewBag.Num = num;*/
+
+            //测试3
+            /*List<actionInfo> SearchResult = null;
+            ErrorMessage errorInfo = null;
+            iweb.getFriendDynamic("1452706",out SearchResult,out errorInfo);
+            ViewBag.SearchResult = SearchResult;*/
+
+            //测试4
+            List<IndexWebInterface.FileItem> ret = null;
+            ErrorMessage errorInfo = null;
+            iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
+
+            ViewBag.He = ret;
+
+
+
             return View();
+
         }
 
     }
