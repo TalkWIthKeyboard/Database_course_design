@@ -63,7 +63,7 @@ namespace Database_course_design.Controllers
             var fun = new KUXIANGDBEntities();
             var resultArray = new List<actionInfo>();
             var error = new ErrorMessage();
-            var result = person.getSelfDynamic("1452741", "REPOSITORY_2407814216", out resultArray,out error);
+
             return View();
         }
     }

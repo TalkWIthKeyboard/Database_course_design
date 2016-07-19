@@ -285,7 +285,7 @@ namespace Database_course_design.Models
         /// 展示这个用户的动态
         /// 输入：用户的id
         /// 输出：这个用户的最近动态
-        /// 待测试
+        /// 完成测试
         /// </summary>
         public List<actionInfo> getUserDynamics(string _UserId)
         {
