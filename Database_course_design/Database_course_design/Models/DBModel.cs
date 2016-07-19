@@ -585,9 +585,8 @@ namespace Database_course_design.Models
                     return false;
                 }
             }
-
         }
-        ///王冠淞
+
         /// <summary>
         /// 创建系统消息
         /// 输入: 用户ID，消息内容
@@ -596,7 +595,7 @@ namespace Database_course_design.Models
         //</summary>
         public bool addMessageToUser(string userid,string content)
         {
-            using (KUXIANGDBEntities db=new Models.KUXIANGDBEntities())
+            using (KUXIANGDBEntities db = new Models.KUXIANGDBEntities())
             {
                 try
                 {
@@ -618,6 +617,7 @@ namespace Database_course_design.Models
                 }
             }
         }
+
         ///<summary>
         ///消息推送
         ///输入： 接收者的编号
@@ -1041,9 +1041,9 @@ namespace Database_course_design.Models
         /// 删除仓库
         /// 输入：用户ID，仓库ID
         /// 输出：删除成功与否
-        /// 测试成功
+        /// 待测试
         /// </summary>
-        public bool RemoveRepository(string userid, string repositoryid)
+        public bool RemoveRepository(string userid, string repositoryid,out ErrorMessage errorMessage)
         {
             int numb = 0;
             using (var db = new KUXIANGDBEntities())
@@ -1061,53 +1061,57 @@ namespace Database_course_design.Models
 
                     if (numb != 0)
                     {
+                        var fileList = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == repositoryid).ToList();
+                        foreach (var each in fileList)
+                        {
+                            var error = new ErrorMessage();
+                            removeFile(userid,repositoryid,each.FILE_ID,out error);
+                            if (error != null)
+                            {
+                                errorMessage = error;
+                            }
+                        }
                         db.REPOSITORies.Remove(db.REPOSITORies.Where(p =>p.REPOSITORY_ID == repositoryid).FirstOrDefault());
                         db.SaveChanges();
+                    }
+                    else
+                    {
+                        var error = new ErrorMessage
+                        {
+                            ErrorOperation = "删除仓库操作",
+                            ErrorReason = "没有权限删除仓库",
+                            ErrorTime = DateTime.Now
+                        };
+                        errorMessage = error;
+                        return false;
+                    }
+
+                    if (!recordOperation(userid, repositoryid, "Delete", null))
+                    {
+                        var error = new ErrorMessage
+                        {
+                            ErrorOperation = "添加操作信息操作",
+                            ErrorReason = "内函数异常",
+                            ErrorTime = DateTime.Now
+                        };
+                        errorMessage = error;
+                        return false;
+                    }
+                    else
+                    {
+                        errorMessage = null;
                         return true;
                     }
-                    recordOperation(userid, repositoryid, "Delete", null);
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("仓库删除失败！");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                }
-
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 修改文件状态
-        /// 输入：文件id
-        /// 输出：修改状态是否成功
-        /// 测试成功
-        /// </summary>
-        public bool ModifyFileState(string fileid)
-        {
-            using (var db = new KUXIANGDBEntities())
-            {
-                try
-                {
-                    var mfile =
-                    from p
-                   in db.FILETABLEs
-                   where p.FILE_ID == fileid
-                   select p;
-                    foreach (var mf in mfile)
-                    {
-                        mf.FILE_STATE = 1;
-                    }
-                    db.SaveChanges();
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine("修改文件状态失败！");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    var error = new ErrorMessage();
+                    error.ErrorOperation = "仓库删除失败！";
+                    error.ErrorReason = ex.Message;
+                    error.ErrorTime = DateTime.Now;
+                    errorMessage = error;
                     return false;
                 }
-
             }
         }
 
@@ -1764,7 +1768,65 @@ namespace Database_course_design.Models
                 {
                     errorMessage = null;
                     fileId = file_id;
+                    var manageArray = new List<USER_REPOSITORY_RELATIONSHIP>();
+                    manageArray = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == rep_id
+                                                                        && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).ToList();
+                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == rep_id).FirstOrDefault();
+                    foreach (var each in manageArray)
+                    {
+                        addMessageToUser(each.USER_ID, "您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？");
+                    }
                     return true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 审核请求
+        /// 输入：用户id，仓库id，文件id，是否许可(0是许可，1是不许可)
+        /// 输出：是否操作成功，错误信息
+        /// </summary>
+        public bool verifyRequest(string userId, string repId,string fileId, int flag,out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            var user = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
+                                                             && p.REPOSITORY_ID == repId
+                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
+            if (user == null)
+            {
+                var error = new ErrorMessage();
+                error.ErrorOperation = "审核请求操作";
+                error.ErrorReason = "没有权限进行审核";
+                error.ErrorTime = DateTime.Now;
+                errorMessage = error;
+                return false;
+            }
+            else
+            {
+                if (flag == 0)
+                {
+                    var file = db.FILETABLEs.Where(p => p.FILE_ID == fileId).FirstOrDefault();
+                    file.FILE_STATE = 1;
+                    errorMessage = null;
+                    return true;
+                }
+                else
+                {
+                    var errorM = new ErrorMessage();
+                    if (!removeFile(userId,repId, fileId,out errorM))
+                    {
+                        var error = new ErrorMessage();
+                        error.ErrorOperation = "审核请求操作";
+                        error.ErrorReason = "删除操作失败";
+                        error.ErrorTime = DateTime.Now;
+                        errorMessage = error;
+                        return false;
+                    }
+                    else
+                    {
+                        errorMessage = null;
+                        return true;
+                    }
                 }
             }
         }
@@ -1817,26 +1879,81 @@ namespace Database_course_design.Models
 
         /// <summary>
         /// 删除文件
-        /// 输入：仓库id，文件id
-        /// 输出：bool(是否删除成功)
-        /// 测试成功
+        /// 输入：用户id，仓库id，文件id
+        /// 输出：是否成功，错误信息
+        /// 待测试
         /// </summary>
-        public bool deleteFile(string repositoryId, string fileId)
+        public bool removeFile(string userId,string repositoryId,string fileId,out ErrorMessage errorMessage)
         {
-            using (KUXIANGDBEntities db = new KUXIANGDBEntities())
+            var db = new KUXIANGDBEntities();
+            var user = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
+                                                             && p.REPOSITORY_ID == repositoryId
+                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
+            if (user == null)
             {
+                var error = new ErrorMessage()
+                {
+                    ErrorOperation = "删除文件操作",
+                    ErrorReason = "没有权限进行删除操作",
+                    ErrorTime = DateTime.Now
+                };
+                errorMessage = error;
+                return false;
+            }
+            else
+            {
+                USER_REPOSITORY_OPERATION operation = new USER_REPOSITORY_OPERATION
+                {
+                    USER_ID = userId,
+                    REPOSITORY_ID = repositoryId,
+                    OPERATION_DATE = DateTime.Now,
+                    OPERATION = "Delete"
+                };
+                db.USER_REPOSITORY_OPERATION.Add(operation);
+
+                //1级的文件要删除库与文件的关系
+                var deep = db.FILETABLEs.Where(t => t.FILE_ID == fileId).FirstOrDefault().FILE_DEEP;
+                if (deep == 1)
+                {
+                    try
+                    {
+                        db.REPOSITORY_FILE.Remove(db.REPOSITORY_FILE.Where(t => t.FILE_ID == fileId).FirstOrDefault());
+                    }
+                    catch (Exception ex)
+                    {
+                        var error = new ErrorMessage
+                        {
+                            ErrorOperation = "删除文件与仓库的关系操作",
+                            ErrorReason = ex.Message,
+                            ErrorTime = DateTime.Now
+                        };
+                        errorMessage = error;
+                        return false;
+                    }
+                }
+                //非1级文件要删除文件与文件的关系
+                else
+                {
+                    try
+                    {
+                        db.FILE_FILE.Remove(db.FILE_FILE.Where(p => p.FILE_ID2 == fileId).FirstOrDefault());
+                    }
+                    catch (Exception ex)
+                    {
+                        var error = new ErrorMessage
+                        {
+                            ErrorOperation = "删除文件与文件的关系操作",
+                            ErrorReason = ex.Message,
+                            ErrorTime = DateTime.Now
+                        };
+                        errorMessage = error;
+                        return false;
+                    }
+                }
+                
+                //删除这个文件下面的文件
                 try
                 {
-                    string UserId = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == repositoryId && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault().USER_ID;
-                    //更新操作
-                    USER_REPOSITORY_OPERATION operation = new USER_REPOSITORY_OPERATION
-                    {
-                        USER_ID = UserId,
-                        REPOSITORY_ID = repositoryId,
-                        OPERATION_DATE = DateTime.Now,
-                        OPERATION = "Delete"
-                    };
-                    db.USER_REPOSITORY_OPERATION.Add(operation);
                     Queue files = new Queue();
                     files.Enqueue(fileId);
                     while (files.Count > 0)
@@ -1849,16 +1966,20 @@ namespace Database_course_design.Models
                             db.FILE_FILE.Remove(db.FILE_FILE.Where(t => t.FILE_ID1 == cur && t.FILE_ID2 == temp.FILE_ID2).FirstOrDefault());
                         }
                         db.FILETABLEs.Remove(db.FILETABLEs.Where(t => t.FILE_ID == cur).FirstOrDefault());
-                       // var deep = db.FILETABLEs.Where(t => t.FILE_ID == cur).FirstOrDefault().FILE_DEEP;
-                        db.REPOSITORY_FILE.Remove(db.REPOSITORY_FILE.Where(t => t.FILE_ID == cur).FirstOrDefault());    
                     }
                     db.SaveChanges();
+                    errorMessage = null;
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("删除文件操作异常");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    var error = new ErrorMessage
+                    {
+                        ErrorOperation = "删除文件下面的文件操作异常",
+                        ErrorReason = ex.Message,
+                        ErrorTime = DateTime.Now
+                    };
+                    errorMessage = error;
                     return false;
                 }
             }
