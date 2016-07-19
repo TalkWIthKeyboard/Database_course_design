@@ -2,7 +2,9 @@
 using Database_course_design.Models.ItemModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -34,6 +36,17 @@ namespace Database_course_design.Controllers
              ErrorMessage errorInfo = null;
              iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
              ViewBag.He = ret;*/
+            //向数据库注入数据
+            /*DBModel fun = new DBModel();
+            KUXIANGDBEntities db = new KUXIANGDBEntities();
+            var sArray = new List<string>();
+            StreamReader st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\data.in",Encoding.Default);
+            while (st.Peek() != -1)
+            {
+                string str = st.ReadLine();
+                var realStr = str.Split('\t');
+                sArray.Add(realStr[0]);
+            }
 
 
             //测试2
@@ -62,7 +75,21 @@ namespace Database_course_design.Controllers
             ViewBag.DayHeat = dayheat;*/
 
             return View();
+            st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\course.in");
+            while (st.Peek() != -1)
+            {
+                string str = st.ReadLine();
+                var rand = new Random();
+                int a = rand.Next(0, sArray.Count());
+                try
+                {
+                   fun.CreateRepository(sArray[a], str + "仓库", 0, "这是一个仓库", str);
+                }
+                catch
+                {
 
+                } 
+            }*/
         }
 
         public JsonResult GetPersonInfo()
@@ -86,6 +113,5 @@ namespace Database_course_design.Controllers
 
             return js;
         }
-
     }
 }

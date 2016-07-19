@@ -18,8 +18,8 @@ namespace Database_course_design.Models
         public string REPOSITORY_ID { get; set; }
         public System.DateTime LOOK_DATE { get; set; }
         public Nullable<int> IS_STAR { get; set; }
+        public string REPOSITORY_NAME { get; set; }
     
-        public virtual REPOSITORY REPOSITORY { get; set; }
         public virtual USERTABLE USERTABLE { get; set; }
     }
 }

@@ -169,6 +169,7 @@
     <Content Include="Content\fileicon.css" />
     <Content Include="Content\indexStyle.css" />
     <Content Include="Content\personalStyle.css" />
+    <Content Include="Controllers\data.txt" />
     <Content Include="img\head.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="Content\loginStyle.css" />
@@ -294,6 +295,8 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Home\Personal.cshtml" />
     <Content Include="Views\Test\test.cshtml" />
+    <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\Upload.cshtml" />
     <EntityDeploy Include="Models\KUXIANGModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
@@ -301,8 +304,6 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Home\Download.cshtml" />
-    <Content Include="Views\Home\Upload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

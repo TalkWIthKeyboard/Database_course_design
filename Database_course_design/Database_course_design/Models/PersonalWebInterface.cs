@@ -12,7 +12,7 @@ namespace Database_course_design.Models
         /// 获取用户自己的动态
         /// 输入：用户的id, 仓库id（null时为获取所有的动态）， 要返回的动态列表, 错误的信息
         /// 输出：是否成功
-        /// 未测试
+        /// 完成测试
         /// </summary>
         public bool getSelfDynamic(string _UserId, string _RepoId, out List<ItemModel.actionInfo> SearchResul, out ItemModel.ErrorMessage ErrorInfo)
         {
@@ -24,9 +24,12 @@ namespace Database_course_design.Models
                 SearchResul = new List<ItemModel.actionInfo>();
                 if (_RepoId == null)
                 {
-                    var res = dbmodel.showFriendDynamics(_UserId);
-                    if (res != null)
-                    { flag = true; SearchResul = res; }
+                    var result = dbmodel.getUserDynamics(_UserId);
+                    if (result != null)
+                    {
+                        flag = true;
+                        SearchResul = result;
+                    }
                 }
                 else
                 {
@@ -40,7 +43,7 @@ namespace Database_course_design.Models
                         newAction.UserOperation = row.OPERATION;
                         newAction.UserPhotoUrl = row.USERTABLE.IMAGE;
                         newAction.RepositoryId = _RepoId;
-                        newAction.RepositoryName = row.REPOSITORY.NAME;
+                       // newAction.RepositoryName = row.REPOSITORY.NAME;
                         SearchResul.Add(newAction);
                     }
                     flag = true;
@@ -75,6 +78,7 @@ namespace Database_course_design.Models
         /// 修改用户好友关系
         /// 输入：用户自己的Id, 对象用户的Id, 关注或取消关注（true是关注）, 错误信息
         /// 输出：是否成功
+        /// 完成测试
         /// </summary>
         public bool changeFriend(string _SelfUserId, string _TarUserId, bool Focus, out ItemModel.ErrorMessage ErrorInfo)
         {

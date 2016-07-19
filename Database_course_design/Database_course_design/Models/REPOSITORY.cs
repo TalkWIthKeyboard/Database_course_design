@@ -20,8 +20,6 @@ namespace Database_course_design.Models
             this.REPOSITORY_FILE = new HashSet<REPOSITORY_FILE>();
             this.REPOSITORY1 = new HashSet<REPOSITORY>();
             this.USER_COMMENT_REPOSITORY = new HashSet<USER_COMMENT_REPOSITORY>();
-            this.USER_REPOSITORY_LOOKHISTORY = new HashSet<USER_REPOSITORY_LOOKHISTORY>();
-            this.USER_REPOSITORY_OPERATION = new HashSet<USER_REPOSITORY_OPERATION>();
             this.USER_REPOSITORY_RELATIONSHIP = new HashSet<USER_REPOSITORY_RELATIONSHIP>();
         }
     
@@ -46,10 +44,6 @@ namespace Database_course_design.Models
         public virtual REPOSITORY REPOSITORY2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER_COMMENT_REPOSITORY> USER_COMMENT_REPOSITORY { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER_REPOSITORY_LOOKHISTORY> USER_REPOSITORY_LOOKHISTORY { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER_REPOSITORY_OPERATION> USER_REPOSITORY_OPERATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER_REPOSITORY_RELATIONSHIP> USER_REPOSITORY_RELATIONSHIP { get; set; }
     }

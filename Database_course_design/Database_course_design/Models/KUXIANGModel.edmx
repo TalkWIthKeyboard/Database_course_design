@@ -37,7 +37,7 @@
           </Key>
           <Property Name="FILE_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="date" />
-          <Property Name="PATH" Type="varchar2" MaxLength="20" />
+          <Property Name="PATH" Type="varchar2" MaxLength="2000" />
           <Property Name="FILE_NAME" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="FILE_TYPE" Type="varchar2" MaxLength="20" />
           <Property Name="FILE_STATE" Type="number" Precision="7" Scale="0" />
@@ -65,10 +65,10 @@
           <Property Name="STAR_NUM" Type="number" Precision="7" Scale="0" />
           <Property Name="FORK_NUM" Type="number" Precision="7" Scale="0" />
           <Property Name="IS_CREATE" Type="number" Precision="7" Scale="0" />
-          <Property Name="FORK_FROM" Type="varchar2" MaxLength="20" />
+          <Property Name="FORK_FROM" Type="varchar2" MaxLength="40" />
           <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
           <Property Name="URL" Type="varchar2" MaxLength="50" />
-          <Property Name="COURSE_ID" Type="varchar2" MaxLength="20" />
+          <Property Name="COURSE_ID" Type="varchar2" MaxLength="40" />
           <Property Name="UPDATE_DATE" Type="date" />
         </EntityType>
         <EntityType Name="REPOSITORY_FILE">
@@ -108,18 +108,17 @@
         <EntityType Name="USER_REPOSITORY_LOOKHISTORY">
           <Key>
             <PropertyRef Name="USER_ID" />
-            <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="LOOK_DATE" />
           </Key>
           <Property Name="USER_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="REPOSITORY_ID" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="LOOK_DATE" Type="date" Nullable="false" />
           <Property Name="IS_STAR" Type="number" Precision="7" Scale="0" />
+          <Property Name="REPOSITORY_NAME" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_OPERATION">
           <Key>
             <PropertyRef Name="USER_ID" />
-            <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="OPERATION_DATE" />
           </Key>
           <Property Name="USER_ID" Type="varchar2" MaxLength="40" Nullable="false" />
@@ -127,6 +126,7 @@
           <Property Name="OPERATION_DATE" Type="date" Nullable="false" />
           <Property Name="OPERATION" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="DESCRIPTION" Type="varchar2" MaxLength="100" />
+          <Property Name="REPOSITORY_NAME" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
           <Key>
@@ -373,22 +373,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="USER_REPOSITORY_LOOKHISTO_FK2">
-          <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="1">
+        <Association Name="USER_REPOSITORY_OPERATION_FK1">
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="USER_REPOSITORY_LOOKHISTORY" Type="Self.USER_REPOSITORY_LOOKHISTORY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REPOSITORY">
-              <PropertyRef Name="REPOSITORY_ID" />
-            </Principal>
-            <Dependent Role="USER_REPOSITORY_LOOKHISTORY">
-              <PropertyRef Name="REPOSITORY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="USER_REPOSITORY_OPERATION_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
           <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -396,20 +384,6 @@
             </Principal>
             <Dependent Role="USER_REPOSITORY_OPERATION">
               <PropertyRef Name="USER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="USER_REPOSITORY_OPERATION_FK2">
-          <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REPOSITORY">
-              <PropertyRef Name="REPOSITORY_ID" />
-            </Principal>
-            <Dependent Role="USER_REPOSITORY_OPERATION">
-              <PropertyRef Name="REPOSITORY_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -543,16 +517,8 @@
             <End Role="USERTABLE" EntitySet="USERTABLE" />
             <End Role="USER_REPOSITORY_LOOKHISTORY" EntitySet="USER_REPOSITORY_LOOKHISTORY" />
           </AssociationSet>
-          <AssociationSet Name="USER_REPOSITORY_LOOKHISTO_FK2" Association="Self.USER_REPOSITORY_LOOKHISTO_FK2">
-            <End Role="REPOSITORY" EntitySet="REPOSITORY" />
-            <End Role="USER_REPOSITORY_LOOKHISTORY" EntitySet="USER_REPOSITORY_LOOKHISTORY" />
-          </AssociationSet>
           <AssociationSet Name="USER_REPOSITORY_OPERATION_FK1" Association="Self.USER_REPOSITORY_OPERATION_FK1">
             <End Role="USERTABLE" EntitySet="USERTABLE" />
-            <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
-          </AssociationSet>
-          <AssociationSet Name="USER_REPOSITORY_OPERATION_FK2" Association="Self.USER_REPOSITORY_OPERATION_FK2">
-            <End Role="REPOSITORY" EntitySet="REPOSITORY" />
             <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
           </AssociationSet>
           <AssociationSet Name="USER_REPOSITORY_RELATIONS_FK1" Association="Self.USER_REPOSITORY_RELATIONS_FK1">
@@ -615,7 +581,7 @@
           </Key>
           <Property Name="FILE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="DateTime" />
-          <Property Name="PATH" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PATH" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="FILE_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FILE_TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FILE_STATE" Type="Int32" />
@@ -647,18 +613,16 @@
           <Property Name="STAR_NUM" Type="Int32" />
           <Property Name="FORK_NUM" Type="Int32" />
           <Property Name="IS_CREATE" Type="Int32" />
-          <Property Name="FORK_FROM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FORK_FROM" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="COURSE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="COURSE_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="UPDATE_DATE" Type="DateTime" />
           <NavigationProperty Name="COURSE" Relationship="Self.REPOSITORY_COURSE_FK1" FromRole="REPOSITORY" ToRole="COURSE" />
           <NavigationProperty Name="REPOSITORY_FILE" Relationship="Self.REPOSITORY_FILE_REPOSITOR_FK1" FromRole="REPOSITORY" ToRole="REPOSITORY_FILE" />
           <NavigationProperty Name="REPOSITORY1" Relationship="Self.REPOSITORY_REPOSITORY_FK1" FromRole="REPOSITORY" ToRole="REPOSITORY1" />
           <NavigationProperty Name="REPOSITORY2" Relationship="Self.REPOSITORY_REPOSITORY_FK1" FromRole="REPOSITORY1" ToRole="REPOSITORY" />
           <NavigationProperty Name="USER_COMMENT_REPOSITORY" Relationship="Self.USER_COMMENT_REPOSITORY_R_FK1" FromRole="REPOSITORY" ToRole="USER_COMMENT_REPOSITORY" />
-          <NavigationProperty Name="USER_REPOSITORY_LOOKHISTORY" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK2" FromRole="REPOSITORY" ToRole="USER_REPOSITORY_LOOKHISTORY" />
-          <NavigationProperty Name="USER_REPOSITORY_OPERATION" Relationship="Self.USER_REPOSITORY_OPERATION_FK2" FromRole="REPOSITORY" ToRole="USER_REPOSITORY_OPERATION" />
           <NavigationProperty Name="USER_REPOSITORY_RELATIONSHIP" Relationship="Self.USER_REPOSITORY_RELATIONS_FK2" FromRole="REPOSITORY" ToRole="USER_REPOSITORY_RELATIONSHIP" />
         </EntityType>
         <EntityType Name="REPOSITORY_FILE">
@@ -708,20 +672,18 @@
         <EntityType Name="USER_REPOSITORY_LOOKHISTORY">
           <Key>
             <PropertyRef Name="USER_ID" />
-            <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="LOOK_DATE" />
           </Key>
           <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="REPOSITORY_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LOOK_DATE" Type="DateTime" Nullable="false" />
           <Property Name="IS_STAR" Type="Int32" />
-          <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK2" FromRole="USER_REPOSITORY_LOOKHISTORY" ToRole="REPOSITORY" />
+          <Property Name="REPOSITORY_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_LOOKHISTO_FK1" FromRole="USER_REPOSITORY_LOOKHISTORY" ToRole="USERTABLE" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_OPERATION">
           <Key>
             <PropertyRef Name="USER_ID" />
-            <PropertyRef Name="REPOSITORY_ID" />
             <PropertyRef Name="OPERATION_DATE" />
           </Key>
           <Property Name="USER_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
@@ -729,7 +691,7 @@
           <Property Name="OPERATION_DATE" Type="DateTime" Nullable="false" />
           <Property Name="OPERATION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="REPOSITORY" Relationship="Self.USER_REPOSITORY_OPERATION_FK2" FromRole="USER_REPOSITORY_OPERATION" ToRole="REPOSITORY" />
+          <Property Name="REPOSITORY_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USERTABLE" Relationship="Self.USER_REPOSITORY_OPERATION_FK1" FromRole="USER_REPOSITORY_OPERATION" ToRole="USERTABLE" />
         </EntityType>
         <EntityType Name="USER_REPOSITORY_RELATIONSHIP">
@@ -929,34 +891,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="USER_REPOSITORY_LOOKHISTO_FK2">
-          <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="USER_REPOSITORY_LOOKHISTORY" Type="Self.USER_REPOSITORY_LOOKHISTORY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REPOSITORY">
-              <PropertyRef Name="REPOSITORY_ID" />
-            </Principal>
-            <Dependent Role="USER_REPOSITORY_LOOKHISTORY">
-              <PropertyRef Name="REPOSITORY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="USER_REPOSITORY_OPERATION_FK2">
-          <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REPOSITORY">
-              <PropertyRef Name="REPOSITORY_ID" />
-            </Principal>
-            <Dependent Role="USER_REPOSITORY_OPERATION">
-              <PropertyRef Name="REPOSITORY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="USER_REPOSITORY_RELATIONS_FK2">
           <End Role="REPOSITORY" Type="Self.REPOSITORY" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1034,7 +968,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="USER_REPOSITORY_OPERATION_FK1">
-          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1" />
+          <End Role="USERTABLE" Type="Self.USERTABLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="USER_REPOSITORY_OPERATION" Type="Self.USER_REPOSITORY_OPERATION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERTABLE">
@@ -1140,14 +1076,6 @@
           <AssociationSet Name="USER_COMMENT_REPOSITORY_R_FK1" Association="Self.USER_COMMENT_REPOSITORY_R_FK1">
             <End Role="REPOSITORY" EntitySet="REPOSITORies" />
             <End Role="USER_COMMENT_REPOSITORY" EntitySet="USER_COMMENT_REPOSITORY" />
-          </AssociationSet>
-          <AssociationSet Name="USER_REPOSITORY_LOOKHISTO_FK2" Association="Self.USER_REPOSITORY_LOOKHISTO_FK2">
-            <End Role="REPOSITORY" EntitySet="REPOSITORies" />
-            <End Role="USER_REPOSITORY_LOOKHISTORY" EntitySet="USER_REPOSITORY_LOOKHISTORY" />
-          </AssociationSet>
-          <AssociationSet Name="USER_REPOSITORY_OPERATION_FK2" Association="Self.USER_REPOSITORY_OPERATION_FK2">
-            <End Role="REPOSITORY" EntitySet="REPOSITORies" />
-            <End Role="USER_REPOSITORY_OPERATION" EntitySet="USER_REPOSITORY_OPERATION" />
           </AssociationSet>
           <AssociationSet Name="USER_REPOSITORY_RELATIONS_FK2" Association="Self.USER_REPOSITORY_RELATIONS_FK2">
             <End Role="REPOSITORY" EntitySet="REPOSITORies" />
@@ -1310,6 +1238,7 @@
                 <ScalarProperty Name="REPOSITORY_ID" ColumnName="REPOSITORY_ID" />
                 <ScalarProperty Name="LOOK_DATE" ColumnName="LOOK_DATE" />
                 <ScalarProperty Name="IS_STAR" ColumnName="IS_STAR" />
+                <ScalarProperty Name="REPOSITORY_NAME" ColumnName="REPOSITORY_NAME" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1321,6 +1250,7 @@
                 <ScalarProperty Name="OPERATION_DATE" ColumnName="OPERATION_DATE" />
                 <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="REPOSITORY_NAME" ColumnName="REPOSITORY_NAME" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
