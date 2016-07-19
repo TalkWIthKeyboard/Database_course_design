@@ -179,15 +179,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\otherHead.png" />
-    <Content Include="Models\KUXIANGDBEntities.Context.tt">
+    <Content Include="Models\KUXIANGModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KUXIANGDBEntities.edmx</DependentUpon>
-      <LastGenOutput>KUXIANGDBEntities.Context.cs</LastGenOutput>
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
+      <LastGenOutput>KUXIANGModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\KUXIANGDBEntities.tt">
+    <Content Include="Models\KUXIANGModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KUXIANGDBEntities.edmx</DependentUpon>
-      <LastGenOutput>KUXIANGDBEntities.cs</LastGenOutput>
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
+      <LastGenOutput>KUXIANGModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\echarts.js" />
@@ -209,17 +209,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\COMMENTTABLE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\COURSE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBModel.cs" />
     <Compile Include="Models\FILETABLE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FILE_FILE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IndexWebInterface.cs" />
     <Compile Include="Models\ItemModel\anctionInfo.cs" />
@@ -229,56 +229,56 @@
     <Compile Include="Models\ItemModel\RepertorySearchResult.cs" />
     <Compile Include="Models\ItemModel\UserInfo.cs" />
     <Compile Include="Models\ItemModel\UserSearchResult.cs" />
-    <Compile Include="Models\KUXIANGDBEntities.Context.cs">
+    <Compile Include="Models\KUXIANGModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KUXIANGDBEntities.Context.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\KUXIANGDBEntities.cs">
+    <Compile Include="Models\KUXIANGModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\KUXIANGDBEntities.Designer.cs">
+    <Compile Include="Models\KUXIANGModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KUXIANGDBEntities.edmx</DependentUpon>
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\MESSAGE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrclDBContext.cs" />
     <Compile Include="Models\PersonalWebInterface.cs" />
     <Compile Include="Models\PythonOperation.cs" />
     <Compile Include="Models\REPOSITORY.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\REPOSITORY_FILE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TAKE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USERTABLE.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_COMMENT_REPOSITORY.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_COMMENT_USER.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_REPOSITORY_LOOKHISTORY.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_REPOSITORY_OPERATION.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_REPOSITORY_RELATIONSHIP.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_USER.cs">
-      <DependentUpon>KUXIANGDBEntities.tt</DependentUpon>
+      <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -293,15 +293,15 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Home\Personal.cshtml" />
     <Content Include="Views\Test\test.cshtml" />
-    <EntityDeploy Include="Models\KUXIANGDBEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KUXIANGDBEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\KUXIANGDBEntities.edmx.diagram">
-      <DependentUpon>KUXIANGDBEntities.edmx</DependentUpon>
-    </Content>
     <Content Include="Views\Home\Download.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
+    <EntityDeploy Include="Models\KUXIANGModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\KUXIANGModel.edmx.diagram">
+      <DependentUpon>KUXIANGModel.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
