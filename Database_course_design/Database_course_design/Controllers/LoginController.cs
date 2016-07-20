@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
              else
              {
                  short iden = 0;
-                 if (userInfo.identity == "本科生" || userInfo.identity == "研究生")
+                 if (userInfo.identity == "本专科生" || userInfo.identity == "研究生")
                  {
                      iden = 0;
                  }

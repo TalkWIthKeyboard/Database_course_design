@@ -14,7 +14,7 @@ using System.Threading;
 using Database_course_design.Models.ItemModel;
 
 
-namespace Database_course_design.Models
+namespace Database_course_design.Models.ScriptModel
 {
     public class PythonOperation
     {
