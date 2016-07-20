@@ -276,56 +276,66 @@ namespace Database_course_design.Models.WorkModel
             {
                 try
                 {
-                    USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == userid).FirstOrDefault();
-                    COURSE oldCourse = db.COURSEs.Where(p => p.LABEL3 == label3
-                                                        && p.LABEL1 == user.UNIVERSITY
-                                                        && p.LABEL2 == user.DEPARTMENT).FirstOrDefault();
-                    if (oldCourse == null)
+                    var errorM = new ErrorMessage();
+                    if (verifyRepositoryName(userid,name,out errorM))
                     {
-                        COURSE newCourse = new COURSE
+                        USERTABLE user = db.USERTABLEs.Where(p => p.USER_ID == userid).FirstOrDefault();
+                        COURSE oldCourse = db.COURSEs.Where(p => p.LABEL3 == label3
+                                                            && p.LABEL1 == user.UNIVERSITY
+                                                            && p.LABEL2 == user.DEPARTMENT).FirstOrDefault();
+                        if (oldCourse == null)
                         {
-                            LABEL1 = user.UNIVERSITY,
-                            LABEL2 = user.DEPARTMENT,
-                            LABEL3 = label3,
-                            COURSE_ID = basic.createNewId("COURSE")
+                            COURSE newCourse = new COURSE
+                            {
+                                LABEL1 = user.UNIVERSITY,
+                                LABEL2 = user.DEPARTMENT,
+                                LABEL3 = label3,
+                                COURSE_ID = basic.createNewId("COURSE")
+                            };
+                            db.COURSEs.Add(newCourse);
+                            oldCourse = newCourse;
+                        }
+
+                        string repositoryid = basic.createNewId("REPOSITORY");
+                        short attri = 0;
+                        //1是创建 0是fork
+                        short iscreate = 1;
+                        String forkfrom = "";
+                        short relationship = 0;
+                        REPOSITORY newRep = new REPOSITORY
+                        {
+                            REPOSITORY_ID = repositoryid,
+                            NAME = name,
+                            AUTHORITY = authority,
+                            ATTRIBUTE = attri,
+                            IS_CREATE = iscreate,
+                            FORK_FROM = forkfrom,
+                            DESCRIPTION = description,
+                            COURSE_ID = oldCourse.COURSE_ID,
+                            STAR_NUM = 0,
+                            FORK_NUM = 0,
+                            UPDATE_DATE = DateTime.Now
                         };
-                        db.COURSEs.Add(newCourse);
-                        oldCourse = newCourse;
+                        db.REPOSITORies.Add(newRep);
+
+                        USER_REPOSITORY_RELATIONSHIP userrepr = new USER_REPOSITORY_RELATIONSHIP
+                        {
+                            USER_ID = userid,
+                            REPOSITORY_ID = newRep.REPOSITORY_ID,
+                            RELATIONSHIP = relationship
+                        };
+                        db.USER_REPOSITORY_RELATIONSHIP.Add(userrepr);
+                        db.SaveChanges();
+
+                        basic.recordOperation(userid, repositoryid, "Create", description);
+                        return true;
                     }
-
-                    string repositoryid = basic.createNewId("REPOSITORY");
-                    short attri = 0;
-                    //1是创建 0是fork
-                    short iscreate = 1;
-                    String forkfrom = "";
-                    short relationship = 0;
-                    REPOSITORY newRep = new REPOSITORY
+                    else
                     {
-                        REPOSITORY_ID = repositoryid,
-                        NAME = name,
-                        AUTHORITY = authority,
-                        ATTRIBUTE = attri,
-                        IS_CREATE = iscreate,
-                        FORK_FROM = forkfrom,
-                        DESCRIPTION = description,
-                        COURSE_ID = oldCourse.COURSE_ID,
-                        STAR_NUM = 0,
-                        FORK_NUM = 0,
-                        UPDATE_DATE = DateTime.Now
-                    };
-                    db.REPOSITORies.Add(newRep);
-
-                    USER_REPOSITORY_RELATIONSHIP userrepr = new USER_REPOSITORY_RELATIONSHIP
-                    {
-                        USER_ID = userid,
-                        REPOSITORY_ID = newRep.REPOSITORY_ID,
-                        RELATIONSHIP = relationship
-                    };
-                    db.USER_REPOSITORY_RELATIONSHIP.Add(userrepr);
-                    db.SaveChanges();
-
-                    basic.recordOperation(userid, repositoryid, "Create", description);
-                    return true;
+                        System.Diagnostics.Debug.WriteLine("仓库创建失败");
+                        System.Diagnostics.Debug.WriteLine(errorM.ErrorReason);
+                        return false;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -594,7 +604,7 @@ namespace Database_course_design.Models.WorkModel
         /// 输出：文件信息List
         /// 待测试
         /// </summary>
-        public List<FileInfo> showFileInFolder(string fileId, ref string fileName)
+        public List<FileInfo> showFileInFolder(string fileId)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
@@ -656,6 +666,81 @@ namespace Database_course_design.Models.WorkModel
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 14.添加私人仓库
+        /// 输入：用户id，仓库名，仓库描述，3级标签
+        /// 输出：操作是否成功，错误信息
+        /// 待测试
+        /// </summary>
+        public bool createPrivateRepository(string userid, string name, string description, string label3, out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            try
+            {
+                var userGrade = db.USERTABLEs.Where(p => p.USER_ID == userid).FirstOrDefault().GRADE;
+                if (userGrade >= 50)
+                {
+                    if (CreateRepository(userid, name, 0, description, label3))
+                    {
+                        errorMessage = null;
+                        return true;
+                    }
+                    else
+                    {
+                        var error = new ErrorMessage("创建私有仓库操作", "创建仓库失败");
+                        errorMessage = error;
+                        return false;
+                    }
+                }
+                else
+                {
+                    var error = new ErrorMessage("创建私有仓库操作", "没有权限创建私有仓库");
+                    errorMessage = error;
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage("创建私有仓库操作异常", ex.Message);
+                errorMessage = error;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 15.判断仓库名重名
+        /// 输入：用户id，仓库名
+        /// 输出：是否重名，错误信息
+        /// 待测试
+        /// </summary>
+        public bool verifyRepositoryName(string userId, string repName, out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            try
+            {
+                var repList = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
+                                                                    && p.RELATIONSHIP == 0).ToList();
+                foreach (var each in repList)
+                {
+                    var name = db.REPOSITORies.Where(p => p.REPOSITORY_ID == each.REPOSITORY_ID).FirstOrDefault().NAME;
+                    if (repName == name)
+                    {
+                        var error = new ErrorMessage("判断仓库名重名操作", "存在重名问题");
+                        errorMessage = error;
+                        return false;
+                    }
+                }
+                errorMessage = null;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage("判断仓库名重名操作", ex.Message);
+                errorMessage = error;
+                return false;
+            } 
         }
     }
 }

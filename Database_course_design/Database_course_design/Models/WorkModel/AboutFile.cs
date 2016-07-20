@@ -353,5 +353,46 @@ namespace Database_course_design.Models.WorkModel
                 }
             }
         }
+
+        /// <summary>
+        /// 6.判断文件是否重名
+        /// 输入：文件名，父节点的id，文件是在文件夹中还是仓库中（flag=0为文件夹，1为仓库）
+        /// 输出：是否重名
+        /// 待测试
+        /// </summary>
+        public bool verifyDuplicateName(string fileName, string fatherId, int flag,out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            var fileFile = new List<String>();
+            try
+            {
+                if (flag == 0)
+                {
+                    fileFile = db.FILE_FILE.Where(p => p.FILE_ID1 == fatherId).Select(p => p.FILE_ID2).ToList();
+                }
+                else
+                {
+                    fileFile = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == fatherId).Select(p => p.FILE_ID).ToList();
+                }
+                foreach (var each in fileFile)
+                {
+                    var name = db.FILETABLEs.Where(p => p.FILE_ID == each).FirstOrDefault().FILE_NAME;
+                    if (name == fileName)
+                    {
+                        var error = new ErrorMessage("检查文件（夹）重名操作","存在重名");
+                        errorMessage = error;
+                        return false;
+                    }
+                }
+                errorMessage = null;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                var error = new ErrorMessage("检查文件（夹）重名操作异常", ex.Message);
+                errorMessage = error;
+                return false;
+            }
+        }
     }
 }
