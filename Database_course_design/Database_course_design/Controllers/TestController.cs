@@ -124,7 +124,7 @@ namespace Database_course_design.Controllers
             } */
 
 
-            /*//向数据库注入人对人的评论数据
+            /*//向数据库注入人对库的评论数据
             DBModel fun = new DBModel();
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             var sArray = new List<string>();
@@ -140,12 +140,20 @@ namespace Database_course_design.Controllers
             while (st.Peek() != -1)
             {
                 string str = st.ReadLine() + "仓库";
-                var rep = db.REPOSITORies.Where(p => p.NAME == str).FirstOrDefault();
-                var rand = new Random();
-                int a = rand.Next(0, sArray.Count());
-                string la = sArray[a];
-                var username = db.USERTABLEs.Where(p => p.USER_ID == la).FirstOrDefault().USER_NAME;
-                fun.addCommentToRepository(username + "很喜欢" + rep.NAME + ",并很想和你搅基！", rep.REPOSITORY_ID, la);
+                try
+                {
+                    var rep = db.REPOSITORies.Where(p => p.NAME == str).FirstOrDefault();
+                    var rand = new Random();
+                    int a = rand.Next(0, sArray.Count());
+                    string la = sArray[a];
+                    var username = db.USERTABLEs.Where(p => p.USER_ID == la).FirstOrDefault().USER_NAME;
+                    string lb = username + "很喜欢" + rep.NAME + ",并很想和你搅基！";
+                    fun.addCommentToRepository(lb, rep.REPOSITORY_ID, la);
+                }
+                catch
+                {
+
+                }
             }*/
             return View();
         }

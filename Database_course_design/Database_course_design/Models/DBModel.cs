@@ -24,6 +24,35 @@ namespace Database_course_design.Models
             return newId;
         }
 
+
+        /// <summary>
+        /// 检查权限
+        /// </summary>
+        public int? auditAuthority(string userId,string repId)
+        {
+            var db = new KUXIANGDBEntities();
+            int? flag = -1;
+            try
+            {
+                var result = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
+                                                                     && p.REPOSITORY_ID == repId).ToList();
+                flag = 2;
+                foreach (var each in result)
+                {
+                    if (each.RELATIONSHIP != 2)
+                    {
+                        flag = each.RELATIONSHIP;
+                        break;
+                    }
+                }
+                return flag;
+            }
+            catch (Exception ex)
+            {
+                return flag;
+            }
+        }
+
         /// <summary>
         /// 添加新用户到数据库
         /// 输入：用户账号，用户密码，用户名，所在院系，邮箱地址，用户身份，用户积分

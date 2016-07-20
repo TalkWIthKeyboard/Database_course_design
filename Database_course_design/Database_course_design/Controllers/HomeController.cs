@@ -57,31 +57,6 @@ namespace Database_course_design.Controllers
             iweb.getFriendDynamic("1452739",out SearchResult,out errorInfo);
             ViewBag.FriendDynamic = SearchResult;
 
-
-            //向数据库注入人对人的评论数据
-            DBModel fun = new DBModel();
-            KUXIANGDBEntities db = new KUXIANGDBEntities();
-            var sArray = new List<string>();
-            StreamReader st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\data.in", Encoding.Default);
-            while (st.Peek() != -1)
-            {
-                string str = st.ReadLine();
-                var realStr = str.Split('\t');
-                sArray.Add(realStr[0]);
-            }
-
-            st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\course.in");
-            while (st.Peek() != -1)
-            {
-                string str = st.ReadLine() + "仓库";
-                var rep = db.REPOSITORies.Where(p => p.NAME == str).FirstOrDefault();
-                var rand = new Random();
-                int a = rand.Next(0, sArray.Count());
-                string la = sArray[a];
-                var username = db.USERTABLEs.Where(p => p.USER_ID == la).FirstOrDefault().USER_NAME;
-                fun.addCommentToRepository(username + "很喜欢" + rep.NAME + ",并很想和你搅基！", rep.REPOSITORY_ID, la);
-            }
-
             return View();
         }
 
