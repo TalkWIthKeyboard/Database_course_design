@@ -101,6 +101,14 @@
       <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.12.1.2400\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Data.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Common.4.1.0\lib\net451\System.Data.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SqlClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.1.0\lib\net451\System.Data.SqlClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -209,20 +217,29 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ItemModel\FileInfo.cs" />
+    <Compile Include="Models\ScriptModel\addDataToDatabase.cs" />
+    <Compile Include="Models\WorkModel\AboutComment.cs" />
+    <Compile Include="Models\WorkModel\AboutCourse.cs" />
+    <Compile Include="Models\WorkModel\AboutFile.cs" />
+    <Compile Include="Models\WorkModel\AboutMessage.cs" />
+    <Compile Include="Models\WorkModel\AboutRepository.cs" />
+    <Compile Include="Models\WorkModel\AboutSearch.cs" />
+    <Compile Include="Models\WorkModel\AboutUser.cs" />
+    <Compile Include="Models\WorkModel\BasicModel.cs" />
     <Compile Include="Models\COMMENTTABLE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\COURSE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBModel.cs" />
     <Compile Include="Models\FILETABLE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FILE_FILE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IndexWebInterface.cs" />
+    <Compile Include="Models\WebModel\IndexWebInterface.cs" />
     <Compile Include="Models\ItemModel\anctionInfo.cs" />
     <Compile Include="Models\ItemModel\ErrorMessage.cs" />
     <Compile Include="Models\ItemModel\HeatItem.cs" />
@@ -230,7 +247,7 @@
     <Compile Include="Models\ItemModel\RepertorySearchResult.cs" />
     <Compile Include="Models\ItemModel\UserInfo.cs" />
     <Compile Include="Models\ItemModel\UserSearchResult.cs" />
-    <Compile Include="Models\JsonConvert.cs" />
+    <Compile Include="Models\ScriptModel\JsonConvert.cs" />
     <Compile Include="Models\KUXIANGModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,9 +266,9 @@
     <Compile Include="Models\MESSAGE.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrclDBContext.cs" />
-    <Compile Include="Models\PersonalWebInterface.cs" />
-    <Compile Include="Models\PythonOperation.cs" />
+    <Compile Include="Models\ScriptModel\OrclDBContext.cs" />
+    <Compile Include="Models\WebModel\PersonalWebInterface.cs" />
+    <Compile Include="Models\ScriptModel\PythonOperation.cs" />
     <Compile Include="Models\REPOSITORY.cs">
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
