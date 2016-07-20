@@ -14,6 +14,7 @@ namespace Database_course_design.Models.ItemModel
     /// 仓库的id
     /// 仓库的名字
     /// 仓库的更新信息
+    /// 信息的时间
     /// </summary>
     public class ActionInfo
     {
@@ -24,5 +25,6 @@ namespace Database_course_design.Models.ItemModel
         public string RepositoryName { get; set; }
         public string RepositoryId { get; set; }
         public string UpdateInfo { get; set; }
+        public string UpdateTime { get; set; }
     }
 }

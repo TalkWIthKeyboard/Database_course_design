@@ -48,7 +48,7 @@ namespace Database_course_design.Models.WorkModel
         /// 输出：文件名,文件类型，文件大小
         /// 测试成功
         /// </summary>
-        public List<FileInfo> showFile(string resipositoryId, ref string resipositoryName)
+        public List<FileInfo> showFile(string resipositoryId)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
@@ -59,7 +59,8 @@ namespace Database_course_design.Models.WorkModel
                     foreach (var each in rep)
                     {
                         var f = db.FILETABLEs.Where(p => p.FILE_ID == each.FILE_ID).FirstOrDefault();
-                        FileInfo temp = new FileInfo(f);
+                        var resipositoryName = db.REPOSITORies.Where(p => p.REPOSITORY_ID == resipositoryId).FirstOrDefault().NAME;
+                        FileInfo temp = new FileInfo(f,resipositoryName);
                         res.Add(temp);
                     }
                     return res;

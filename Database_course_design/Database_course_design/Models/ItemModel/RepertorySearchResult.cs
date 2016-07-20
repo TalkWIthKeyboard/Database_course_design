@@ -7,6 +7,7 @@ namespace Database_course_design.Models.ItemModel
 {
     /// <summary>
     /// 搜索仓库信息结果类
+    /// 仓库id
     /// 仓库名
     /// 仓库链接
     /// 仓库信息
@@ -20,6 +21,7 @@ namespace Database_course_design.Models.ItemModel
     /// </summary>
     public class RepertorySearchResult
     {
+        public string RepertoryID { get; set; }
         public string RepertoryName { get; set; }
         public string RepertoryInfo { get; set; }
         public string RepertoryUpdateTime { get; set; }
@@ -31,7 +33,7 @@ namespace Database_course_design.Models.ItemModel
         public string RepertoryLabel3 { get; set; }
 
         /// <summary>
-        /// 构造函数
+        /// 带参数构造函数
         /// </summary>
         public RepertorySearchResult(REPOSITORY _Repo)
         {
@@ -52,6 +54,9 @@ namespace Database_course_design.Models.ItemModel
             RepertoryLabel3 = _Repo.COURSE.LABEL3;
         }
 
+        /// <summary>
+        /// 空构造函数
+        /// </summary>
         public RepertorySearchResult()
         {
 

@@ -195,7 +195,8 @@ namespace Database_course_design.Models.WorkModel
             var results = new List<ActionInfo>();
             try
             {
-                var ans = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == _UserId).ToList();
+                var ans = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == _UserId).
+                                                        OrderByDescending(p => p.OPERATION_DATE).ToList();
                 var user = db.USERTABLEs.Where(p => p.USER_ID == _UserId).FirstOrDefault();
                 foreach (var each in ans)
                 {
@@ -208,7 +209,8 @@ namespace Database_course_design.Models.WorkModel
                         UserOperation = each.OPERATION,
                         RepositoryName = repo.NAME,
                         RepositoryId = repo.REPOSITORY_ID,
-                        UpdateInfo = each.DESCRIPTION
+                        UpdateInfo = each.DESCRIPTION,
+                        UpdateTime = each.OPERATION_DATE.ToString()
                     };
                     results.Add(result);
                 }
@@ -244,6 +246,7 @@ namespace Database_course_design.Models.WorkModel
                             newdy.Add(each);
                         }
                     }
+                    newdy.Sort((x,y) => -x.UpdateTime.CompareTo(y.UpdateTime));
                     return newdy;
                 }
                 catch (Exception ex)
