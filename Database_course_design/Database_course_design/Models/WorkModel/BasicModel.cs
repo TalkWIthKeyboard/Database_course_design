@@ -38,7 +38,7 @@ namespace Database_course_design.Models
             {
                 var result = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
                                                                      && p.REPOSITORY_ID == repId).ToList();
-                if (result == null)
+                if (result.Count() == 0)
                 {
                     return flag;
                 }

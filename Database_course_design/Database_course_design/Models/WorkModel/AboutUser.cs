@@ -189,10 +189,10 @@ namespace Database_course_design.Models.WorkModel
         /// 输出：这个用户的最近动态
         /// 完成测试
         /// </summary>
-        public List<actionInfo> getUserDynamics(string _UserId)
+        public List<ActionInfo> getUserDynamics(string _UserId)
         {
             var db = new KUXIANGDBEntities();
-            var results = new List<ItemModel.actionInfo>();
+            var results = new List<ActionInfo>();
             try
             {
                 var ans = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == _UserId).ToList();
@@ -200,7 +200,7 @@ namespace Database_course_design.Models.WorkModel
                 foreach (var each in ans)
                 {
                     var repo = db.REPOSITORies.Where(p => p.REPOSITORY_ID == each.REPOSITORY_ID).FirstOrDefault();
-                    var result = new ItemModel.actionInfo
+                    var result = new ActionInfo
                     {
                         UserId = user.USER_ID,
                         UserName = user.USER_NAME,
@@ -228,13 +228,13 @@ namespace Database_course_design.Models.WorkModel
         /// 输出：所有好友的最近动态
         /// 测试成功
         /// </summary>
-        public List<actionInfo> showFriendDynamics(string UserId)
+        public List<ActionInfo> showFriendDynamics(string UserId)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 try
                 {
-                    List<actionInfo> newdy = new List<ItemModel.actionInfo>();
+                    List<ActionInfo> newdy = new List<ActionInfo>();
                     var friends = db.USER_USER.Where(p => p.USER_ID1 == UserId).ToArray();
                     foreach (var friend in friends)
                     {
