@@ -240,7 +240,7 @@
       <DependentUpon>KUXIANGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WebModel\IndexWebInterface.cs" />
-    <Compile Include="Models\ItemModel\anctionInfo.cs" />
+    <Compile Include="Models\ItemModel\ActionInfo.cs" />
     <Compile Include="Models\ItemModel\ErrorMessage.cs" />
     <Compile Include="Models\ItemModel\HeatItem.cs" />
     <Compile Include="Models\ItemModel\OperationItem.cs" />
