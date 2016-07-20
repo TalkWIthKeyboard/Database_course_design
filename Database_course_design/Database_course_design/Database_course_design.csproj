@@ -176,14 +176,16 @@
     <Content Include="ChilkatDotNet46.dll" />
     <Content Include="Content\fileicon.css" />
     <Content Include="Content\indexStyle.css" />
+    <Content Include="Content\loginStyle.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\normalize.css" />
     <Content Include="Content\personalStyle.css" />
+    <Content Include="Content\repositoryStyle.css" />
+    <Content Include="Content\searchStyle.css" />
+    <Content Include="Content\sweetalert.css" />
     <Content Include="Controllers\data.txt" />
     <Content Include="img\head.jpg" />
     <Content Include="img\logo.png" />
-    <Content Include="Content\loginStyle.css" />
-    <Content Include="Content\normalize.css" />
-    <Content Include="Content\register.css" />
-    <Content Include="Content\main.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\otherHead.png" />
@@ -201,9 +203,12 @@
     <Content Include="Scripts\echarts.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\personal.js" />
-    <Content Include="Scripts\register.js" />
-    <Content Include="Scripts\ScatterDiagram.js" />
+    <Content Include="Scripts\repository.js" />
+    <Content Include="Scripts\sweetalert-dev.js" />
     <Content Include="Scripts\test.js" />
+    <Content Include="Views\Test\test.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -302,18 +307,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Home\Personal.cshtml" />
-    <Content Include="Views\Test\test.cshtml" />
-    <Content Include="Views\Home\Download.cshtml" />
-    <Content Include="Views\Home\Upload.cshtml" />
     <EntityDeploy Include="Models\KUXIANGModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KUXIANGModel.Designer.cs</LastGenOutput>
@@ -321,6 +318,19 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\iconfont.ttf" />
+    <Content Include="fonts\iconfont.woff" />
+    <Content Include="Controllers\course.in" />
+    <Content Include="Controllers\data.in" />
+    <Content Include="Views\Home\Comment.cshtml" />
+    <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\OverView.cshtml" />
+    <Content Include="Views\Home\Personal.cshtml" />
+    <Content Include="Views\Home\Repository.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Home\Upload.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

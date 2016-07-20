@@ -14,7 +14,7 @@ namespace Database_course_design.Models
             public string RepoName;
             public string RepoAuthority;
             public string RepoDescription;
-            public string RepoUpdataDate;
+            public string RepoUpdateDate;
         }
 
         public struct CommentSearchResult

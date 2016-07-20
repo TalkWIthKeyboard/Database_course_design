@@ -1,5 +1,6 @@
 $(
     function () {
+
         // 按钮点击效果
         var $buttons = $('#social button'),
             $followButton = $('#follow'),
@@ -7,6 +8,7 @@ $(
 
         $buttons.each(function(index, el) {
             $(el).click(function(event) {
+
                 $(el).animate({top: '-1'}, 200)
                     .css({'z-index': '0', 'cursor': 'auto'})
                     .animate({top: '19', right: '5'}, 200, function() {
@@ -20,9 +22,54 @@ $(
             });
         });
 
+        // 点击选项卡切换概览，详情和留言
+        var $navLink = $('#repository a');
+        $navLink.each(function(index, el) {
+            $(el).click(function(event) {
+                if ($(el).attr('id') === 'navLink1') {
+                    $('#repository ul').css('height', 'calc(100% - 380px)');
+                    $('#repository ul li').css('height', '20%');
+                    $('main').css('height', '100%');
+                } else {
+                    $('#repository ul').css('height', 'auto');
+                    $('#repository ul li').css('height', 'auto');
+                    $('main').css({'height': 'auto', 'min-height': '100%'});
+                }
+            })
+        });
 
+        // 点击弹窗编辑资料
+        $('#edit').click(function(event) {
+            $('#fill').show(0);
+            $('#popup').addClass('show');
+        });
 
-         $.ajax({
+        $('#popup form button').click(function(event) {
+            $('#popup').removeClass('show');
+            $('#fill').delay(200).hide(0);
+        })
+
+        // 切换弹窗表单
+        var $formNavLink = $('#popup nav a');
+        $formNavLink.each(function(index, el) {
+            $(el).click(function(event) {
+                $(el).addClass('selected');
+                $($formNavLink[1 - index]).removeClass('selected');
+
+                if (index === 0) {
+                    $('#popup').css('height', '540');
+                    $('#basicForm').css('left', '+=404');
+                    $('#passwordForm').css({'left': '+=404'});
+                } else {
+                    $('#popup').css('height', '400');
+                    $('#basicForm').css('left', '-=404');
+                    $('#passwordForm').css({'left': '-=404'});
+                }
+            });
+        });
+
+        /*统计*/
+        $.ajax({
             url: "/Home/statistics",
             type: "POST",
             dataType: "json",
@@ -44,7 +91,7 @@ $(
                     else if (count <= 20) heat += "学霸练就中";
                     else heat += "我猜你是老师吧"
 
-                    dataBJ.push([i, count, count,heat]);
+                    dataBJ.push([i, count, count, heat]);
                     for (var j = 0; j < count; ++j) {
                         var label1 = data[i].OpList[j].OPERATION;
                         var label2 = data[i].OpList[j].TARGET_USER_NAME;
@@ -187,10 +234,7 @@ $(
             error: function () {
                 alert("hehe");
             }
-         });
-
-
-        //[data[i].Count, data[i].OpList[j]], data[i]
+        });
 
     }
 )

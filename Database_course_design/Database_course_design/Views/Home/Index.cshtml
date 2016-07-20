@@ -5,10 +5,13 @@
 
 @{ 
     var CardContent = ViewBag.CardContent;
-    var ForkNum = ViewBag.ForkNUm;
-    var StarkNum = ViewBag.StarNum;
     var FriendDynamic = ViewBag.FriendDynamic;
+    var user_id = ViewBag.User_ID;
+    var NickName = ViewBag.NickName;
+    var Img = ViewBag.Image;
 }
+
+@using System.Text.RegularExpressions;
 
 
 <!Doctype html>
@@ -46,14 +49,14 @@
         <section id="content">
             <div id="searchBar">
                 <svg aria-hidden="true" class="octicon octicon-mark-github" height="22" version="1.1" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
-                <input type="text" placeholder="搜索" />
+                <input type="text" id="search" name="search" placeholder="搜索" />
             </div>
-            <a class="head" href="#"><img src="~/img/head.jpg" alt="user" /></a>
+                <a class="head" href="#"><img src=Img alt="user" /></a>
             <p>NickName</p>
             <ul>
                 <!-- a标签可以用.net的方法渲染这段代码改了就行 我样式写好了 只要按照这个结构生成样式就没问题 svg要写死的不用动 到时候弄来素材就放进去 -->
                 <li>
-                    <a href="/Home/Personal">
+                    <a href="/Home/OverView">
                         <svg aria-hidden="true" class="octicon octicon-mark-github" height="16" version="1.1" viewBox="0 0 16 16" width="28"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
                         个人信息
                     </a>
@@ -72,14 +75,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a id="showFriends" href="#">
                         <svg aria-hidden="true" class="octicon octicon-mark-github" height="16" version="1.1" viewBox="0 0 16 16" width="28"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
                         我的好友
                         <span>30</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/Home/Repository">
                         <svg aria-hidden="true" class="octicon octicon-mark-github" height="16" version="1.1" viewBox="0 0 16 16" width="28"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
                         我的仓库
                         <span>5</span>
@@ -91,9 +94,7 @@
         <!-- 好友动态 -->
         <section id="sidebar">
             <ul>
-                @if (!FriendDynamic)
-                {
-                    foreach (var x in FriendDynamic)
+                    @foreach (var x in FriendDynamic)
                     {
                         var UserName = x.UserName;
                         var UserOperation = x.UserOperation;
@@ -106,13 +107,6 @@
                             <p>@UpdateInfo</p>
                         </li>
                     }
-                }
-                
-               <!-- <li>
-                    <a href="#">xdliu002</a>
-                    <span>收藏了</span>
-                    <a href="#">高等数学B历年真题</a>
-                </li>-->
 
             </ul>
         </section>
@@ -135,49 +129,46 @@
                 </a>
             </nav>
             <!--CardView 这个地方用.net生成标签时也按照这个结构就行了 ul里必须要有list-head和list-foot然后里面可以动态生成行数-->
-            <ul class="card">
-                <li class="list-head">
-                    <a href="#">@CardContent[0].RepositoryName</a>
-                    <a class="star" href="#">
-                        <svg aria-hidden="true" class="octicon octicon-mark-github" height="20" version="1.1" viewBox="0 0 16 16" width="28"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
-                        <sub>@StarkNum</sub>
-                    </a>
-                    <a class="fork" href="#">
-                        <svg aria-hidden="true" class="octicon octicon-mark-github" height="20" version="1.1" viewBox="0 0 16 16" width="28"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
-                        <sub>@ForkNum</sub>
-                    </a>
-                </li>
 
-                @foreach (var x in CardContent)
+            @if (CardContent != null)
+            {
+                foreach (var x in CardContent)
                 {
-                    var Url = "http://10.0.1.158:3000/Tongji/" + @x.Url;
-                    var File = @x.FileName + "." + @x.FileType;
-                    string FileName = @x.FileName;
-                    <li class="file">
-                        <span class="file-icon" data-type=@x.FileType></span>
-                        @Html.ActionLink(FileName, "Download",new { url = Url,file = File})
-                        <span></span>
-                    </li>
+                    var value = x.Value;
+                    var list = x.Value.FileList;
+                    var ForkNum = value.ForkNum;
+                    var StarNum = value.StarNum;
+                    <ul class="card">
+                        <li class="list-head">
+                            <a href="#">
+                                @x.Key
+                            </a>
+                            <a class="star" href="#">
+                                <svg aria-hidden="true" class="octicon octicon-mark-github" height="20" version="1.1" viewBox="0 0 16 16" width="28"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+                                <sub>@StarNum</sub>
+                            </a>
+                            <a class="fork" href="#">
+                                <svg aria-hidden="true" class="octicon octicon-mark-github" height="20" version="1.1" viewBox="0 0 16 16" width="28"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+                                <sub>@ForkNum</sub>
+                            </a>
+                        </li>
+
+                        @foreach (var y in list)
+                        {
+                            var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
+                            var fileName = y.FileName;
+                            string[] str = Regex.Split(fileName,".");
+                            var forefix = str[0];
+                            var postfix = str[1];
+                            <li class="file">
+                                <span class="file-icon" data-type=@postfix></span>
+                               
+                                <span></span>
+                            </li>
+                        }
+                    </ul>
                 }
-                <!--<li class="file">
-                    <span class="file-icon" data-type="doc">@ViewBag.FileType</span>
-                    <a href="/Home/Download">@ViewBag.FileName</a>
-                    <span>@ViewBag.FileSize</span>
-                </li>
-                <li class="file">
-                    <span class="file-icon" data-type="doc"></span>
-                    <a href="#"></a>
-                </li>
-                <li class="file">
-                    <span class="file-icon" data-type="doc"></span>
-                    <a href="#">成员分组名单</a>
-                </li>
-                <li class="file">
-                    <span class="file-icon" data-type="doc"></span>
-                    <a href="#">成员分组名单</a>
-                </li>
-                <li class="list-foot"></li>-->
-            </ul>
+            }
 
         </section>
 
@@ -186,6 +177,38 @@
         <!--<footer>
             <h4>Footer</h4>
         </footer>-->
+
+    </div>
+    <!--好友-->
+    <div id="friends">
+        <p>好友列表</p>
+        <div>
+            <a href="#" username="lirui"><img src="../img/1.jpg"></a>
+            <p>
+                瀑布流对于图片的展现，是高效而具有吸引力的，用户
+            </p>
+            <p><i class="iconfont">&#xe648</i>2016年5月10日</p>
+        </div>
+        <div>
+            <a href="#"><img src="../img/1.jpg"></a>
+            <p>巧妙的利用视觉层级，视线的任意流动又缓解了视觉疲劳。下面介绍css瀑布流 布局的实现方法 学习也休闲 立即登录 注册新账号 手机版 进入会员 ...</p>
+        </div>
+        <div>
+            <a href="#"><img src="../img/1.jpg"></a>
+            <p>个性签名</p>
+        </div>
+        <div>
+            <a href="#"><img src="../img/1.jpg"></a>
+            <p>个性签名</p>
+        </div>
+        <div>
+            <a href="#"><img src="../img/1.jpg"></a>
+            <p>个性签名</p>
+        </div>
+        <div>
+            <a href="#"><img src="../img/1.jpg"></a>
+            <p>个性签名</p>
+        </div>
 
     </div>
 </body>

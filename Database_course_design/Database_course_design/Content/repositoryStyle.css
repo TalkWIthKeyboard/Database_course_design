@@ -1,0 +1,128 @@
+#t2 {
+	width: 82%;
+}
+
+main {
+	padding: 15px 30px;
+}
+
+main ul,
+main li {
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px solid #f3f3f3;
+	border-radius: 4px;
+}
+
+main ul li {
+	padding: 4px 10px;
+}
+
+#folderHead {
+	height: 60px;
+}
+
+#folderInfo {
+    float: left;
+    height: 28px;
+    margin: 10px auto;
+}
+
+#folderInfo i {
+    font-size: 26px;
+}
+
+#folderInfo span {
+    font-size: 20px;
+    height: 28px;
+    vertical-align: text-bottom;
+    margin-left: 5px;
+}
+
+#btns {
+    float: right;
+    margin: 12px 10px;
+}
+
+#btns a {
+    color: #858585;
+    margin: 0 5px;
+    height: 26px;
+    line-height: 25px;
+    vertical-align: top;
+}
+
+#btns a i {
+    margin: 0 5px;
+}
+
+#btns button {
+    height: 26px;
+    width: 65px;
+    font-size: 10px;
+    border-radius: 4px;
+    color: white;
+    margin: 0 5px;
+}
+
+#btns button:nth-of-type(1) {
+    background-color: #3EF1C4;
+}
+
+#btns button:nth-of-type(2) {
+    position: relative;
+    background-color: #00C7FF;
+    overflow: hidden;
+}
+
+#btns button:nth-of-type(2) input {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    height: 26px;
+    width: 65px;
+    cursor: pointer;
+}
+
+#folder .file {
+	height: 50px;
+    position: relative;
+}
+
+#folder .file .file-icon {
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
+#folder .file a {
+	line-height: 40px;
+	margin-left: 15px;
+	color: #0EA2C2;
+}
+
+#folder .file span {
+    color: #858585;
+}
+
+#folder .file span:nth-of-type(2) {
+    position: absolute;
+    height: 40px;
+    line-height: 40px;
+    left: 50%;
+    margin-left: -32px;
+}
+
+#folder .file span:nth-of-type(3) {
+    float: right;
+    margin-right: 10px;
+    height: 40px;
+    line-height: 40px;
+}
+
+main > p {
+    color: #858585;
+}
+
+#messageBoard {
+    margin: 0 auto;
+}

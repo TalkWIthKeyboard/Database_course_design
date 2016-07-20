@@ -1,3 +1,5 @@
+﻿@charset "UTF-8";
+
 /*
 深蓝:#004E64
 中蓝:#037FA2
@@ -32,8 +34,23 @@ input {
     outline: none;
 }
 
+input[type="reset"],
+input[type="submit"] {
+    cursor: pointer;
+}
+
 li {
     list-style: none;
+}
+
+main {
+    width: calc(82% - 12px);
+    height: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 10px;
+    float: right;
+    margin-right: 6px;
 }
 
 section {
@@ -42,6 +59,21 @@ section {
 
 ul {
     padding: 0;
+}
+
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.woff') format('woff'), /* chrome、firefox */
+        url('../fonts/iconfont.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .file-icon {
@@ -144,7 +176,7 @@ ul {
     border: none;
     width: calc(100% - 30px);
     font-size: 16px;
-    padding: none;
+    padding: 0;
 }
 
 #content .head {
@@ -181,4 +213,272 @@ ul {
 #content ul li a svg {
     vertical-align: baseline;
     fill: #464646;
+}
+
+/* 仓库列表样式 */
+#repository {
+    width: 80%;
+    height: 100%;
+    min-height: 100%;
+    float: left;
+    margin: 0 1%;
+}
+
+#repository nav,
+#popup nav {
+    border: 2px solid #F3F3F3;
+    border-bottom: none;
+    display: inline-block;
+    text-align: center;
+}
+
+#repository nav a,
+#popup nav a {
+    width: 120px;
+    height: 50px;
+    float: left;
+    line-height: 50px;
+    color: #464646;
+    transform: translateZ(0);
+}
+
+#repository nav a.selected::before,
+#popup nav a.selected::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #F3F3F3 #F3F3F3;
+}
+
+#repository ul {
+    margin: 0;
+    margin-top: -2px;
+    height: calc(100% - 380px);
+    width: 100%;
+}
+
+#repository ul li {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 15px;
+    border: 1px solid #F3F3F3;
+}
+
+#repository ul li a {
+    color: #0EA2C2;
+    font-size: 20px;
+}
+
+#repository ul li .label {
+    padding: 4px;
+    font-size: 14px;
+    color: white;
+    border-radius: 4px;
+    vertical-align: text-top;
+}
+
+.label.offical {
+    background-color: #EFC52A;
+}
+
+.label.original {
+    background-color: #3EF1C4;
+}
+
+.label.contribute {
+    background-color: #9e6bcb;
+}
+
+#repository ul li p {
+    color: #858585;
+    margin-left: 20px;
+}
+
+/*评论框样式*/
+#messageInput {
+    margin-top: -2px;
+    height: 150px;
+    padding: 20px;
+    padding-bottom: 0;
+    border: 1px solid #f3f3f3;
+}
+
+#messageInput img,
+#messageBoard img {
+    width: 60px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 40px;
+    vertical-align: top;
+}
+
+#messageInput form {
+    display: inline-block;
+    width: calc(100% - 110px);
+    height: 100%;
+}
+
+#messageInput form div {
+    position: relative;
+    width: 100%;
+    background-color: #F3F3F3;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    height: calc(100% - 50px);
+    font-size: 18px;
+}
+
+#messageInput div:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -26px;
+    border-width: 9px 13px;
+    border-style: solid;
+    border-color: #f3f3f3 #f3f3f3 transparent transparent;
+}
+
+#messageInput div textarea,
+#basicForm textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    background-color: transparent;
+    color: #858585;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+#messageInput form input {
+    height: 25px;
+    width: 65px;
+    border-radius: 4px;
+    color: white;
+    font-size: 10px;
+    float: right;
+    margin: 10px 5px;
+}
+
+#messageInput form input:nth-of-type(1) {
+    background-color: #00FBCD;
+}
+
+#messageInput form input:nth-of-type(2) {
+    background-color: #00C9FA;
+}
+
+#message {
+    padding: 20px;
+}
+
+#message > div {
+    display: inline-block;
+}
+
+#message div:nth-child(1) {
+    width: 80px;
+    margin-top: 0;
+    vertical-align: top;
+}
+
+#message div:nth-child(2) {
+    width: calc(100% - 200px);
+}
+
+#message a {
+    width: 60px;
+    height: 60px;
+}
+
+#messageBoard #message p {
+    width: 100%;
+    margin-left: 0;
+}
+
+#messageBoard #message span:nth-of-type(2) {
+    color: #858585;
+    font-size: 14px;
+}
+
+/*好友列表*/
+#friends {
+    position: absolute;
+    height: calc(100% - 50px);
+    overflow: scroll;
+    width: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 50px;
+    right: 0;
+}
+
+#friends > p {
+    color: white;
+    font-size: 20px;
+    margin: 30px 20px;
+}
+
+#friends div {
+    margin: 10px 20px;
+    height: 250px;
+    width: calc(33% - 40px);
+    float: left;
+}
+
+#friends div a {
+    display: block;
+    width: 100px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+#friends div a img {
+    border-radius: 4px;
+    width: 100px;
+    height: 100px;
+}
+
+#friends div a::before {
+    content: attr(username);
+    line-height: 30px;
+    position: absolute;
+    height: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    color: white;
+    -webkit-transition: height 0.5s;
+}
+
+#friends div a:hover::before {
+    height: 30px;
+}
+
+#friends div p {
+    width: 70%;
+    color: #F3F3F3;
+}
+
+/*消息提醒列表*/
+ul#messageList {
+    position: absolute;
+    width: 100%;
+    bottom: 50px;
+}
+
+#messageList li {
+    width: 100%;
+    height: 60px;
+    color: white;
+    background-color: black;
 }

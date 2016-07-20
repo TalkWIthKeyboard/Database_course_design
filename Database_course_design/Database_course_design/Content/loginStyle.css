@@ -11,13 +11,35 @@ div {
     background-color: transparent;
 }
 
+/* .ball {
+    width: 200px;
+    height: 200px;
+    background: -webkit-radial-gradient(#004E64 0, #004E64 31%, #037FA2 31%, #037FA2 51%, #03ACDC 51%);
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.ball img {
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -30px;
+    margin-left: -30px;
+    border-radius: 50%;
+} */
+
 #logo {
     height: 52%;
     width: 52vh;
     border-radius: 50%;
     position: absolute;
     top: -2vw;
-    right: 53vh;
+    right: calc(50vw - 26vh + 300px);
     background-color: transparent;
 }
 
@@ -66,7 +88,7 @@ div {
     width: 92vh;
     border-radius: 50%;
     position: absolute;
-    right: -1vh;
+    right: calc(50vw - 46vh);
     top: 3vh;
 }
 
@@ -78,11 +100,11 @@ div {
     position: absolute;
     z-index: 4;
     top: calc(3vh + 110px);
-    right: calc(-1vh + 110px);
+    right: calc(50vw - 46vh + 110px);
 }
 
 #loginForm > div {
-    width: 46%;
+    width: 55%;
     height: 208px;
     margin: 0 auto;
     margin-top: calc(50% - 104px);

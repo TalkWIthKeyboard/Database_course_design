@@ -262,7 +262,6 @@ namespace Database_course_design.Models.WorkModel
                 errorMessage = error;
                 return false;
             }
-
         }
 
         /// <summary>
