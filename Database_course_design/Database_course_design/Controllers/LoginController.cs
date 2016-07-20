@@ -5,12 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using Database_course_design.Models;
 using Database_course_design.Models.ItemModel;
+using Database_course_design.Models.WorkModel;
 
 namespace WebApplication1.Controllers
 {
     public class LoginController : Controller
     {
-        private DBModel dbmodel = new DBModel();
         private static string user_id = "";
 
         public ActionResult Login()
@@ -20,6 +20,7 @@ namespace WebApplication1.Controllers
 
         public void Save()
         {
+            var userOp = new AboutUser();
             string username = Request["email"];
             user_id = username;
             string passwd = Request["password"];
@@ -40,7 +41,7 @@ namespace WebApplication1.Controllers
                 {
                     iden = 1;
                 }
-                dbmodel.addUserInfo(username,passwd,userInfo.name,userInfo.department,"",iden,0);
+                userOp.addUserInfo(username,passwd,userInfo.name,userInfo.department,"",iden,0);
                 Response.Redirect("/Home/Index");
             }
             return;

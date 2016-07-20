@@ -1,4 +1,6 @@
 ﻿using Database_course_design.Models;
+using Database_course_design.Models.ItemModel;
+using Database_course_design.Models.WorkModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,6 @@ using System.Web.Mvc;
 using System.Net;
 using System.IO;
 using System.Threading;
-using Database_course_design.Models.ItemModel;
 using WebApplication1.Controllers;
 using System.Text;
 
@@ -15,7 +16,6 @@ namespace Database_course_design.Controllers
 {
     public class HomeController : Controller
     {
-        private DBModel dbmodel = new DBModel();
         private IndexWebInterface iweb = new IndexWebInterface();
         private LoginController lgc = new LoginController();
         private PersonalWebInterface pweb = new PersonalWebInterface();
@@ -30,7 +30,8 @@ namespace Database_course_design.Controllers
         
         public ActionResult Index()
         {
-            List<IndexWebInterface.FileItem> ret = null;
+            var fileOp = new AboutFile();
+            List<Models.ItemModel.FileInfo> ret = null;
             ErrorMessage errorInfo = null;
             iweb.getFIleByRepoId("REPOSITORY_8111840549", out ret, out errorInfo);
             ViewBag.CardContent = ret;
@@ -39,7 +40,7 @@ namespace Database_course_design.Controllers
 
             for (int i = 0; i <  20; i++)
             {
-                var ss = dbmodel.createFolder("REPOSITORY_2392485163", "1452802", "王冠淞测试文件夹" + i.ToString(), "REPOSITORY_2392485163", 0, out field, out ex);
+                var ss = fileOp.createFolder("REPOSITORY_2392485163", "1452802", "王冠淞测试文件夹" + i.ToString(), "REPOSITORY_2392485163", 0, out field, out ex);
             }
             //var s = dbmodel.createFile("REPOSITORY_2405964274", "王家慧测试文件.exe", "1", 23, "FILETABLE_6976112805", 1, "", out field);
             /*被赞次数*/
@@ -53,7 +54,7 @@ namespace Database_course_design.Controllers
             ViewBag.ForkNum = Forknum;
 
             /*好友动态*/
-            List<actionInfo> SearchResult = null;
+            List<ActionInfo> SearchResult = null;
             iweb.getFriendDynamic("1452739",out SearchResult,out errorInfo);
             ViewBag.FriendDynamic = SearchResult;
 
@@ -102,13 +103,7 @@ namespace Database_course_design.Controllers
 
         public ActionResult Personal()
         {
-           
-
-
             return View();
         }
-
-
-
     }
 }

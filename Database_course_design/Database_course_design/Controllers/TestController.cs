@@ -1,5 +1,6 @@
-﻿using Database_course_design.Models;
+﻿using Database_course_design.Models.WorkModel;
 using Database_course_design.Models.ItemModel;
+using Database_course_design.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,6 +62,9 @@ namespace Database_course_design.Controllers
             ErrorMessage errorInfo = null;
             pweb.getUserHeat("1452716", out dayheat, out errorInfo);
             ViewBag.DayHeat = dayheat;*/
+
+            var userOp = new AboutUser();
+            userOp.showOthersRepertory("1452687", 4);
 
             return View();
         }
