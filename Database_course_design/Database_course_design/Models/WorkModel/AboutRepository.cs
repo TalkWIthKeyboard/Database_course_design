@@ -620,5 +620,43 @@ namespace Database_course_design.Models.WorkModel
                 }
             }
         }
+
+        /// <summary>
+        /// 13.挑选官方库
+        /// 输入：3级标签
+        /// 输出：是否操作成功
+        /// 待测试
+        /// </summary>
+        public bool chooseOfficialRepository(string label1,string label2,string label3)
+        {
+            var db = new KUXIANGDBEntities();
+            try
+            {
+                var reps = db.REPOSITORies.Where(p => p.COURSE.LABEL1 == label1
+                                             && p.COURSE.LABEL2 == label2
+                                             && p.COURSE.LABEL3 == label3).ToList();
+                double? max = 0;
+                int? l = -1;
+                int num = 0;
+                foreach (var each in reps)
+                {
+                    int? iden = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == each.REPOSITORY_ID).FirstOrDefault().USERTABLE.IDENTITY;
+                    if ((each.STAR_NUM + each.FORK_NUM) * (1 + 0.5 * iden) > max)
+                    {
+                        max = (each.STAR_NUM + each.FORK_NUM) * (1 + 0.5 * iden);
+                        l = num;
+                    }
+                    num++;
+                }
+                reps[num].ATTRIBUTE = 1;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("挑选官方库操作失败");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return false;
+            }
+        }
     }
 }
