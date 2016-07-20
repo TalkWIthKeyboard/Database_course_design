@@ -72,7 +72,12 @@ namespace Database_course_design.Models.WorkModel
         public bool createFile(string rep_id, string name, string type, int size, string position, int flag, string description, out string file_id)
         {
             var db = new KUXIANGDBEntities();
-
+            ErrorMessage errorMessage = new ErrorMessage();
+            if (!verifyDuplicateName(name, position, flag, out errorMessage))
+            {
+                file_id = null;
+                return false;
+            }
             string newFileId = basic.createNewId("FILETABLE");
             string newPath = "";
             string userId = null;
@@ -208,10 +213,9 @@ namespace Database_course_design.Models.WorkModel
         public bool createFolder(string rep_id, string user_id, string name, string position, int fatherIsFolder, out string fileId, out ErrorMessage errorMessage)
         {
             var db = new KUXIANGDBEntities();
-            var flag = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == user_id
-                                                             && p.REPOSITORY_ID == rep_id
-                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
-            if (flag == null)
+            var basicModel = new BasicModel();
+            var auth = basicModel.auditAuthority(user_id, rep_id);
+            if (auth != 0 && auth != 1)
             {
                 var error = new ErrorMessage("创建文件夹", "没有权限创建文件夹");
                 errorMessage = error;
@@ -248,9 +252,8 @@ namespace Database_course_design.Models.WorkModel
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 var file_id = "";
-                var result = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userid
-                                                                    && p.REPOSITORY_ID == rep_id
-                                                                    && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
+                BasicModel basicModel = new BasicModel();
+                var auth = basicModel.auditAuthority(userid, rep_id);
                 if (!createFile(rep_id, name, "0", size, position, flag, description, out file_id))
                 {
                     var error = new ErrorMessage()
@@ -266,7 +269,7 @@ namespace Database_course_design.Models.WorkModel
                 else
                 {
                     //没有权限，需要给管理员发信息获得许可
-                    if (result == null)
+                    if (auth != 0 && auth != 1)
                     {
                         var manageArray = new List<USER_REPOSITORY_RELATIONSHIP>();
                         manageArray = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == rep_id
@@ -296,10 +299,9 @@ namespace Database_course_design.Models.WorkModel
         public bool removeFile(string userId, string repositoryId, string fileId, out ErrorMessage errorMessage)
         {
             var db = new KUXIANGDBEntities();
-            var user = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
-                                                            && p.REPOSITORY_ID == repositoryId
-                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
-            if (user == null)
+            BasicModel basicModel = new BasicModel();
+            var auth = basicModel.auditAuthority(userId, repositoryId);
+            if (auth != 0 && auth != 1)
             {
                 var error = new ErrorMessage()
                 {
