@@ -264,11 +264,11 @@ namespace Database_course_design.Models.WorkModel
         /// 输出：所有相关的仓库名（是否要链接）
         /// 测试成功
         /// </summary>
+
         public List<RepertorySearchResult> showOthersRepertory(string UserId,int flag)
         {
             var db = new KUXIANGDBEntities();
-            List<RepertorySearchResult> res = new List<RepertorySearchResult>();
-
+            var res = new List<RepertorySearchResult>();
             try
             {
                 var results =
