@@ -119,7 +119,7 @@ namespace Database_course_design.Models.WorkModel
 
         /// <summary>
         /// 4.留言板显示
-        /// 输入： 接收者的编号
+        /// 输入：接收者的编号
         /// 输出：评论队列
         /// 测试成功
         /// </summary>
@@ -138,7 +138,7 @@ namespace Database_course_design.Models.WorkModel
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("修改文件状态失败！");
+                    System.Diagnostics.Debug.WriteLine("留言板显示失败！");
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                     return null;
                 }
