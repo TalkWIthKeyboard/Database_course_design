@@ -121,6 +121,13 @@ namespace Database_course_design.Models.WorkModel
                         oldUser.GRADE = 0;
                     }
                     db.SaveChanges();
+                    
+                    //如果用户的积分大于50分，提醒用户可以创建私有仓库
+                    if (oldUser.GRADE >= 50)
+                    {
+                        var messageOp = new AboutMessage();
+                        messageOp.addMessageToUser(UserId, "0\n你已经可以创建私有仓库了！耶！");
+                    }
                     return (short)oldUser.GRADE;
                 }
                 catch (Exception ex)
@@ -385,10 +392,7 @@ namespace Database_course_design.Models.WorkModel
                                                              && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
             if (user == null)
             {
-                var error = new ErrorMessage();
-                error.ErrorOperation = "审核请求操作";
-                error.ErrorReason = "没有权限进行审核";
-                error.ErrorTime = DateTime.Now;
+                var error = new ErrorMessage("审核请求操作", "没有权限进行审核");
                 errorMessage = error;
                 return false;
             }
@@ -407,10 +411,7 @@ namespace Database_course_design.Models.WorkModel
                     var errorM = new ErrorMessage();
                     if (!fileOp.removeFile(userId, repId, fileId, out errorM))
                     {
-                        var error = new ErrorMessage();
-                        error.ErrorOperation = "审核请求操作";
-                        error.ErrorReason = "删除操作失败";
-                        error.ErrorTime = DateTime.Now;
+                        var error = new ErrorMessage("审核请求操作","删除操作失败");
                         errorMessage = error;
                         return false;
                     }
@@ -420,6 +421,46 @@ namespace Database_course_design.Models.WorkModel
                         return true;
                     }
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// 12.确认别人的申请请求
+        /// 输入：发送人的id，申请仓库的id，许可还是不许可（flag = 0 许可）
+        /// 输出：操作是否成功
+        /// 待测试
+        /// </summary>
+        public bool sureApplyManager(string senderId, string repId, int flag)
+        {
+            var db = new KUXIANGDBEntities();
+            var message = new AboutMessage();
+            try
+            {
+                if (flag == 0)
+                {
+                    var relation = new USER_REPOSITORY_RELATIONSHIP
+                    {
+                        USER_ID = senderId,
+                        REPOSITORY_ID = repId,
+                        RELATIONSHIP = 1
+                    };
+                    db.USER_REPOSITORY_RELATIONSHIP.Add(relation);
+                    db.SaveChanges();
+                    message.addMessageToUser(senderId, "0\n你的请求被接受了！");
+                    return true;
+                }
+                else
+                {
+                    message.addMessageToUser(senderId, "0\n你的请求被拒绝了！");
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("确认别人的申请请求操作异常");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return false;
             }
         }
     }

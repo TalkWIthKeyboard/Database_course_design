@@ -74,9 +74,6 @@ namespace Database_course_design.Controllers
             pweb.getUserHeat("1452716", out dayheat, out errorInfo);
             ViewBag.DayHeat = dayheat;*/
 
-            var userOp = new Models.WorkModel.AboutUser();
-            userOp.addUserInfo("1353803", "629003", "宋伟", "", "", 0, 0);
-
             return View();
         }
 

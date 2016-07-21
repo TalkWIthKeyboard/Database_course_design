@@ -256,12 +256,7 @@ namespace Database_course_design.Models.WorkModel
                 var auth = basicModel.auditAuthority(userid, rep_id);
                 if (!createFile(rep_id, name, "0", size, position, flag, description, out file_id))
                 {
-                    var error = new ErrorMessage()
-                    {
-                        ErrorOperation = "创建文件",
-                        ErrorReason = "创建文件失败",
-                        ErrorTime = DateTime.Now
-                    };
+                    var error = new ErrorMessage("创建文件", "创建文件失败");
                     errorMessage = error;
                     fileId = "";
                     return false;
@@ -278,7 +273,7 @@ namespace Database_course_design.Models.WorkModel
                         foreach (var each in manageArray)
                         {
                             var message = new AboutMessage();
-                            message.addMessageToUser(each.USER_ID, "您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？");
+                            message.addMessageToUser(each.USER_ID, "2\n您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？\n" + userid + "\n" + rep_id + "\n" + file_id);
                         }
                     }
                     fileId = file_id;
@@ -303,12 +298,7 @@ namespace Database_course_design.Models.WorkModel
             var auth = basicModel.auditAuthority(userId, repositoryId);
             if (auth != 0 && auth != 1)
             {
-                var error = new ErrorMessage()
-                {
-                    ErrorOperation = "删除文件操作",
-                    ErrorReason = "没有权限进行删除操作",
-                    ErrorTime = DateTime.Now
-                };
+                var error = new ErrorMessage("删除文件操作", "没有权限进行删除操作");
                 errorMessage = error;
                 return false;
             }
@@ -344,12 +334,7 @@ namespace Database_course_design.Models.WorkModel
                 }
                 catch (Exception ex)
                 {
-                    var error = new ErrorMessage
-                    {
-                        ErrorOperation = "删除文件下面的文件操作异常",
-                        ErrorReason = ex.Message,
-                        ErrorTime = DateTime.Now
-                    };
+                    var error = new ErrorMessage("删除文件下面的文件操作异常", ex.Message);
                     errorMessage = error;
                     return false;
                 }

@@ -742,5 +742,35 @@ namespace Database_course_design.Models.WorkModel
                 return false;
             } 
         }
+
+        /// <summary>
+        /// 16.申请成为管理者
+        /// 输入：申请者id，仓库id
+        /// 输出：是否操作成功
+        /// 待测试
+        /// </summary>
+        public bool applyManager(string userId,string repId)
+        {
+            var db = new KUXIANGDBEntities();
+            try
+            {
+                var userRelations = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == repId).ToList();
+                var repName = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repId).FirstOrDefault().NAME;
+                var messageOp = new AboutMessage();
+
+                foreach (var each in userRelations)
+                {
+                    var user = db.USERTABLEs.Where(p => p.USER_ID == each.USER_ID).FirstOrDefault();
+                    messageOp.addMessageToUser(user.USER_ID, "1\n"+ user.USER_NAME + "申请成为您的" + repName + "的管理员，是否允许？\n" + userId + "\n" + repId);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("申请成为管理员操作");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return false;
+            }
+        }
     }
 }
