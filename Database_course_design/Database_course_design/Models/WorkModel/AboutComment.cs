@@ -133,6 +133,7 @@ namespace Database_course_design.Models.WorkModel
                                   join commnt in db.COMMENTTABLEs
                                   on user.COMMENT_ID equals commnt.COMMENT_ID
                                   where user.USER_ID == userid
+                                  orderby commnt.COMMENT_DATE descending
                                   select commnt;
                     return comment.ToList();
                 }

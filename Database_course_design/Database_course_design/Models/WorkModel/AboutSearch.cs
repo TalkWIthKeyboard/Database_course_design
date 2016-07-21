@@ -29,6 +29,7 @@ namespace Database_course_design.Models.WorkModel
                                             join c in db.COURSEs
                                             on p.COURSE_ID equals c.COURSE_ID
                                             where c.LABEL1.Contains(keyWord) || c.LABEL2.Contains(keyWord) || c.LABEL3.Contains(keyWord)
+                                            orderby p.STAR_NUM descending
                                             select p;
                         newRepositoryList = newRepository.ToList();
                     }
@@ -38,6 +39,7 @@ namespace Database_course_design.Models.WorkModel
                                             join c in db.COURSEs
                                             on p.COURSE_ID equals c.COURSE_ID
                                             where  p.NAME.Contains(keyWord)
+                                            orderby p.STAR_NUM descending
                                             select p;
                         newRepositoryList = newRepository.ToList();
                     }
