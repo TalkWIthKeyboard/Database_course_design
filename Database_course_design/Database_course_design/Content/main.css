@@ -167,10 +167,6 @@ ul {
     padding-bottom: 5px;
 }
 
-#searchBar svg {
-    vertical-align: middle;
-}
-
 #searchBar input {
     outline: none;
     border: none;
@@ -208,11 +204,6 @@ ul {
     width: 130px;
     display: block;
     margin: 0 auto;
-}
-
-#content ul li a svg {
-    vertical-align: baseline;
-    fill: #464646;
 }
 
 /* 仓库列表样式 */
@@ -372,37 +363,38 @@ ul {
 
 #messageInput form input:nth-of-type(2) {
     background-color: #00C9FA;
+    cursor: pointer;
 }
 
-#message {
+.message {
     padding: 20px;
 }
 
-#message > div {
+.message > div {
     display: inline-block;
 }
 
-#message div:nth-child(1) {
+.message div:nth-child(1) {
     width: 80px;
     margin-top: 0;
     vertical-align: top;
 }
 
-#message div:nth-child(2) {
+.message div:nth-child(2) {
     width: calc(100% - 200px);
 }
 
-#message a {
+.message a {
     width: 60px;
     height: 60px;
 }
 
-#messageBoard #message p {
+#messageBoard .message p {
     width: 100%;
     margin-left: 0;
 }
 
-#messageBoard #message span:nth-of-type(2) {
+#messageBoard .message span:nth-of-type(2) {
     color: #858585;
     font-size: 14px;
 }
@@ -410,25 +402,28 @@ ul {
 /*好友列表*/
 #friends {
     position: absolute;
-    height: calc(100% - 50px);
+    height: 0;
     overflow: scroll;
-    width: 0;
+    width: 82%;
     background-color: rgba(0, 0, 0, 0.7);
     top: 50px;
     right: 0;
+    -webkit-transition: height 0.8s ease;
 }
 
 #friends > p {
     color: white;
     font-size: 20px;
-    margin: 30px 20px;
+    margin: 10px 30px;
 }
 
 #friends div {
-    margin: 10px 20px;
     height: 250px;
-    width: calc(33% - 40px);
+    width: 33%;
     float: left;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 #friends div a {
@@ -477,8 +472,42 @@ ul#messageList {
 }
 
 #messageList li {
+    border-radius: 4px;
+    border-top: 1px solid #e3e3e3;
     width: 100%;
-    height: 60px;
     color: white;
-    background-color: black;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#messageList li p {
+    color: black;
+    margin: 0;
+    text-align: left;
+}
+
+ul#messageList li div {
+    height: 20px;
+    width: 48%;
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    margin-top: 5px;
+}
+
+ul#messageList li p a {
+    display: inline-block;
+    color: #037FA2;
+}
+
+ul#messageList li div a {
+    width: 20px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#messageList li a img {
+    display: inline-block;
+    width: 20px;
+    line-height: 100%;
 }

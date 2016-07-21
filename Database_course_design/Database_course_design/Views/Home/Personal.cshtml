@@ -9,7 +9,14 @@
     var CardContent = ViewBag.CardContent;
     var NickName = ViewBag.NickName;
     var Img = ViewBag.Image;
+    var FriendNum = ViewBag.FriendNum;
+    var FriendList = ViewBag.Friend;
+    var user_id = ViewBag.User_ID;
+    var current_user_id = ViewBag.Current_User_ID;
+    var message = ViewBag.MessageArr;
 }
+
+@using System.Text.RegularExpressions;
 
 <!DOCTYPE html>
 <html>
@@ -51,7 +58,7 @@
         <ul>
             <!-- a标签可以用.net的方法渲染这段代码改了就行 我样式写好了 只要按照这个结构生成样式就没问题 svg要写死的不用动 到时候弄来素材就放进去 -->
             <li>
-                <a href="/Home/OverView">
+                <a href="#" class="friend" friend_id = @user_id>
                     <svg aria-hidden="true" class="octicon octicon-mark-github" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
                     个人信息
                 </a>
@@ -73,7 +80,7 @@
                 <a id="showFriends" href="#">
                     <svg aria-hidden="true" class="octicon octicon-mark-github" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
                     我的好友
-                    <span>30</span>
+                    <span>@FriendNum</span>
                 </a>
             </li>
             <li>
@@ -84,13 +91,43 @@
                 </a>
             </li>
         </ul>
+
+        <!--消息提示-->
+        <ul id="messageList">
+            @foreach (var x in message)
+            {
+                var str = x.MESSAGE_CONTENT;
+                string[] s = Regex.Split(str, "\n");
+                <li>
+                    @if (s[0] == "0")
+                    {
+                        <p>@s[1]</p>
+                    }
+                    else if (s[0] == "1")
+                    {
+                        <p userid=@s[2] repid=@s[3]>@s[1]</p>
+                    }
+                    else
+                    {
+                        <p userid=@s[2] repid=@s[3] fileid=@s[4]>@s[1]<a href=@s[5]>查看文件</a></p>
+                    }
+                    <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
+                    <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
+                </li>
+            }
+
+        </ul>
+
     </section>
 
     <main id="personal">
         <div id="personalInfo">
             <img src="../img/otherHead.png" />
             <div id="words">
-                <button id="edit">编辑资料</button>
+                @if (user_id == current_user_id)
+                {
+                    <button id="edit">编辑资料</button>
+                }
 
                 <h2>Minami Kotori</h2>
                 <p id="motto">
@@ -242,33 +279,20 @@
 
     <div id="friends">
         <p>好友列表</p>
-        <div>
-            <a href="#" username="lirui"><img src="../img/1.jpg"></a>
-            <p>
-                瀑布流对于图片的展现，是高效而具有吸引力的，用户
-            </p>
-            <p><i class="iconfont">&#xe648</i>2016年5月10日</p>
-        </div>
-        <div>
-            <a href="#"><img src="../img/1.jpg"></a>
-            <p>巧妙的利用视觉层级，视线的任意流动又缓解了视觉疲劳。下面介绍css瀑布流 布局的实现方法 学习也休闲 立即登录 注册新账号 手机版 进入会员 ...</p>
-        </div>
-        <div>
-            <a href="#"><img src="../img/1.jpg"></a>
-            <p>个性签名</p>
-        </div>
-        <div>
-            <a href="#"><img src="../img/1.jpg"></a>
-            <p>个性签名</p>
-        </div>
-        <div>
-            <a href="#"><img src="../img/1.jpg"></a>
-            <p>个性签名</p>
-        </div>
-        <div>
-            <a href="#"><img src="../img/1.jpg"></a>
-            <p>个性签名</p>
-        </div>
+        @foreach (var x in FriendList)
+        {
+            var CreateTime = x.UserCreateTime;
+            var UserName = x.UserName;
+            var Signature = x.UserSignature;
+            var Url = x.UserPhotoUrl;
+            <div>
+                <a href="#" username=@UserName><img src=@Url></a>
+                <p>
+                    @Signature
+                </p>
+                <p><i class="iconfont">&#xe648;</i>@CreateTime</p>
+            </div>
+        }
 
     </div>
 

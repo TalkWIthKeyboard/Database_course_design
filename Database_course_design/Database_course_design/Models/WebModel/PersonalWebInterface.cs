@@ -439,5 +439,54 @@ namespace Database_course_design.Models
                 return null;
             }
         }
+
+        /// <summary>
+        /// 11.检查是否是朋友关系
+        /// 输入：用户id，被关注者id
+        /// 输出：是否是朋友关系
+        /// 测试成功
+        /// </summary>
+        public bool FellowOrNot(string _UserAId, string _UserBId)
+        {
+            try
+            {
+                KUXIANGDBEntities db = new KUXIANGDBEntities();
+                var Item = db.USER_USER.Where(p => p.USER_ID1 == _UserAId && p.USER_ID2 == _UserBId).FirstOrDefault();
+                return null == Item ? false : true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 12.获取这个人的所有好友信息
+        /// 输入：用户id
+        /// 输出：这个人的所有好友信息
+        /// 待测试
+        /// </summary>
+        public List<UserSearchResult> getUserFriend(string userId)
+        {
+            var results = new List<UserSearchResult>();
+            var db = new KUXIANGDBEntities();
+            try
+            {
+                var friend = db.USER_USER.Where(p => p.USER_ID1 == userId).ToList();
+                foreach (var each in friend)
+                {
+                    var user = db.USERTABLEs.Where(p => p.USER_ID == each.USER_ID2).FirstOrDefault();
+                    var result = new UserSearchResult(user);
+                    results.Add(result);
+                }
+                return results;
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("显示好友列表操作");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }

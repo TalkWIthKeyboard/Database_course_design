@@ -67,6 +67,10 @@
     border-radius: 12px;
 }
 
+#middle .card:nth-of-type(1) {
+    margin-top: 150%;
+}
+
 #middle .card li {
     padding: 0 20px;
 }
@@ -80,16 +84,22 @@
 #middle .card .list-head a {
     font-size: 20px;
     color: #0EA2C2;
+    margin-right: 15px;
+}
+
+#middle .card .list-head a i {
+    color: #858585;
+    font-size: 20px;
+}
+
+#middle .card .list-head a span {
+    font-size: 16px;
 }
 
 #middle .card .list-head .star,
 #middle .card .list-head .fork {
     float: right;
     margin-left: 10px;
-}
-
-#middle .card svg {
-    vertical-align: bottom;
 }
 
 #middle .card .file {
@@ -101,14 +111,6 @@
     line-height: 40px;
 	margin-right: 20px;
 }
-
-/*#middle .card .file:nth-of-type(2n) {
-    background-color: #F5F5F5;
-}*/
-
-/*#middle .card .file:nth-of-type(2n) .file-icon::before {
-    border-color: #F5F5F5 #F5F5F5 rgba(255,255,255,.35) rgba(255,255,255,.35);
-}*/
 
 #middle .card .file-icon {
     vertical-align: middle;

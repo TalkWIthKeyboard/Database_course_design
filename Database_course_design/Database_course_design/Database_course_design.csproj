@@ -179,6 +179,7 @@
     <Content Include="Content\loginStyle.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\normalize.css" />
+    <Content Include="Content\overviewStyle.css" />
     <Content Include="Content\personalStyle.css" />
     <Content Include="Content\repositoryStyle.css" />
     <Content Include="Content\searchStyle.css" />
@@ -188,7 +189,9 @@
     <Content Include="img\logo.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\no.png" />
     <Content Include="img\otherHead.png" />
+    <Content Include="img\yes.png" />
     <Content Include="Models\KUXIANGModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
@@ -201,6 +204,7 @@
     </Content>
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\echarts.js" />
+    <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\personal.js" />
     <Content Include="Scripts\repository.js" />
@@ -318,8 +322,6 @@
     <Content Include="Models\KUXIANGModel.edmx.diagram">
       <DependentUpon>KUXIANGModel.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\iconfont.ttf" />
-    <Content Include="fonts\iconfont.woff" />
     <Content Include="Controllers\course.in" />
     <Content Include="Controllers\data.in" />
     <Content Include="Views\Home\Comment.cshtml" />
@@ -331,6 +333,8 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="fonts\iconfont.ttf" />
+    <Content Include="fonts\iconfont.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

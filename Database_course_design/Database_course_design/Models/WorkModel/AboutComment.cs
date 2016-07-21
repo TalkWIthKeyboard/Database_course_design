@@ -41,7 +41,7 @@ namespace Database_course_design.Models.WorkModel
 
         /// <summary>
         /// 2.对用户进行评论
-        /// 输入：评论内容，评论日期，被评论者id，发布者id，
+        /// 输入：评论内容，被评论者id，发布者id，
         /// 输出：布尔类型，判断评论是否成功
         /// 测试成功
         /// </summary>  

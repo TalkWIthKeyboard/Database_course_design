@@ -4,6 +4,8 @@
 
 main {
 	padding: 15px 30px;
+    height: auto;
+    min-height: 100%;
 }
 
 main ul,

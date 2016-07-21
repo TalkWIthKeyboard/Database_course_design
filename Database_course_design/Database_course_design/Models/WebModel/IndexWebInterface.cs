@@ -11,6 +11,7 @@ namespace Database_course_design.Models
     {
         public struct IndexRepoItem
         {
+            public string RepositoryID;
             public int StarNum;
             public int ForkNum;
             public List<FileInfo> FileList;
@@ -42,6 +43,7 @@ namespace Database_course_design.Models
                     ErrorMessage ErrorInfo_2 = null;
                     //拿到仓库下所有文件
                     getFIleByRepoId(RepoItem.RepertoryID, out ValueItem.FileList, out ErrorInfo_2);
+                    ValueItem.RepositoryID = RepoItem.RepertoryID;
                     ValueItem.StarNum = RepoItem.RepertoryStar;
                     ValueItem.ForkNum = RepoItem.RepertoryFork;
                     if (false == ret.ContainsKey(RepoItem.RepertoryName))
@@ -157,22 +159,28 @@ namespace Database_course_design.Models
         /// 输出：仓库输出列表
         /// 测试成功
         /// </summary>
-        public bool getRepertoryByAttribute(string _UserId, out List<RepertorySearchResult> SearchResult, out ErrorMessage ErrorInfo)
+        public bool getRepertoryByAttribute(string _UserId, out Dictionary<string, IndexRepoItem> ret, out ErrorMessage ErrorInfo)
         {
             KUXIANGDBEntities db = new KUXIANGDBEntities();
             var searchOp = new AboutSearch();
+            ret = new Dictionary<string, IndexRepoItem>();
             try
             {
                 var result = searchOp.recommendRepositoryByAttribute(_UserId);
                 if (result != null)
                 {
-                    List<RepertorySearchResult> allResult = null;
                     foreach (var each in result)
                     {
-                        var s = new ItemModel.RepertorySearchResult(each);
-                        allResult.Add(s);
+                        IndexRepoItem ValueItem;
+                        ErrorMessage ErrorInfo_2 = null;
+                        //拿到仓库下所有文件
+                        getFIleByRepoId(each.REPOSITORY_ID, out ValueItem.FileList, out ErrorInfo_2);
+                        ValueItem.RepositoryID = each.REPOSITORY_ID;
+                        ValueItem.StarNum = (int)each.STAR_NUM;
+                        ValueItem.ForkNum = (int)each.FORK_NUM;
+                        if (false == ret.ContainsKey(each.NAME))
+                            ret.Add(each.NAME, ValueItem);
                     }
-                    SearchResult = allResult;
                     ErrorInfo = null;
                     return true;
                 }
@@ -180,7 +188,7 @@ namespace Database_course_design.Models
                 {
                     var er = new ItemModel.ErrorMessage("官方库按热度推荐异常","数据库检索不到信息");
                     ErrorInfo = er;
-                    SearchResult = null;
+                    ret = null;
                     return false;
                 }
             }
@@ -188,7 +196,7 @@ namespace Database_course_design.Models
             {
                 var er = new ItemModel.ErrorMessage("官方库按热度推荐异常", ex.Message);
                 ErrorInfo = er;
-                SearchResult = null;
+                ret = null;
                 return false;
             }
         }

@@ -3,8 +3,8 @@ $(
 
         // 按钮点击效果
         var $buttons = $('#social button'),
-            $followButton = $('#follow'),
-            $unfollowButton = $('#unfollow');
+            $followButton = $('.follow'),
+            $unfollowButton = $('.unfollow');
 
         $buttons.each(function(index, el) {
             $(el).click(function(event) {
@@ -19,22 +19,31 @@ $(
                     .animate({top: '15', right: '10'}, 200, function() {
                         $(this).attr('disabled', false);
                     });
+
+                var followed = true;
+                if ($($buttons[1 - index]).attr('class').split(' ')[0] === 'follow') {
+                    followed = false;
+                }
+
+                $.post('/Home/follow', { 'followed': followed }, function (data) {
+                });
             });
         });
 
         // 点击选项卡切换概览，详情和留言
         var $navLink = $('#repository a');
         $navLink.each(function(index, el) {
-            $(el).click(function(event) {
+            $(el).click(function (event) {
+                var type = '';
                 if ($(el).attr('id') === 'navLink1') {
-                    $('#repository ul').css('height', 'calc(100% - 380px)');
-                    $('#repository ul li').css('height', '20%');
-                    $('main').css('height', '100%');
+                    type = '1';
+                } else if ($(el).attr('id') === 'navLink2') {
+                    type = '2';
                 } else {
-                    $('#repository ul').css('height', 'auto');
-                    $('#repository ul li').css('height', 'auto');
-                    $('main').css({'height': 'auto', 'min-height': '100%'});
+                    type = '3';
                 }
+                
+                StandardPost('/Home/Choose', {'type': type});
             })
         });
 
@@ -67,6 +76,16 @@ $(
                 }
             });
         });
+
+        // 评论框输入
+        $('#messageInput form :button').click(function () {
+            var commit = $('#messageInput form textarea').val();
+            /*$.post('/Home/', { 'commit': commit });*/
+            var head = $('#content .head img').attr('src');
+            var name = $('#content p').html();
+            $('#messageBoard').prepend('<li class="message"><div><a href="#"><img src="' + head + '"/></a></div><div><span>' +
+                name + '</span><p>' + commit + '</p><span>r32r32</span></div></li>');
+        })
 
         /*统计*/
         $.ajax({
@@ -203,7 +222,7 @@ $(
                             text: ['热度'],
                             textGap: 30,
                             textStyle: {
-                                color: '#fff'
+                                color: '#75E7C2'
                             },
                             inRange: {
                                 symbolSize: [10, 30],
@@ -232,7 +251,7 @@ $(
 
             },
             error: function () {
-                alert("hehe");
+                alert("页面出错了");
             }
         });
 
