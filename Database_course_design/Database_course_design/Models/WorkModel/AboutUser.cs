@@ -288,6 +288,7 @@ namespace Database_course_design.Models.WorkModel
                 join user_reposit in db.USER_REPOSITORY_RELATIONSHIP
                 on reposit.REPOSITORY_ID equals user_reposit.REPOSITORY_ID
                 where user_reposit.USER_ID == UserId
+                orderby reposit.UPDATE_DATE descending
                 select new { reposit, relation = user_reposit.RELATIONSHIP};
 
                 if (flag < 3)
