@@ -235,6 +235,7 @@ main {
 }
 
 #basicForm input[type="text"],
+#basicForm input[type="email"],
 #passwordForm input[type="password"] {
     box-sizing: border-box;
     background: #F3F3F3;

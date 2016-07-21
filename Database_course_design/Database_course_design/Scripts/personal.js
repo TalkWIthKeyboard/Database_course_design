@@ -77,17 +77,27 @@ $(
             });
         });
 
+        // 修改账号信息
         $('#basicForm .submitDiv input').click(function () {
             var username = $('#basicForm input[name="username"]').val();
             var signature = $('#basicForm textarea').val();
             var email = $('#basicForm input[name="email"]').val();
             var address = $('#basicForm input[name="address"]').val();
 
-            alert(username);
-            alert(signature);
-            alert(email);
-            alert(address);
+            StandardPost('/Home/PersonalInfo', {
+                'username': username, 'signature': signature,
+                'email': email, 'address': address
+            });
         });
+
+        // 修改密码
+        $('#passwordForm .submitDiv input').click(function () {
+            var oldPassword = $('#passwordForm input[name="password"]').val();
+            var newPassword = $('#passwordForm input[name="newPassword"]').val();
+            var repeatPassword = $('#passwordForm input[name="repeatPassword"]').val();
+
+            StandardPost('/Home/ChangeBasicInfo', { 'oldPassword': oldPassword, 'newPassword': newPassword, 'repeatPassword': repeatPassword });
+        })
 
         // 评论框输入
         $('#messageInput form :button').click(function () {

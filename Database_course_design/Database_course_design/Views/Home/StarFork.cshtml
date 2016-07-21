@@ -105,28 +105,33 @@
                 foreach (var x in message)
                 {
                     var str = x.MESSAGE_CONTENT;
+                    var messageId = x.MESSAGE_ID;
                     string[] s = Regex.Split(str, "\n");
-                    <li>
+
+                    <li messageId=@messageId type=@s[0]>
                         @if (s[0] == "0")
-                    {
-                            <p>@s[1]</p>
+                        {
+                            <p userId="" repId="" fileId="">@s[1]</p>
+                                <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
                         }
                         else if (s[0] == "1")
                         {
-                            <p userid=@s[2] repid=@s[3]>@s[1]</p>
+                            <p userId=@s[2] repId=@s[3] fileId="">@s[1]</p>
+                                <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
+                                <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
                         }
                         else
                         {
-                            <p userid=@s[2] repid=@s[3] fileid=@s[4]>@s[1]<a href=@s[5]>查看文件</a></p>
+                            <p userId=@s[2] repId=@s[3] fileId=@s[4]>@s[1]<a href=@s[5]>查看文件</a></p>
+                                <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
+                                <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
                         }
-                        <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
-                        <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
                     </li>
                 }
             }
-
-
         </ul>
+
+
 
     </section>
 

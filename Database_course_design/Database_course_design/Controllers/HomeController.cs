@@ -386,5 +386,48 @@ namespace Database_course_design.Controllers
                 Response.Redirect("/Home/Index");
         }
 
+        public void PersonalInfo()
+        {
+            string username = Request["username"];
+            string signature = Request["signature"];
+            string email = Request["email"];
+            string address = Request["address"];
+
+            var messageOp = new AboutMessage();
+            var changeinfo = new AboutUser();
+            var judge = changeinfo.changeUserInfo(user_id, email, null, signature, username, null, address);
+
+            if (judge)
+            {
+                messageOp.addMessageToUser(user_id, "0\n修改用户信息成功");
+                Response.Redirect("/Home/Index");
+            }else
+            {
+                messageOp.addMessageToUser(user_id, "0\n修改用户信息失败");
+                Response.Redirect("/Home/Personal");
+            }
+        }
+
+        public void ChangeBasicInfo()
+        {
+            var password = Request["oldPassword"];
+            var newPassword = Request["newPassword"];
+            var repeatPassword = Request["repeatPassword"];
+            var userOp = new AboutUser();
+            var messageOp = new AboutMessage();
+            var error = new ErrorMessage();
+
+            if (userOp.changePassword(user_id,password,newPassword,repeatPassword,out error))
+            {
+                messageOp.addMessageToUser(user_id, "0\n修改密码成功");
+                Response.Redirect("/Home/Index");
+            }
+            else
+            {
+                messageOp.addMessageToUser(user_id, "0\n修改密码失败," + error.ErrorReason);
+                Response.Redirect("/Home/Personal");
+            }
+        }
+
     }
 }

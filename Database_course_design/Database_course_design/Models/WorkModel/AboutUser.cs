@@ -456,5 +456,48 @@ namespace Database_course_design.Models.WorkModel
                 return false;
             }
         }
+
+        /// <summary>
+        /// 13.修改用户账号密码
+        /// 输入：用户id，新密码
+        /// 输出：是否修改成功
+        /// 测试成功
+        /// </summary>
+        public bool changePassword(string userId,string oldPassword,string newPassword, string confirmPassword,out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            try
+            {
+                var user = db.USERTABLEs.Where(p => p.USER_ID == userId).FirstOrDefault();
+                if (oldPassword != user.PASSWORD)
+                {
+                    var error = new ErrorMessage("修改密码操作", "原密码错误");
+                    errorMessage = error;
+                    return false;
+                }
+                else
+                {
+                    if (newPassword != confirmPassword)
+                    {
+                        var error = new ErrorMessage("修改密码操作", "两次密码不一样");
+                        errorMessage = error;
+                        return false;
+                    }
+                    else
+                    {
+                        user.PASSWORD = newPassword;
+                        db.SaveChanges();
+                        errorMessage = null;
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage("修改密码操作", "数据库异常");
+                errorMessage = error;
+                return false;
+            }
+        }
     }
 }
