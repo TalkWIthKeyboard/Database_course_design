@@ -315,6 +315,7 @@ namespace Database_course_design.Models.WorkModel
                             COURSE_ID = oldCourse.COURSE_ID,
                             STAR_NUM = 0,
                             FORK_NUM = 0,
+                            URL = userid + '/' + repositoryid,
                             UPDATE_DATE = DateTime.Now
                         };
                         db.REPOSITORies.Add(newRep);
@@ -531,6 +532,7 @@ namespace Database_course_design.Models.WorkModel
                         STAR_NUM = 0,
                         FORK_FROM = RepositoryId,
                         IS_CREATE = 0,
+                        URL = UserId + '/' + RepositoryId,
                         COURSE_ID = origin.COURSE_ID,
                         UPDATE_DATE = System.DateTime.Now
                     };
