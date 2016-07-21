@@ -25,6 +25,25 @@ $(
             }
         });
 
+        //历史浏览
+        $('.history').each(function (index, el) {
+            $(el).click(function (event) {
+                var rID = $(el).attr('history');
+                alert(rID);
+                StandardPost('/Home/History', { 'rID': rID });
+            })
+        });
+
+        //个人收藏
+        $('.star').each(function (index, el) {
+            $(el).click(function (event) {
+                var rID = $(el).attr('star');
+                alert(rID);
+                StandardPost('/Home/StarFork', { 'rID': rID });
+            })
+        });
+
+
         /*消息提示*/
         $('#messageList li div a').each(function (index, el) {
             $(el).click(function (event) {
@@ -53,6 +72,7 @@ $(
         $('.repository').each(function (index, el) {
             $(el).click(function (event) {
                 var rID = $(el).attr('repositoryId');
+                alert(rID);
                 StandardPost('/Home/Repository', { 'rID': rID });
             })
         });

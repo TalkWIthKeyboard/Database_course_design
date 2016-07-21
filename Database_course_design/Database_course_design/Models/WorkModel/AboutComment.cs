@@ -144,5 +144,33 @@ namespace Database_course_design.Models.WorkModel
                 }
             }
         }
+
+        /// <summary>
+        /// 5.仓库留言板显示
+        /// 输入：仓库的编号
+        /// 输出：评论队列
+        /// 测试成功
+        /// </summary>
+        public List<COMMENTTABLE> showRepositoryComment(string repId)
+        {
+            var db = new KUXIANGDBEntities();
+            var comments = new List<COMMENTTABLE>();
+            try
+            {
+                var commentId = db.USER_COMMENT_REPOSITORY.Where(p => p.REPOSITORY_ID == repId).ToList();
+                foreach(var each in commentId)
+                {
+                    var comment = db.COMMENTTABLEs.Where(p => p.COMMENT_ID == each.COMMENT_ID).FirstOrDefault();
+                    comments.Add(comment);
+                }
+                return comments;
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("显示仓库的留言板操作异常");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }

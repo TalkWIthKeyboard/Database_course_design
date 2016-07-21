@@ -11,6 +11,7 @@ namespace Database_course_design.Models
     {
         public struct PersonalRepoItem
         {
+            public string RepoId;
             public string RepoName;
             public string RepoAuthority;
             public string RepoDescription;
@@ -344,6 +345,7 @@ namespace Database_course_design.Models
                     int Aut = getAuthority(item.RepertoryID);
                     RetItem.RepoName = db.REPOSITORies.Where(p => p.REPOSITORY_ID == item.RepertoryID).Select(p => p.NAME).FirstOrDefault();
                     RetItem.RepoDescription = getRepositoryDes(item.RepertoryID);
+                    RetItem.RepoId = item.RepertoryID;
                     if (1 == Aut)
                     {
                         RetItem.RepoAuthority = "官方";

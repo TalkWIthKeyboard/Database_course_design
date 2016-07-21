@@ -296,6 +296,7 @@ namespace Database_course_design.Models.WorkModel
                         from reposit in results
                         where reposit.relation == flag
                         select reposit;
+                    var test = results.ToList();
                 }
                 else
                 {
@@ -308,7 +309,6 @@ namespace Database_course_design.Models.WorkModel
                             select reposit;
                     }
                 }
-
                 foreach (var row in results)
                 {
                     RepertorySearchResult newres = new RepertorySearchResult(row.reposit);

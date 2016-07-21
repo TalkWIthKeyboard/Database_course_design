@@ -31,7 +31,7 @@ $(
         });
 
         // 点击选项卡切换概览，详情和留言
-        var $navLink = $('#repository a');
+        var $navLink = $('#repository nav a');
         $navLink.each(function(index, el) {
             $(el).click(function (event) {
                 var type = '';
@@ -75,6 +75,18 @@ $(
                     $('#passwordForm').css({'left': '-=404'});
                 }
             });
+        });
+
+        $('#basicForm .submitDiv input').click(function () {
+            var username = $('#basicForm input[name="username"]').val();
+            var signature = $('#basicForm textarea').val();
+            var email = $('#basicForm input[name="email"]').val();
+            var address = $('#basicForm input[name="address"]').val();
+
+            alert(username);
+            alert(signature);
+            alert(email);
+            alert(address);
         });
 
         // 评论框输入

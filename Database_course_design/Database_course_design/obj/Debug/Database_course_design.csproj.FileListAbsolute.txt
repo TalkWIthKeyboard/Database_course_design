@@ -490,3 +490,5 @@ C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Databa
 C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\obj\Debug\Database_course_design.csprojResolveAssemblyReference.cache
 C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\obj\Debug\Database_course_design.dll
 C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\obj\Debug\Database_course_design.pdb
+D:\Source\Database_course_design\Database_course_design\bin\System.Data.Common.dll
+D:\Source\Database_course_design\Database_course_design\bin\System.Data.SqlClient.dll

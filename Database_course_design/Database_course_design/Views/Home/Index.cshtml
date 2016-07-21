@@ -71,13 +71,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" class="history" history=@user_id>
                         <i class="iconfont">&#xf00f9;</i>
                         历史浏览
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" class="star" star=@user_id>
                         <i class="iconfont">&#xe64c;</i>
                         个人收藏
                         <span>6</span>
@@ -91,36 +91,39 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/Home/Repository">
+                    <a href="#" class="createRepository">
                         <i class="iconfont">&#xe619;</i>
-                        我的仓库
+                        创建仓库
                         <span>5</span>
                     </a>
                 </li>
             </ul>
             <!--消息提示-->
             <ul id="messageList">
-                @foreach (var x in message)
+                @if (message != null)
                 {
-                    var str = x.MESSAGE_CONTENT;
-                    var messageId = x.MESSAGE_ID;
-                    string[] s = Regex.Split(str, "\n");
-                    <li messageId=@messageId type=@s[0]>
-                        @if (s[0] == "0")
-                        {
-                            <p userId=@s[2] repId="" fileId="">@s[1]</p>
-                        }
-                        else if (s[0] == "1")
-                        {
-                            <p userId=@s[2] repId=@s[3] fileId="">@s[1]</p>
-                        }
-                        else
-                        {
-                            <p userId=@s[2] repId=@s[3] fileId=@s[4]>@s[1]<a href=@s[5]>查看文件</a></p>
-                        }
-                        <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
-                        <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
-                    </li>
+                    foreach (var x in message)
+                    {
+                        var str = x.MESSAGE_CONTENT;
+                        var messageId = x.MESSAGE_ID;
+                        string[] s = Regex.Split(str, "\n");
+                        <li messageId=@messageId type=@s[0]>
+                            @if (s[0] == "0")
+                            {
+                                <p userId=@s[2] repId="" fileId="">@s[1]</p>
+                            }
+                            else if (s[0] == "1")
+                            {
+                                <p userId=@s[2] repId=@s[3] fileId="">@s[1]</p>
+                            }
+                            else
+                            {
+                                <p userId=@s[2] repId=@s[3] fileId=@s[4]>@s[1]<a href=@s[5]>查看文件</a></p>
+                            }
+                            <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
+                            <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
+                        </li>
+                    }
                 }
             </ul>
             </section>
@@ -137,10 +140,11 @@
                                 var RepositoryName = x.RepositoryName;
                                 var UpdateInfo = x.UpdateInfo;
                                 var Friend_ID = x.UserId;
+                                var RepositoryId = x.RepositoryId;
                                 <li>
                                     <a href="#" class="friend" friend_id=@Friend_ID>@UserName</a>
                                     <span>@UserOperation</span>
-                                    <a href="#" class="repository" repositoryId=@RepositoryName>@RepositoryName</a>
+                                    <a href="#" class="repository" repositoryId=@RepositoryId>@RepositoryName</a>
                                     <p>@UpdateInfo</p>
                                 </li>
                             }
@@ -211,29 +215,33 @@
                                             <sub>@StarNum</sub>
                                         </a>
                                     </li>
-
-                                    @foreach (var y in list)
+                                    @if (list != null)
                                     {
-                                        if (i < 5)
+                                        foreach (var y in list)
                                         {
-                                            var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
-                                            var fileName = y.FileName;
-                                            string[] str = Regex.Split(fileName, ".");
-                                            var forefix = str[0];
-                                            var postfix = str[1];
-                                            <li class="file">
-                                                <span class="file-icon" data-type=@postfix></span>
+                                            if (i < 5)
+                                            {
+                                                var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
+                                                var fileName = y.FileName;
+                                                string[] str = Regex.Split(fileName, ".");
+                                                var forefix = str[0];
+                                                var postfix = str[1];
+                                                <li class="file">
+                                                    <span class="file-icon" data-type=@postfix></span>
 
-                                                <span></span>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
+                                                    <span></span>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
 
-                                        ++i;
+                                            ++i;
+                                        }
                                     }
+
+                                    
                                     <li class="list-foot"></li>
                                 </ul>
                             }
@@ -264,28 +272,30 @@
                                             <sub>@StarNum</sub>
                                         </a>
                                     </li>
-
-                                    @foreach (var y in list)
+                                    @if (list != null)
                                     {
-                                        if (i < 5)
+                                        foreach (var y in list)
                                         {
-                                            var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
-                                            var fileName = y.FileName;
-                                            string[] str = Regex.Split(fileName, ".");
-                                            var forefix = str[0];
-                                            var postfix = str[1];
-                                            <li class="file">
-                                                <span class="file-icon" data-type=@postfix></span>
+                                            if (i < 5)
+                                            {
+                                                var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
+                                                var fileName = y.FileName;
+                                                string[] str = Regex.Split(fileName, ".");
+                                                var forefix = str[0];
+                                                var postfix = str[1];
+                                                <li class="file">
+                                                    <span class="file-icon" data-type=@postfix></span>
 
-                                                <span></span>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
+                                                    <span></span>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
 
-                                        i++;
+                                            i++;
+                                        }
                                     }
                                     <li class="list-foot"></li>
                                 </ul>
@@ -306,21 +316,47 @@
     <div id="friends">
         <p>好友列表</p>
 
-        @foreach (var x in FriendList)
+        @if (FriendList != null)
         {
-            var CreateTime = x.UserCreateTime;
-            var UserName = x.UserName;
-            var Signature = x.UserSignature;
-            var Url = x.UserPhotoUrl;
-            <div>
-                <a href="#" username=@UserName><img src=@Url></a>
-                <p>
-                    @Signature
-                </p>
-                <p><i class="iconfont">&#xe648;</i>@CreateTime</p>
-            </div>
+            foreach (var x in FriendList)
+            {
+                var CreateTime = x.UserCreateTime;
+                var UserName = x.UserName;
+                var Signature = x.UserSignature;
+                var Url = x.UserPhotoUrl;
+                var friend_id = x.UserId;
+                <div>
+                    <a href="#" class="friend" friend_id=@friend_id><img src=@Url></a>
+                    <p>
+                        @Signature
+                    </p>
+                    <p><i class="iconfont">&#xe648;</i>@CreateTime</p>
+                </div>
+            }
         }
     </div>
+
+    <!--弹出新建仓库表单-->
+    <div id="fill">
+        <div id="popup">
+            <h2>创建仓库</h2>
+            <form id="basicForm">
+                <p>仓库名称</p>
+                <input type="text" name="repositoryName">
+                <p>仓库描述</p>
+                <textarea></textarea>
+                <div class="btn">公有</div>
+                <div class="btn">私有</div>
+                <p>标签</p>
+                <input type="text" name="tag">
+                <div class="submitDiv">
+                    <button>取消</button>
+                    <input type="button" value="保存修改">
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>

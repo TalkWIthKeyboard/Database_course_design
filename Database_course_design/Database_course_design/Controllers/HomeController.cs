@@ -39,6 +39,25 @@ namespace Database_course_design.Controllers
 
         }
 
+        /*历史浏览*/
+        public ActionResult History()
+        {
+            var userOp = new AboutUser();
+            ViewBag.History = userOp.showLookHistory(user_id);
+            
+
+            return View();
+        }
+
+        /*个人收藏*/
+        public ActionResult StarFork()
+        {
+            var userOp = new AboutUser();
+            /*得到Star的仓库*/
+            ViewBag.StarForkList = userOp.showOthersRepertory(user_id, 2);
+            return View();
+        }
+
         public ActionResult Index()
         {
             getPersonalBasicInfo();
@@ -217,6 +236,10 @@ namespace Database_course_design.Controllers
             /*仓库管理员人数*/
             ViewBag.ManagerNum = repOp.getRepertoryManageNum(Rep_ID);
 
+            /*仓库留言*/
+            var commentOp = new AboutComment();
+            ViewBag.ForkComment = commentOp.showRepositoryComment(Rep_ID);
+
             return View();
         }
 
@@ -346,6 +369,22 @@ namespace Database_course_design.Controllers
                 }
             }
             return true;
-        }           
+        }
+        
+        public void CreateFork()
+        {
+            string repositoryName = Request["repositoryName"];
+            string repositoryDescription = Request["repositoryDescription"];
+            string isPublic = Request["isPublic"];
+            string tag = Request["tag"];
+
+            var ar = new AboutRepository();
+            var authority = isPublic == "true" ? 1 : 0;
+            if (ar.CreateRepository(user_id, repositoryName, authority, repositoryDescription, tag))
+                Response.Redirect("/Home/Personal");
+            else
+                Response.Redirect("/Home/Index");
+        }
+
     }
 }

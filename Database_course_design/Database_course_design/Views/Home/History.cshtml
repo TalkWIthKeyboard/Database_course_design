@@ -1,25 +1,29 @@
 ﻿
 @{
-    ViewBag.Title = "Comment";
+    ViewBag.Title = "History";
 }
 
 
+@{
+    ViewBag.Title = "OverView";
+}
 
 
 @{
     ViewBag.Title = "Personal";
     var CardContent = ViewBag.CardContent;
-    var Authority = ViewBag.Authority;
-    var Des = ViewBag.Des;
-    var Comment = ViewBag.Comment;
+    var NickName = ViewBag.NickName;
+    var Img = ViewBag.Image;
     var FriendNum = ViewBag.FriendNum;
     var FriendList = ViewBag.Friend;
     var user_id = ViewBag.User_ID;
     var current_user_id = ViewBag.Current_User_ID;
     var message = ViewBag.MessageArr;
+    var history = ViewBag.History;
 }
 
 @using System.Text.RegularExpressions;
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +46,7 @@
     <!--NavigationBar-->
     <div id="navigationBar">
         <div id="t2">
-            <p>NickName</p>
+            <p>@NickName</p>
         </div>
         <div id="t1">
             <a href="#"><img src="../img/logo.png" /></a>
@@ -53,14 +57,14 @@
     <section id="content">
         <div id="searchBar">
             <svg aria-hidden="true" class="octicon octicon-mark-github" height="22" version="1.1" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
-            <input type="text" id="search" name="search" placeholder="搜索" />
+            <input type="text" id="search" placeholder="搜索" required />
         </div>
-        <a class="head" href="#"><img src="../img/head.jpg" alt="user" /></a>
-        <p>Yukinoshita Yukino</p>
+        <a class="head" href="#"><img src=Img alt="user" /></a>
+        <p>@NickName</p>
         <ul>
             <!-- a标签可以用.net的方法渲染这段代码改了就行 我样式写好了 只要按照这个结构生成样式就没问题 svg要写死的不用动 到时候弄来素材就放进去 -->
             <li>
-                <a href="#" class="friend" friend_id = @user_id>
+                <a href="#" class="friend" friend_id=@user_id>
                     <svg aria-hidden="true" class="octicon octicon-mark-github" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
                     个人信息
                 </a>
@@ -96,28 +100,30 @@
 
         <!--消息提示-->
         <ul id="messageList">
-            @foreach (var x in message)
+            @if (message != null)
             {
-                var str = x.MESSAGE_CONTENT;
-                string[] s = Regex.Split(str, "\n");
-                <li>
-                    @if (s[0] == "0")
+                foreach (var x in message)
+                {
+                    var str = x.MESSAGE_CONTENT;
+                    string[] s = Regex.Split(str, "\n");
+                    <li>
+                        @if (s[0] == "0")
                     {
-                        <p>@s[1]</p>
-                    }
-                    else if (s[0] == "1")
-                    {
-                        <p userid=@s[2] repid=@s[3]>@s[1]</p>
-                    }
-                    else
-                    {
-                        <p userid=@s[2] repid=@s[3] fileid=@s[4]>@s[1]<a href=@s[5]>查看文件</a></p>
-                    }
-                    <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
-                    <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
-                </li>
+                            <p>@s[1]</p>
+                        }
+                        else if (s[0] == "1")
+                        {
+                            <p userid=@s[2] repid=@s[3]>@s[1]</p>
+                        }
+                        else
+                        {
+                            <p userid=@s[2] repid=@s[3] fileid=@s[4]>@s[1]<a href=@s[5]>查看文件</a></p>
+                        }
+                        <div><a href="#" class="yes"><img src="~/img/yes.png" /></a></div>
+                        <div><a href="#" class="no"><img src="~/img/no.png" /></a></div>
+                    </li>
+                }
             }
-
         </ul>
 
     </section>
@@ -165,44 +171,51 @@
             </ul>
         </div>
         <div id="repository">
-            <nav>
-                <a id="navLink1" href="#" class="selected">概览</a>
-                <a id="navLink2" href="#">详情</a>
-                <a id="navLink3" href="#">留言</a>
-            </nav>
 
+
+
+            <!-- 历史纪录 -->
+            <h2>浏览过:</h2>
+            <ul>
+                @if (history != null)
+                {
+                    foreach (var x in history)
+                    {
+
+                        var date = x.LOOK_DATE;
+                        var RperName = x.REPOSITORY_NAME;
+                        var RepoID = x.REPOSITORY_ID;
+                        <li>
+                            <svg aria-hidden="true" class="octicon octicon-mark-github" height="16" version="1.1" viewBox="0 0 16 16" width="18"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+                            <a href="#" class="repository" repositoryId=@RepoID>@RperName</a>
+                            <p>@date</p>
+                        </li>
+                    }
+                }
+            </ul>
             <!-- 留言标签页 -->
-            <div id="messageInput">
+            <!--<div id="messageInput">
                  <img src="../img/head.jpg" />
                  <form>
                      <div>
                          <textarea></textarea>
                      </div>
-                     <input type="button" value="发表留言" />
+                     <input type="submit" value="发表留言" />
                      <input type="reset" value="取消" />
                  </form>
              </div>
              <ul id="messageBoard">
-                 @if (Comment != null)
-                 {
-                     foreach (var x in Comment)
-                     {
-                         var loved = x.User_Name;
-                         var loved_Comment = x.Content;
-                         var date = x.CommentDate;
-                    <li class="message">
-                        <div>
-                            <a href="#"><img src="../img/anotherhead.jpg" /></a>
-                        </div>
-                        <div>
-                            <span>@loved</span>
-                            <p>@loved_Comment</p>
-                            <span>@date</span>
-                        </div>
-                    </li>
-                     }
-                 }
-             </ul>
+                 <li id="message">
+                     <div>
+                         <a href="#"><img src="../img/anotherhead.jpg" /></a>
+                     </div>
+                     <div>
+                         <span>Yukinoshita</span>
+                         <p>aafdjfiwjfiowjfijifjeoiwfiai jfkewhfuihwufahwehfuihaifh huiehiuf heuiwfh hjkdhnfj huiwehfuih uhfuiewha uhdsjkcvhwh uiheiwuhui</p>
+                         <span>2016年11月21日</span>
+                     </div>
+                 </li>
+             </ul>-->
         </div>
     </main>
 
@@ -268,28 +281,31 @@
     </script>
 
     <div id="friends">
-       @if (FriendList != null)
-       {
-        foreach (var x in FriendList)
+        <p>好友列表</p>
+        @if (FriendList != null)
         {
-            var CreateTime = x.UserCreateTime;
-            var UserName = x.UserName;
-            var Signature = x.UserSignature;
-            var Url = x.UserPhotoUrl;
-            var friend_id = x.UserId;
-            <div>
-                <a href="#" class="friend" friend_id=@friend_id><img src=@Url></a>
-                <p>
-                    @Signature
-                </p>
-                <p><i class="iconfont">&#xe648;</i>@CreateTime</p>
-            </div>
+            foreach (var x in FriendList)
+            {
+                var CreateTime = x.UserCreateTime;
+                var UserName = x.UserName;
+                var Signature = x.UserSignature;
+                var Url = x.UserPhotoUrl;
+                var friend_id = x.UserId;
+                <div>
+                    <a href="#" class="friend" friend_id=@friend_id><img src=@Url></a>
+                    <p>
+                        @Signature
+                    </p>
+                    <p><i class="iconfont">&#xe648;</i>@CreateTime</p>
+                </div>
+            }
         }
-       }
     </div>
 
 </body>
 </html>
+
+
 
 
 

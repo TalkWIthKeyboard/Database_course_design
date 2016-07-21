@@ -335,6 +335,8 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="fonts\iconfont.ttf" />
     <Content Include="fonts\iconfont.woff" />
+    <Content Include="Views\Home\History.cshtml" />
+    <Content Include="Views\Home\StarFork.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
