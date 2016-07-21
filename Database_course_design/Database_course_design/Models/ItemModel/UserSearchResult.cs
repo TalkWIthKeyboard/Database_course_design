@@ -14,7 +14,7 @@ namespace Database_course_design.Models.ItemModel
     /// 用户的email
     /// </summary>
     public class UserSearchResult
-    {
+    {   
         public string UserName { get; set; }
         public string UserState { get; set; }
         public string UserPhotoUrl { get; set; }
