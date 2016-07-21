@@ -72,7 +72,12 @@ namespace Database_course_design.Models.WorkModel
         public bool createFile(string rep_id, string name, string type, int size, string position, int flag, string description, out string file_id)
         {
             var db = new KUXIANGDBEntities();
-
+            ErrorMessage errorMessage = new ErrorMessage();
+            if (!verifyDuplicateName(name, position, flag, out errorMessage))
+            {
+                file_id = null;
+                return false;
+            }
             string newFileId = basic.createNewId("FILETABLE");
             string newPath = "";
             string userId = null;
@@ -115,6 +120,7 @@ namespace Database_course_design.Models.WorkModel
             {
                 new_file.FILE_STATE = 1;
             }
+
             try
             {
                 db.FILETABLEs.Add(new_file);
@@ -208,10 +214,9 @@ namespace Database_course_design.Models.WorkModel
         public bool createFolder(string rep_id, string user_id, string name, string position, int fatherIsFolder, out string fileId, out ErrorMessage errorMessage)
         {
             var db = new KUXIANGDBEntities();
-            var flag = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == user_id
-                                                             && p.REPOSITORY_ID == rep_id
-                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
-            if (flag == null)
+            var basicModel = new BasicModel();
+            var auth = basicModel.auditAuthority(user_id, rep_id);
+            if (auth != 0 && auth != 1)
             {
                 var error = new ErrorMessage("创建文件夹", "没有权限创建文件夹");
                 errorMessage = error;
@@ -230,6 +235,9 @@ namespace Database_course_design.Models.WorkModel
                 }
                 else
                 {
+                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == rep_id).FirstOrDefault();
+                    rep.UPDATE_DATE = DateTime.Now;
+                    db.SaveChanges();
                     errorMessage = null;
                     fileId = file_id;
                     return true;
@@ -248,17 +256,11 @@ namespace Database_course_design.Models.WorkModel
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 var file_id = "";
-                var result = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userid
-                                                                    && p.REPOSITORY_ID == rep_id
-                                                                    && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
+                BasicModel basicModel = new BasicModel();
+                var auth = basicModel.auditAuthority(userid, rep_id);
                 if (!createFile(rep_id, name, "0", size, position, flag, description, out file_id))
                 {
-                    var error = new ErrorMessage()
-                    {
-                        ErrorOperation = "创建文件",
-                        ErrorReason = "创建文件失败",
-                        ErrorTime = DateTime.Now
-                    };
+                    var error = new ErrorMessage("创建文件", "创建文件失败");
                     errorMessage = error;
                     fileId = "";
                     return false;
@@ -266,7 +268,7 @@ namespace Database_course_design.Models.WorkModel
                 else
                 {
                     //没有权限，需要给管理员发信息获得许可
-                    if (result == null)
+                    if (auth != 0 && auth != 1)
                     {
                         var manageArray = new List<USER_REPOSITORY_RELATIONSHIP>();
                         manageArray = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == rep_id
@@ -275,7 +277,8 @@ namespace Database_course_design.Models.WorkModel
                         foreach (var each in manageArray)
                         {
                             var message = new AboutMessage();
-                            message.addMessageToUser(each.USER_ID, "您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？");
+                            var filePath = db.FILETABLEs.Where(p => p.FILE_ID == file_id).FirstOrDefault().PATH;
+                            message.addMessageToUser(each.USER_ID, "2\n您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？\n" + userid + "\n" + rep_id + "\n" + file_id + "\n" + filePath);
                         }
                     }
                     fileId = file_id;
@@ -296,17 +299,11 @@ namespace Database_course_design.Models.WorkModel
         public bool removeFile(string userId, string repositoryId, string fileId, out ErrorMessage errorMessage)
         {
             var db = new KUXIANGDBEntities();
-            var user = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
-                                                            && p.REPOSITORY_ID == repositoryId
-                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
-            if (user == null)
+            BasicModel basicModel = new BasicModel();
+            var auth = basicModel.auditAuthority(userId, repositoryId);
+            if (auth != 0 && auth != 1)
             {
-                var error = new ErrorMessage()
-                {
-                    ErrorOperation = "删除文件操作",
-                    ErrorReason = "没有权限进行删除操作",
-                    ErrorTime = DateTime.Now
-                };
+                var error = new ErrorMessage("删除文件操作", "没有权限进行删除操作");
                 errorMessage = error;
                 return false;
             }
@@ -342,15 +339,51 @@ namespace Database_course_design.Models.WorkModel
                 }
                 catch (Exception ex)
                 {
-                    var error = new ErrorMessage
-                    {
-                        ErrorOperation = "删除文件下面的文件操作异常",
-                        ErrorReason = ex.Message,
-                        ErrorTime = DateTime.Now
-                    };
+                    var error = new ErrorMessage("删除文件下面的文件操作异常", ex.Message);
                     errorMessage = error;
                     return false;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 6.判断文件是否重名
+        /// 输入：文件名，父节点的id，文件是在文件夹中还是仓库中（flag=0为文件夹，1为仓库）
+        /// 输出：是否重名
+        /// 待测试
+        /// </summary>
+        public bool verifyDuplicateName(string fileName, string fatherId, int flag,out ErrorMessage errorMessage)
+        {
+            var db = new KUXIANGDBEntities();
+            var fileFile = new List<String>();
+            try
+            {
+                if (flag == 0)
+                {
+                    fileFile = db.FILE_FILE.Where(p => p.FILE_ID1 == fatherId).Select(p => p.FILE_ID2).ToList();
+                }
+                else
+                {
+                    fileFile = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == fatherId).Select(p => p.FILE_ID).ToList();
+                }
+                foreach (var each in fileFile)
+                {
+                    var name = db.FILETABLEs.Where(p => p.FILE_ID == each).FirstOrDefault().FILE_NAME;
+                    if (name == fileName)
+                    {
+                        var error = new ErrorMessage("检查文件（夹）重名操作","存在重名");
+                        errorMessage = error;
+                        return false;
+                    }
+                }
+                errorMessage = null;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                var error = new ErrorMessage("检查文件（夹）重名操作异常", ex.Message);
+                errorMessage = error;
+                return false;
             }
         }
     }

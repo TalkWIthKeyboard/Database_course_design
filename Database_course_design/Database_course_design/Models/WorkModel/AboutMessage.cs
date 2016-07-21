@@ -78,6 +78,7 @@ namespace Database_course_design.Models.WorkModel
                 if (message != null)
                 {
                     message.IS_READ = 1;
+                    db.SaveChanges();
                     return true;
                 }
                 else
