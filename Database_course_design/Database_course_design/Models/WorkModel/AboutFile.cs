@@ -277,7 +277,8 @@ namespace Database_course_design.Models.WorkModel
                         foreach (var each in manageArray)
                         {
                             var message = new AboutMessage();
-                            message.addMessageToUser(each.USER_ID, "2\n您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？\n" + userid + "\n" + rep_id + "\n" + file_id);
+                            var filePath = db.FILETABLEs.Where(p => p.FILE_ID == file_id).FirstOrDefault().PATH;
+                            message.addMessageToUser(each.USER_ID, "2\n您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？\n" + userid + "\n" + rep_id + "\n" + file_id + "\n" + filePath);
                         }
                     }
                     fileId = file_id;
