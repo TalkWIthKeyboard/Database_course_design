@@ -292,11 +292,11 @@ namespace Database_course_design.Models.WorkModel
 
         /// <summary>
         /// 5.删除文件
-        /// 输入：仓库id，文件id
+        /// 输入：用户id，仓库id，文件id，是否添加纪录(flag=0是)
         /// 输出：bool(是否删除成功)
         /// 测试成功
         /// </summary>
-        public bool removeFile(string userId, string repositoryId, string fileId, out ErrorMessage errorMessage)
+        public bool removeFile(string userId, string repositoryId, string fileId, int flag, out ErrorMessage errorMessage)
         {
             var db = new KUXIANGDBEntities();
             BasicModel basicModel = new BasicModel();
@@ -311,15 +311,18 @@ namespace Database_course_design.Models.WorkModel
             {
                 try
                 {
-                    //更新操作
-                    USER_REPOSITORY_OPERATION operation = new USER_REPOSITORY_OPERATION
+                    if (flag == 0)
                     {
-                        USER_ID = userId,
-                        REPOSITORY_ID = repositoryId,
-                        OPERATION_DATE = DateTime.Now,
-                        OPERATION = "Delete"
-                    };
-                    db.USER_REPOSITORY_OPERATION.Add(operation);
+                        //更新操作
+                        USER_REPOSITORY_OPERATION operation = new USER_REPOSITORY_OPERATION
+                        {
+                            USER_ID = userId,
+                            REPOSITORY_ID = repositoryId,
+                            OPERATION_DATE = DateTime.Now,
+                            OPERATION = "Delete"
+                        };
+                        db.USER_REPOSITORY_OPERATION.Add(operation);
+                    }
                     Queue files = new Queue();
                     files.Enqueue(fileId);
                     var belongs = db.FILE_FILE.Where(t => t.FILE_ID2 == fileId).FirstOrDefault();

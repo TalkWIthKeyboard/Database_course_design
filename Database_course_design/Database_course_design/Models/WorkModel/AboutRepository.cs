@@ -379,7 +379,7 @@ namespace Database_course_design.Models.WorkModel
                     foreach (var each in fileList)
                     {
                         var error = new ErrorMessage();
-                        fileOp.removeFile(userid, repositoryid, each.FILE_ID, out error);
+                        fileOp.removeFile(userid, repositoryid, each.FILE_ID, 0 ,out error);
                         if (error != null)
                         {
                             errorMessage = error;

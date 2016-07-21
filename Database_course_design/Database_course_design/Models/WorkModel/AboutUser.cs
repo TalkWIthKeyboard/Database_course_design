@@ -387,41 +387,32 @@ namespace Database_course_design.Models.WorkModel
         {
             var fileOp = new AboutFile();
             var db = new KUXIANGDBEntities();
-            var user = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.USER_ID == userId
-                                                             && p.REPOSITORY_ID == repId
-                                                             && (p.RELATIONSHIP == 0 || p.RELATIONSHIP == 1)).FirstOrDefault();
-            if (user == null)
+
+            if (flag == 0)
             {
-                var error = new ErrorMessage("审核请求操作", "没有权限进行审核");
-                errorMessage = error;
-                return false;
+                var file = db.FILETABLEs.Where(p => p.FILE_ID == fileId).FirstOrDefault();
+                file.FILE_STATE = 1;
+                var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repId).FirstOrDefault();
+                rep.UPDATE_DATE = DateTime.Now;
+                changeUserGrade(userId, 1);
+                errorMessage = null;
+                return true;
             }
             else
             {
-                if (flag == 0)
+                var errorM = new ErrorMessage();
+                var uId = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == repId
+                                                                && p.RELATIONSHIP == 0).FirstOrDefault().USER_ID;
+                if (!fileOp.removeFile(uId, repId, fileId, 1,out errorM))
                 {
-                    var file = db.FILETABLEs.Where(p => p.FILE_ID == fileId).FirstOrDefault();
-                    file.FILE_STATE = 1;
-                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repId).FirstOrDefault();
-                    rep.UPDATE_DATE = DateTime.Now;
-                    changeUserGrade(userId, 1);
-                    errorMessage = null;
-                    return true;
+                    var error = new ErrorMessage("审核请求操作","删除操作失败");
+                    errorMessage = error;
+                    return false;
                 }
                 else
                 {
-                    var errorM = new ErrorMessage();
-                    if (!fileOp.removeFile(userId, repId, fileId, out errorM))
-                    {
-                        var error = new ErrorMessage("审核请求操作","删除操作失败");
-                        errorMessage = error;
-                        return false;
-                    }
-                    else
-                    {
-                        errorMessage = null;
-                        return true;
-                    }
+                    errorMessage = null;
+                    return true;
                 }
             }
         }

@@ -318,11 +318,10 @@ namespace Database_course_design.Controllers
             }
             //设置为已读
             messageOp.readMessage(messageId);
-            //处理操作
+            //处理操作(1的时候是请求权限处理，2的时候是文件上传处理)
             if (messageType == "1")
             {
-                var error = new ErrorMessage();
-                if (userOp.verifyRequest(userId,repId,fileId,flag,out error))
+                if (userOp.sureApplyManager(userId, repId, flag))
                 {
                     return true;
                 }
@@ -335,12 +334,18 @@ namespace Database_course_design.Controllers
             {
                 if (messageType == "2")
                 {
-
+                    var error = new ErrorMessage();
+                    if (userOp.verifyRequest(userId, repId, fileId, flag, out error))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
-        }
-
-
-             
+            return true;
+        }           
     }
 }
