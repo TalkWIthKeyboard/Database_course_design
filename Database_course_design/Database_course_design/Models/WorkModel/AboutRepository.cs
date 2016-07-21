@@ -109,7 +109,7 @@ namespace Database_course_design.Models.WorkModel
         /// <summary>
         /// 4.操作历史显示
         /// 输入：用户的编号
-        /// 输出： 操作历史(是否要链接）
+        /// 输出：操作历史(是否要链接）
         /// 测试成功
         /// </summary>
         public List<OperationItem> showOperationHistory(string userId)
@@ -120,7 +120,7 @@ namespace Database_course_design.Models.WorkModel
                 {
                     var Operation = new List<OperationItem>();
                     var res = new OperationItem();
-                    var history = db.USER_REPOSITORY_OPERATION.Where(p => p.USER_ID == userId);
+                    var history = db.USER_REPOSITORY_OPERATION.OrderByDescending(p => p.OPERATION_DATE).Where(p => p.USER_ID == userId);
                     foreach (var str in history)
                     {
                         string reposit, operation, username;
