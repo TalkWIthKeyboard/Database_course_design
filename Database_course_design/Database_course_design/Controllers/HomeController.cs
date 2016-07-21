@@ -55,7 +55,10 @@ namespace Database_course_design.Controllers
             ViewBag.FriendDynamic = SearchResult;
 
 
-
+            /*消息表单*/
+            var messageOp = new AboutMessage();
+            var MessageArr = messageOp.pushMessage(user_id);
+            ViewBag.MessageArr = MessageArr;
 
             return View();
         }

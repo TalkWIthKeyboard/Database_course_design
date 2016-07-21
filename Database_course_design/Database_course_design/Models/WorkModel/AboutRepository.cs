@@ -58,7 +58,8 @@ namespace Database_course_design.Models.WorkModel
                     var rep = db.REPOSITORY_FILE.Where(p => p.REPOSITORY_ID == resipositoryId);
                     foreach (var each in rep)
                     {
-                        var f = db.FILETABLEs.Where(p => p.FILE_ID == each.FILE_ID).FirstOrDefault();
+                        var f = db.FILETABLEs.Where(p => p.FILE_ID == each.FILE_ID
+                                                    && p.FILE_STATE == 1).FirstOrDefault();
                         var resipositoryName = db.REPOSITORies.Where(p => p.REPOSITORY_ID == resipositoryId).FirstOrDefault().NAME;
                         FileInfo temp = new FileInfo(f,resipositoryName);
                         res.Add(temp);
@@ -614,7 +615,8 @@ namespace Database_course_design.Models.WorkModel
                     var file = db.FILE_FILE.Where(p => p.FILE_ID1 == fileId);
                     foreach (var str in file)
                     {
-                        var f = db.FILETABLEs.Where(p => p.FILE_ID == str.FILE_ID2).FirstOrDefault();
+                        var f = db.FILETABLEs.Where(p => p.FILE_ID == str.FILE_ID2
+                                                    && p.FILE_STATE == 1).FirstOrDefault();
                         FileInfo temp = new FileInfo(f);
                         res.Add(temp);
                     }

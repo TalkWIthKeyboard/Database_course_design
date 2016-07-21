@@ -402,6 +402,8 @@ namespace Database_course_design.Models.WorkModel
                 {
                     var file = db.FILETABLEs.Where(p => p.FILE_ID == fileId).FirstOrDefault();
                     file.FILE_STATE = 1;
+                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repId).FirstOrDefault();
+                    rep.UPDATE_DATE = DateTime.Now;
                     changeUserGrade(userId, 1);
                     errorMessage = null;
                     return true;

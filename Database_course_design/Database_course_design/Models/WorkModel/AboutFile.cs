@@ -120,6 +120,7 @@ namespace Database_course_design.Models.WorkModel
             {
                 new_file.FILE_STATE = 1;
             }
+
             try
             {
                 db.FILETABLEs.Add(new_file);
@@ -234,6 +235,9 @@ namespace Database_course_design.Models.WorkModel
                 }
                 else
                 {
+                    var rep = db.REPOSITORies.Where(p => p.REPOSITORY_ID == rep_id).FirstOrDefault();
+                    rep.UPDATE_DATE = DateTime.Now;
+                    db.SaveChanges();
                     errorMessage = null;
                     fileId = file_id;
                     return true;
