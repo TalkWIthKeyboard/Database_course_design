@@ -756,12 +756,13 @@ namespace Database_course_design.Models.WorkModel
             {
                 var userRelations = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == repId).ToList();
                 var repName = db.REPOSITORies.Where(p => p.REPOSITORY_ID == repId).FirstOrDefault().NAME;
+                var userName = db.USERTABLEs.Where(p => p.USER_ID == userId).FirstOrDefault().USER_NAME;
                 var messageOp = new AboutMessage();
 
                 foreach (var each in userRelations)
                 {
                     var user = db.USERTABLEs.Where(p => p.USER_ID == each.USER_ID).FirstOrDefault();
-                    messageOp.addMessageToUser(user.USER_ID, "1\n"+ user.USER_NAME + "申请成为您的" + repName + "的管理员，是否允许？\n" + userId + "\n" + repId);
+                    messageOp.addMessageToUser(user.USER_ID, "1\n"+ userName + "申请成为您的" + repName + "的管理员，是否允许？\n" + userId + "\n" + repId);
                 }
                 return true;
             }
