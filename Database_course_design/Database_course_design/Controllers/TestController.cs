@@ -74,6 +74,9 @@ namespace Database_course_design.Controllers
             pweb.getUserHeat("1452716", out dayheat, out errorInfo);
             ViewBag.DayHeat = dayheat;*/
 
+            var qiniuOp = new Models.ScriptModel.QiNiuOperation();
+            qiniuOp.upload("c:/1.txt", "sw/1.txt");
+
             return View();
         }
 
