@@ -18,11 +18,16 @@ namespace Database_course_design.Models.WorkModel
         /// </summary>
         public bool addUserInfo(string UserAccount, string UserKey, string UserName, string UserDepartment, string UserEmail, short UserIdentity, short UserGrade)
         {
+            string[] nick = { "嘎嘎", "哈哈", "鸽鸽", "头头", "么么", "呵呵", "呼呼" ,"sir"};
+            var rand = new Random();
+            int a = rand.Next(0, 8);
             USERTABLE newUser = new USERTABLE
             {
+                NICKNAME = UserName[0] + nick[a],
                 USER_ID = UserAccount,
                 USER_NAME = UserName,
                 PASSWORD = UserKey,
+                CREATE_DATE = DateTime.Now,
                 DEPARTMENT = UserDepartment,
                 EMAIL = UserEmail,
                 IDENTITY = UserIdentity,
