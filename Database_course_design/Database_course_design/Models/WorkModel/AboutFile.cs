@@ -69,7 +69,7 @@ namespace Database_course_design.Models.WorkModel
         /// 输出：是否创建成功，文件id
         /// 测试成功
         /// </summary>
-        public bool createFile(string rep_id, string name, string type, int size,string position, int flag, string description, string filePath, out string file_id)
+        public bool createFile(string rep_id, string name, string type, int size,string position, int flag, string description, out string file_id)
         {
             var db = new KUXIANGDBEntities();
             ErrorMessage errorMessage = new ErrorMessage();
@@ -107,7 +107,7 @@ namespace Database_course_design.Models.WorkModel
             FILETABLE new_file = new FILETABLE
             {
                 FILE_ID = newFileId,
-                PATH = filePath,
+                PATH = position + '/' + name,
                 FILE_NAME = name,
                 FILE_TYPE = type,
                 FILE_STATE = 0,
@@ -226,7 +226,7 @@ namespace Database_course_design.Models.WorkModel
             else
             {
                 string file_id = "";
-                if (!createFile(rep_id, name, "1", 0, position, fatherIsFolder, "创建了一个文件夹",null, out file_id))
+                if (!createFile(rep_id, name, "1", 0, position, fatherIsFolder, "创建了一个文件夹", out file_id))
                 {
                     var error = new ErrorMessage("创建文件夹", "创建文件夹失败");
                     errorMessage = error;
@@ -251,14 +251,14 @@ namespace Database_course_design.Models.WorkModel
         /// 输出：文件id
         /// 测试成功
         /// </summary>
-        public bool uploadFile(string userid, string rep_id, string name, string type, int size, string description, string position, int flag, string filePath ,out string fileId, out ErrorMessage errorMessage)
+        public bool uploadFile(string userid, string rep_id, string name, string type, int size, string description, string position, int flag ,out string fileId, out ErrorMessage errorMessage)
         {
             using (KUXIANGDBEntities db = new KUXIANGDBEntities())
             {
                 var file_id = "";
                 BasicModel basicModel = new BasicModel();
                 var auth = basicModel.auditAuthority(userid, rep_id);
-                if (!createFile(rep_id, name, "0", size, position, flag, description, filePath, out file_id))
+                if (!createFile(rep_id, name, "0", size, position, flag, description, out file_id))
                 {
                     var error = new ErrorMessage("创建文件", "创建文件失败");
                     errorMessage = error;

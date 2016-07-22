@@ -480,7 +480,6 @@ namespace Database_course_design.Controllers
                         messageOp.addMessageToUser(user_id, "0\n你的上传申请待审核");
                         Response.Redirect("/Home/Index");
                     }
-
                 }
                 return RedirectToAction("Repository");
             }
