@@ -78,6 +78,7 @@ $(
         });
 
 
+
         $('.friend').each(function (index, el) {
             $(el).click(function (event) {
                 var rID = $(el).attr('friend_id');

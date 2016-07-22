@@ -44,6 +44,7 @@ main ul li {
 #btns {
     float: right;
     margin: 12px 10px;
+    vertical-align: middle;
 }
 
 #btns a {
@@ -51,7 +52,6 @@ main ul li {
     margin: 0 5px;
     height: 26px;
     line-height: 25px;
-    vertical-align: top;
 }
 
 #btns a i {
@@ -72,18 +72,33 @@ main ul li {
 }
 
 #btns button:nth-of-type(2) {
-    position: relative;
     background-color: #00C7FF;
-    overflow: hidden;
+    padding: 0;
 }
 
-#btns button:nth-of-type(2) input {
-    position: absolute;
-    top: 0;
-    left: 0px;
+#btns button:nth-of-type(2) a {
+    height: 100%;
+    width: 100%;
+    color: white;
+    margin: 0;
+}
+
+#folderHead form {
+    float: right;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+#folderHead form input[type="submit"] {
     height: 26px;
     width: 65px;
-    cursor: pointer;
+    font-size: 10px;
+    border-radius: 4px;
+    color: white;
+    margin: 0 5px;
+    background-color: #00C7FF;
 }
 
 #folder .file {

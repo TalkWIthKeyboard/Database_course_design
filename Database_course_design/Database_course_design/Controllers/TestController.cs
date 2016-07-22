@@ -12,8 +12,6 @@ namespace Database_course_design.Controllers
 {
     public class TestController : Controller
     {
-        private IndexWebInterface iweb = new IndexWebInterface();
-        private PersonalWebInterface pweb = new PersonalWebInterface();
         // string user_id;
 
         /*得到卡片的内容*/
@@ -29,8 +27,8 @@ namespace Database_course_design.Controllers
              retu
          }*/
 
-        public ActionResult test()
-        {
+
+       
             //测试1
             /* Dictionary<string,IndexWebInterface.FileItem> ret = null;
              ErrorMessage errorInfo = null;
@@ -74,48 +72,38 @@ namespace Database_course_design.Controllers
             pweb.getUserHeat("1452716", out dayheat, out errorInfo);
             ViewBag.DayHeat = dayheat;*/
 
+        public ActionResult test()
+        {
             return View();
         }
 
-        /*
-
-            st = new StreamReader(@"C:\code\Database\Database_course_design\Database_course_design\Controllers\course.in");
-            while (st.Peek() != -1)
-            {
-                string str = st.ReadLine();
-                var rand = new Random();
-                int a = rand.Next(0, sArray.Count());
-                try
-                {
-                   fun.CreateRepository(sArray[a], str + "仓库", 0, "这是一个仓库", str);
-                }
-                catch
-                {
-
-                } 
-            }
+        /*public void upload()
+        {
+            string str = Request["filename"];
         }*/
 
-        public JsonResult GetPersonInfo()
+        public ActionResult Upload(HttpPostedFileBase file)
         {
-            List<DayHeat> dayheat = null;
-            ErrorMessage error = null;
-            pweb.getUserHeat("1452716", out dayheat, out error);
-            // dayheat[0].Count;
-            //    dayheat[0].OpList[0].TARGET_USER_NAME;
-
-           /* var person = new
+            try
             {
-                Count = dayheat[i].Count,
-                Op = new {
-                    Name = dayheat[i].OpList[j].TARGET_USER_NAME,
-                    Operation = dayheat[i].OpList[0].OPERATION,
-                    ReName = dayheat[19].OpList[0].TARGET_REPOSITORY_NAME
-                },
-             };*/
-            JsonResult js = Json(dayheat);
+                if (file.ContentLength > 0)
+                {
+                    var size = file.ContentLength;
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/img"), fileName);
+                    file.SaveAs(path);
 
-            return js;
+                    var qn = new Models.ScriptModel.QiNiuOperation();
+                    //qn.upload(path,"1452716"+""+,);
+                }
+                ViewBag.Message = "Upload successful";
+                return RedirectToAction("test");
+            }
+            catch
+            {
+                ViewBag.Message = "Upload failed";
+                return RedirectToAction("test");
+            }
         }
     }
 }

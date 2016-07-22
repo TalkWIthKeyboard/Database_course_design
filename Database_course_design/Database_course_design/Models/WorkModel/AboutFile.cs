@@ -281,10 +281,15 @@ namespace Database_course_design.Models.WorkModel
                             message.addMessageToUser(each.USER_ID, "2\n您所管理的" + rep.NAME + "仓库有上传请求。请问是否同意？\n" + userid + "\n" + rep_id + "\n" + file_id + "\n" + filePath);
                         }
                     }
+                    else
+                    {
+                        var file = db.FILETABLEs.Where(p => p.FILE_ID == file_id).FirstOrDefault();
+                        file.FILE_STATE = 1;
+                        var user = new AboutUser();
+                        user.changeUserGrade(userid, 1);
+                    }
                     fileId = file_id;
                     errorMessage = null;
-                    var user = new AboutUser();
-                    user.changeUserGrade(userid, 1);
                     return true;
                 }
             }

@@ -23,6 +23,7 @@ namespace Database_course_design.Controllers
         static private string current_user_id = "1452716"; /*进入对方主页*/
         private static int selected =1;/*官方或热度*/
         private static int choice = 1;/*概览*/
+        private static string Repo = "";
 
         public void follow(bool followed)
         {
@@ -206,6 +207,7 @@ namespace Database_course_design.Controllers
             //var a = Request;
             getPersonalBasicInfo();
             string Rep_ID = Request["rID"];
+            Repo = Rep_ID;
             var repOp = new AboutRepository();
             //ser_id = lgc.getUser_id();
             ViewBag.User_ID = user_id;
@@ -315,7 +317,15 @@ namespace Database_course_design.Controllers
             ViewBag.Current_User_ID = current_user_id;
             /*好友数量*/
             var db = new KUXIANGDBEntities();
-            int FriendNum = db.USER_USER.Where(p => p.USER_ID1 == user_id).Count();
+            int FriendNum = 0;
+            try
+            {
+                FriendNum = db.USER_USER.Where(p => p.USER_ID1 == user_id).Count();
+            }
+            catch
+            {
+
+            }
             ViewBag.FriendNum = FriendNum;
 
             /*好友信息*/
@@ -330,6 +340,7 @@ namespace Database_course_design.Controllers
 
         }
 
+        // 接受信息
         public bool AcceptMessage(string messageId, string messageType, string userId, string repId, string fileId, bool agree)
         {
             var messageOp = new AboutMessage();
@@ -371,6 +382,7 @@ namespace Database_course_design.Controllers
             return true;
         }
         
+        // 创建仓库
         public void CreateFork()
         {
             string repositoryName = Request["repositoryName"];
@@ -386,6 +398,7 @@ namespace Database_course_design.Controllers
                 Response.Redirect("/Home/Index");
         }
 
+        // 修改个人信息
         public void PersonalInfo()
         {
             string username = Request["username"];
@@ -408,6 +421,7 @@ namespace Database_course_design.Controllers
             }
         }
 
+        // 修改密码
         public void ChangeBasicInfo()
         {
             var password = Request["oldPassword"];
@@ -429,5 +443,51 @@ namespace Database_course_design.Controllers
             }
         }
 
+        public void Demo()
+        {
+            var url = Request["url"];
+            var qn = new Models.ScriptModel.QiNiuOperation();
+            qn.upload(url, "demo");
+        }
+
+        // 上传文件
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    var size = file.ContentLength;
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/img"), fileName);
+                    var fileOp = new AboutFile();
+                    file.SaveAs(path);
+
+                    var qn = new Models.ScriptModel.QiNiuOperation();
+                    string realpath = user_id + "/" + Repo + "/" + fileName;
+
+                    var db = new KUXIANGDBEntities();
+                    var messageOp = new AboutMessage();
+                    string fileId;
+                    var error = new ErrorMessage();
+                    var flag = fileOp.uploadFile(user_id, Repo, fileName, "0", size, "添加了" + fileName + "文件", Repo, 0, out fileId, out error);
+                    if (flag)
+                    {
+                        qn.upload(path, realpath);
+                    }
+                    else
+                    {
+                        messageOp.addMessageToUser(user_id, "0\n你的上传申请待审核");
+                        Response.Redirect("/Home/Index");
+                    }
+
+                }
+                return RedirectToAction("Repository");
+            }
+            catch
+            {
+                return RedirectToAction("Repository");
+            }
+        }
     }
 }

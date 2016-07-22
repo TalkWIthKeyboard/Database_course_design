@@ -2,11 +2,39 @@
 @{
     ViewBag.Title = "test";
 }
-@{ 
-    var dayheat = ViewBag.DayHeat;
-}
-<script src="~/Scripts/jquery-2.1.4.js"></script>
-<script src="~/Scripts/test.js"></script>
-<p id="friendContent"></p>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script type="text/javascript">
+      /*  $(function () {
+            $('#btn_UpFile').click(function () {
+                var p = $('#file_pic').val();
+                var str = p.split("\\")[2];
+                alert(str);
+                StandardPost('/Test/upload', { 'filename': str });
+            });
+        });*/
+    </script>
+</head>
+
+<body>
+   @using (Html.BeginForm("Upload", "Test", FormMethod.Post,
+             new { enctype = "multipart/form-data" }))
+   {
+        <div class="editor-field">
+            @Html.TextBox("file", "", new { type = "file" })
+        </div>
+        <div class="editor-field">
+            <input type="submit" value="Upload" />
+        </div>
+   }
+</body>
+</html>
 
 

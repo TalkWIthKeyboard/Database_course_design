@@ -217,6 +217,8 @@
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\personal.js" />
+    <Content Include="Scripts\plupload.full.min.js" />
+    <Content Include="Scripts\qiniu.js" />
     <Content Include="Scripts\repository.js" />
     <Content Include="Scripts\sweetalert-dev.js" />
     <Content Include="Scripts\test.js" />
