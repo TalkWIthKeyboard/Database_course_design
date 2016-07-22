@@ -3,6 +3,7 @@
 }
 
 main {
+    height: auto;
 	min-height: calc(100% - 50px);
 }
 
