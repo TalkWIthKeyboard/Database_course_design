@@ -102,6 +102,10 @@
     margin-left: 10px;
 }
 
+#middle .card .list-head .highlight {
+    color: #F4C600;
+}
+
 #middle .card .file {
     height: 40px;
     border-bottom: 1px solid #F5f5f5;

@@ -29,16 +29,14 @@ $(
         $('.history').each(function (index, el) {
             $(el).click(function (event) {
                 var rID = $(el).attr('history');
-                alert(rID);
                 StandardPost('/Home/History', { 'rID': rID });
             })
         });
 
         //∏ˆ»À ’≤ÿ
-        $('.star').each(function (index, el) {
+        $('.starPage').each(function (index, el) {
             $(el).click(function (event) {
                 var rID = $(el).attr('star');
-                alert(rID);
                 StandardPost('/Home/StarFork', { 'rID': rID });
             })
         });
@@ -72,7 +70,7 @@ $(
         $('.repository').each(function (index, el) {
             $(el).click(function (event) {
                 var rID = $(el).attr('repositoryId');
-                alert(rID);
+                
                 StandardPost('/Home/Repository', { 'rID': rID });
             })
         });

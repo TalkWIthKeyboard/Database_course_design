@@ -19,8 +19,8 @@ namespace Database_course_design.Controllers
         private IndexWebInterface iweb = new IndexWebInterface();
         private LoginController lgc = new LoginController();
         private PersonalWebInterface pweb = new PersonalWebInterface();
-        private string user_id ="1452716" ; /*默认*/
-        static private string current_user_id = "1452716"; /*进入对方主页*/
+        private string user_id ="" ; /*默认*/
+        static private string current_user_id = ""; /*进入对方主页*/
         private static int selected =1;/*官方或热度*/
         private static int choice = 1;/*概览*/
         private static string Repo = "";
@@ -60,7 +60,7 @@ namespace Database_course_design.Controllers
         }
 
         public ActionResult Index()
-        {
+        {           
             getPersonalBasicInfo();
 
             /*兴趣推荐*/
@@ -313,6 +313,8 @@ namespace Database_course_design.Controllers
 
         public void getPersonalBasicInfo()
         {
+            user_id = lgc.getUser_id();
+            current_user_id = user_id;
             ViewBag.User_ID = user_id;
             ViewBag.Current_User_ID = current_user_id;
             /*好友数量*/
@@ -331,12 +333,14 @@ namespace Database_course_design.Controllers
             /*好友信息*/
             ViewBag.Friend = pweb.getUserFriend(user_id);
 
-            ViewBag.Image = "http://10.0.1.158:3000/Tongji/SE/" + user_id + "/img/head.jpg";
             /*ViewBag.NickName = ; 获得昵称*/
 
             /*显示所有信息*/
             var messageOp = new AboutMessage();
             ViewBag.MessageArr = messageOp.pushMessage(user_id);
+
+            /*照片*/
+            ViewBag.Image = db.USERTABLEs.Where(p => p.USER_ID == user_id).FirstOrDefault().IMAGE;
 
         }
 
@@ -487,6 +491,24 @@ namespace Database_course_design.Controllers
             {
                 return RedirectToAction("Repository");
             }
+        }
+
+        public void Star()
+        {
+            var ar = new AboutRepository();
+            ErrorMessage errorInfo = new ErrorMessage();
+            string r_id = Request["rID"];
+            ar.changeStar(user_id, r_id, out errorInfo);
+            Response.Redirect("/Home/Index");
+        }
+
+        public void Fork()
+        {
+            var ar = new AboutRepository();
+            ErrorMessage errorInfo = new ErrorMessage();
+            string r_id = Request["rID"];
+            ar.addForkRepertory(user_id, r_id);
+            Response.Redirect("/Home/Index");
         }
     }
 }

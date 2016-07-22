@@ -10,6 +10,7 @@
     var RepName = ViewBag.RepName;
     var ManagerNum = ViewBag.ManagerNum;
     var FriendNum = ViewBag.FriendNum;
+    var Img = ViewBag.Image;
     var FriendList = ViewBag.Friend;
     var user_id = ViewBag.User_ID;
     var current_user_id = ViewBag.Current_User_ID;
@@ -55,12 +56,12 @@
                 <i class="iconfont">&#xe610;</i>
                 <input type="text" id="search" name="search" placeholder="搜索" />
             </div>
-            <a class="head" href="#"><img src=Img alt="user" /></a>
+            <a class="head" href="#"><img src=@Img alt="user" /></a>
             <p>NickName</p>
             <ul>
                 <!-- a标签可以用.net的方法渲染这段代码改了就行 我样式写好了 只要按照这个结构生成样式就没问题 svg要写死的不用动 到时候弄来素材就放进去 -->
                 <li>
-                    <a href="#" class="friend" friend_id = @user_id>
+                    <a href="#" class="friend" friend_id=@user_id>
                         <i class="iconfont">&#xe642;</i>
                         个人信息
                     </a>
@@ -72,7 +73,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="star" star=@user_id>
+                    <a href="#" class="starPage" star=@user_id>
                         <i class="iconfont">&#xe64c;</i>
                         个人收藏
                         <span>6</span>
@@ -156,21 +157,34 @@
             </li>
                 @if (Fork != null)
                 {
-                    foreach (var x in Fork)
+                    foreach (var y in Fork)
                     {
-                        var FileName = x.FileName;
-                        var UpdateTime = x.LastUpdateTime;
-                        string[] str = Regex.Split(FileName, ".");
-                        var forefix = str[0];
-                        var postfix = str[1];
-                    <li class="file">
-                        <span class="file-icon" data-type=@postfix></span>
-                        <a href="#">@forefix</a>
-                       <!-- <span>文件大小</span>-->
-                        <span>@UpdateTime</span>
-                    </li>
+                        var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
+                        var fileName = y.FileName;
+                        var filetype = y.FileType;
+                        if (filetype == "0")
+                        {
+                            string[] str = Regex.Split(fileName, "/");
+                            var postfix = str[str.Count() - 1];
+                            string[] strType = Regex.Split(fileName, ".");
+                                <li class="file">
+                                    <span class="file-icon" data-type=@strType[1]></span>
+
+                                    <span>@strType[0]</span>
+                                </li>
+                            }
+                            else
+                            {
+                                string[] str = Regex.Split(fileName, "/");
+                                var postfix = str[str.Count() - 1];
+                                <li class="file">
+                                    <span class="file-icon" data-type="folder"></span>
+
+                                    <span>@postfix</span>
+                                </li>
+                            }
+                     }
                 }
-            }
         </ul>
         <p>留言</p>
         <div id="messageInput">

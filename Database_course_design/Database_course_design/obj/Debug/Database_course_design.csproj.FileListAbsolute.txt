@@ -492,3 +492,7 @@ C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Databa
 C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\bin\Json.NET.Web.dll
 C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\bin\Newtonsoft.Json.xml
 C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\obj\Debug\Database_course_design.csprojResolveAssemblyReference.cache
+C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\bin\Simplify.Resources.dll
+C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\bin\Simplify.Windows.Forms.dll
+C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\bin\Simplify.Resources.xml
+C:\Users\61034\Source\Repos\Database_course_design\Database_course_design\Database_course_design\bin\Simplify.Windows.Forms.xml

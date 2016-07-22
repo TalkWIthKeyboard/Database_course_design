@@ -14,7 +14,10 @@ namespace Database_course_design.Models
             public string RepositoryID;
             public int StarNum;
             public int ForkNum;
+            public bool isStar;
+            public bool isFork;
             public List<FileInfo> FileList;
+
         }
 
         /// <summary>
@@ -46,6 +49,8 @@ namespace Database_course_design.Models
                     ValueItem.RepositoryID = RepoItem.RepertoryID;
                     ValueItem.StarNum = RepoItem.RepertoryStar;
                     ValueItem.ForkNum = RepoItem.RepertoryFork;
+                    ValueItem.isFork = isFork(_UserID, RepoItem.RepertoryID);
+                    ValueItem.isStar = isStar(_UserID, RepoItem.RepertoryID);
                     if (false == ret.ContainsKey(RepoItem.RepertoryName))
                         ret.Add(RepoItem.RepertoryName, ValueItem);
                 }
@@ -178,6 +183,8 @@ namespace Database_course_design.Models
                         ValueItem.RepositoryID = each.REPOSITORY_ID;
                         ValueItem.StarNum = (int)each.STAR_NUM;
                         ValueItem.ForkNum = (int)each.FORK_NUM;
+                        ValueItem.isFork = isFork(_UserId, each.REPOSITORY_ID);
+                        ValueItem.isStar = isStar(_UserId, each.REPOSITORY_ID);
                         if (false == ret.ContainsKey(each.NAME))
                             ret.Add(each.NAME, ValueItem);
                     }
@@ -281,6 +288,60 @@ namespace Database_course_design.Models
                 var er = new ItemModel.ErrorMessage("返回fork次数时异常",ex.Message);
                 ErrorInfo = er;
                 ForkNum = -1;
+                return false;
+            }
+        }
+
+
+        /*是否是Star关系*/
+        public bool isStar(string _UserId, string _RepoId)
+        {
+            try
+            {
+                KUXIANGDBEntities db = new KUXIANGDBEntities();
+                var RelaItem = db.USER_REPOSITORY_RELATIONSHIP.Where(p => p.REPOSITORY_ID == _RepoId && p.USER_ID == _UserId);
+                if (null == RelaItem)//如果找不到关系
+                {
+                    return false;
+                }
+                var Rela = RelaItem.Select(p => p.RELATIONSHIP).FirstOrDefault();
+                if (2 == Rela)//找到了关系并且是Star关系
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        /*是否是Fork关系*/
+        public bool isFork(string _UserId, string _RepoId)
+        {
+            try
+            {
+                KUXIANGDBEntities db = new KUXIANGDBEntities();
+                AboutUser func = new AboutUser();
+                //拿到该用户所有的仓库
+                var RepoItem = func.showOthersRepertory(_UserId, 0);
+                foreach (var item in RepoItem)
+                {
+                    var nimabi = db.REPOSITORies.Where(p => p.REPOSITORY_ID == item.RepertoryID).Select(p => p.FORK_FROM).FirstOrDefault();
+                    if (nimabi == _RepoId)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
                 return false;
             }
         }

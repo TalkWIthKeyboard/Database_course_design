@@ -33,7 +33,6 @@
 
 
     <script src="~/Scripts/jquery-2.1.4.js"></script>
-    <script src="~/Scripts/app.js"></script>
     <script src="~/Scripts/index.js"></script>
 </head>
 
@@ -60,7 +59,7 @@
                 <i class="iconfont">&#xe610;</i>
                 <input type="text" id="search" name="search" placeholder="搜索" />
             </div>
-            <a class="head" href="#"><img src=Img alt="user" /></a>
+            <a class="head" href="#"><img src=@Img alt="user" /></a>
             <p>NickName</p>
             <ul>
                 <!-- a标签可以用.net的方法渲染这段代码改了就行 我样式写好了 只要按照这个结构生成样式就没问题 svg要写死的不用动 到时候弄来素材就放进去 -->
@@ -77,7 +76,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="star" star=@user_id>
+                    <a href="#" class="starPage" star=@user_id>
                         <i class="iconfont">&#xe64c;</i>
                         个人收藏
                         <span>6</span>
@@ -195,46 +194,83 @@
                     </nav>
 
                     @if (Selected == 1)
-            {
-                if (Offical != null)
-                {
-                    foreach (var x in Offical)
                     {
-                        var value = x.Value;
-                        var list = x.Value.FileList;
-                        var ForkNum = value.ForkNum;
-                        var StarNum = value.StarNum;
-                        var i = 0;
+                        if (Offical != null)
+                        {
+                            foreach (var x in Offical)
+                            {
+                                var value = x.Value;
+                                var list = x.Value.FileList;
+                                var ForkNum = value.ForkNum;
+                                var StarNum = value.StarNum;
+                                var isStar = value.isStar;
+                                var isFork = value.isFork;
+                                var i = 0;
                                 <ul class="card">
-                                    <li class="list-head">
-                                        <a class="repository" href="#" repositoryId=@value.RepositoryID>
+                                    <li class="list-head" repositoryId=@value.RepositoryID>
+                                        <a class="repository" href="#">
                                             @x.Key
                                         </a>
-                                        <a class="fork" href="#">
-                                            <i class="iconfont">&#xe6c3;</i>
-                                            <sub>@ForkNum</sub>
-                                        </a>
-                                        <a class="star" href="#">
-                                            <i class="iconfont">&#xe64b;</i>
-                                            <sub>@StarNum</sub>
-                                        </a>
+                                        @if (isFork)
+                                        {
+                                            <a class="fork" type="btn" href="#">
+                                                <i class="highlight iconfont">&#xe6c3;</i>
+                                                <sub>@ForkNum</sub>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="fork" type="btn" href="#">
+                                                <i class="iconfont">&#xe6c3;</i>
+                                                <sub>@ForkNum</sub>
+                                            </a>
+                                        }
+
+                                        @if (isStar)
+                                        {
+                                            <a class="star" type="btn" href="#">
+                                                <i class="highlight iconfont">&#xe64b;</i>
+                                                <sub>@StarNum</sub>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="star" type="btn" href="#">
+                                                <i class="iconfont">&#xe64b;</i>
+                                                <sub>@StarNum</sub>
+                                            </a>
+                                        }
                                     </li>
                                     @if (list != null)
-                                    {
-                                        foreach (var y in list)
-                                        {
-                                            if (i < 5)
                                             {
-                                                var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
-                                                var fileName = y.FileName;
-                                                string[] str = Regex.Split(fileName, ".");
-                                                var forefix = str[0];
-                                                var postfix = str[1];
-                                                <li class="file">
-                                                    <span class="file-icon" data-type=@postfix></span>
+                                                foreach (var y in list)
+                                                {
+                                                    if (i < 5)
+                                                    {
+                                                        var Url = "http://10.0.1.158:3000/Tongji/" + y.Url;
+                                                        var fileName = y.FileName;
+                                                        var filetype = y.FileType;
+                                                        if (filetype == "0")
+                                                        {
+                                                            string[] str = Regex.Split(fileName, "/");
+                                                            var postfix = str[str.Count() - 1];
+                                                            string[] strType = Regex.Split(fileName, ".");                               
+                                                            <li class="file">
+                                                                <span class="file-icon" data-type= @strType[1]></span>
 
-                                                    <span></span>
-                                                </li>
+                                                                <span>@strType[0]</span>
+                                                            </li>
+                                                }
+                                                else
+                                                {
+                                                            string[] str = Regex.Split(fileName, "/");
+                                                            var postfix = str[str.Count() - 1];
+                                                            <li class="file">
+                                                                <span class="file-icon" data-type= "folder"></span>
+
+                                                                <span>@postfix</span>
+                                                            </li>
+                                                }
                                             }
                                             else
                                             {
