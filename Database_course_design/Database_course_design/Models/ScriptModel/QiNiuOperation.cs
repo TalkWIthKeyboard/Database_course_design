@@ -114,11 +114,10 @@ namespace Database_course_design.Models.ScriptModel
             IOClient target = new IOClient();
             PutExtra extra = new PutExtra();
 
-            string bucket = "filemanage";
-            string key = realPath;
-
             delete(realPath);
             upload(localPath, realPath);
         }
+
+
     }
 }
